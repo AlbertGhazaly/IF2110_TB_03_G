@@ -10,25 +10,25 @@
 
 /* Definisi Node : */
 typedef int ElType;
-typedef struct node* Address;
+typedef struct node* Addresslin;
 typedef struct node {
     ElType info;
-    Address next;
+    Addresslin next;
 } Node;
 
 #define INFO(p) (p)->info
 #define NEXT(p) (p)->next
 
-Address newNode(ElType val);
+Addresslin newNode(ElType val);
 
 /* Definisi List : */
 /* List kosong : FIRST(l) = NULL */
 /* Setiap elemen dengan Address p dapat diacu INFO(p), NEXT(p) */
 /* Elemen terakhir list: jika addressnya Last, maka NEXT(Last)=NULL */
 
-typedef Address List;
+typedef Addresslin List;
 
-#define IDX_UNDEF (-1)
+#define IDX_UNDEFlin (-1)
 #define FIRST(l) (l)
 
 /* PROTOTYPE */

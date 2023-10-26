@@ -1,5 +1,4 @@
 #include <stdio.h>
-#include "boolean.h"
 #include "matrix.h"
 
 void createMatrix(int nRows, int nCols, Matrix *m){
