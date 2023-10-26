@@ -12,5 +12,18 @@
 #include "./wordmachine/wordmachine.h"
 #include "./wordmachine/wordmachine.c"
 #include "./wordmachine/charmachine.h"
+#include "./wordmachine/charmachine.c"
+#include "./time/datetime.h"
+#include "./time/datetime.c"
+#include "./time/time.c"
+#include "./stack/stack.h"
+#include "./stack/stack.c"
+#include "./queue/queue.h"
+#include "./queue/queue.c"
+#include "./matrix/matrix.h"
+#include "./matrix/matrix.c"
+#include "./matrix/matrix.h"
+#include "./listlinier/listlinier.h"
+#include "./listlinier/listlinier.c"
 
 #endif
