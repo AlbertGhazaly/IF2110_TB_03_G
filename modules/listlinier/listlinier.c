@@ -1,9 +1,9 @@
 #include <stdio.h>
-#include <stdlib.h>l
+#include <stdlib.h>
 #include "listlinier.h"
 
-Address newNode(ElType val){
-    Address p = (Address)malloc(sizeof(Node));
+Addresslin newNode(ElType val){
+    Addresslin p = (Addresslin)malloc(sizeof(Node));
     if(p != NULL){
         INFO(p) = val;
         NEXT(p) = NULL;
@@ -47,11 +47,11 @@ int indexOf(List l, ElType val){
         }
     }
     if (found) return idx;
-    return IDX_UNDEF;
+    return IDX_UNDEFlin;
 }
 
 void insertFirst(List *l, ElType val){
-    Address p = newNode(val);
+    Addresslin p = newNode(val);
     if(p != NULL){
         NEXT(p) = *l;
         *l = p;
@@ -63,9 +63,9 @@ void insertLast(List *l, ElType val){
         insertFirst(l, val);
     }
     else {
-        Address p = newNode(val);
+        Addresslin p = newNode(val);
         if(p != NULL){
-            Address last = *l;
+            Addresslin last = *l;
             while(NEXT(last) != NULL){
                 last = NEXT(last);
             }
@@ -79,9 +79,9 @@ void insertAt(List *l, ElType val, int idx){
         insertFirst(l,val);
     }
     else {
-        Address p = newNode(val);
+        Addresslin p = newNode(val);
         if(p != NULL){
-            int ctr = 0;Address loc = *l;
+            int ctr = 0;Addresslin loc = *l;
             while(ctr < idx - 1){
                 ctr++;
                 loc = NEXT(loc);
@@ -93,14 +93,14 @@ void insertAt(List *l, ElType val, int idx){
 }
 
 void deleteFirst(List *l, ElType *val){
-    Address p = *l;
+    Addresslin p = *l;
     *val = INFO(p);
     *l = NEXT(p);
     free(p);
 }
 
 void deleteLast(List *l, ElType *val){
-    Address p = *l, loc = NULL;
+    Addresslin p = *l, loc = NULL;
     while(NEXT(p) != NULL){
         loc = p;
         p = NEXT(p);
@@ -120,12 +120,12 @@ void deleteAt(List *l, int idx, ElType *val){
         deleteFirst(l, val);
     } else {
         int ctr = 0;
-        Address loc = *l;
+        Addresslin loc = *l;
         while(ctr < idx - 1){
             ctr++;
             loc = NEXT(loc);
         }
-        Address p = NEXT(loc);
+        Addresslin p = NEXT(loc);
         *val = INFO(p);
         NEXT(loc) = NEXT(p);
         free(p);
@@ -155,7 +155,7 @@ int length(List l){
 List concat(List l1, List l2){
     List l3;
     CreateList(&l3);
-    Address p = l1;
+    Addresslin p = l1;
     while(p != NULL){
         insertLast(&l3, INFO(p));
         p = NEXT(p);

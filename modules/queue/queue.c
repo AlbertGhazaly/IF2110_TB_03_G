@@ -7,17 +7,17 @@ void CreateQueue(Queue *q){
 }
 
 //test case awal-awal prolly 2-4
-boolean isEmpty(Queue q){
+boolean isEmptyQ(Queue q){
     return (IDX_HEAD(q) == IDX_UNDEF && IDX_TAIL(q) == IDX_UNDEF);
 }
 
 //tc 5-6
-boolean isFull(Queue q){
+boolean isFullQ(Queue q){
     return (IDX_HEAD(q) - 1 == IDX_TAIL(q) || (IDX_TAIL(q) == 0 && IDX_HEAD(q) == CAPACITY - 1) || (IDX_HEAD(q) == 0 && IDX_TAIL(q) == CAPACITY - 1));
 }
 
-int length(Queue q){
-    if(isEmpty(q)){
+int lengthQ(Queue q){
+    if(isEmptyQ(q)){
         return 0;
     }
     if(IDX_HEAD(q) == IDX_TAIL(q)){
@@ -30,7 +30,7 @@ int length(Queue q){
 }
 
 void enqueue(Queue *q, ElType val){
-    if(isEmpty(*q)){
+    if(isEmptyQ(*q)){
         IDX_TAIL(*q) = 0;
         IDX_HEAD(*q) = 0;
     }
@@ -47,7 +47,7 @@ void enqueue(Queue *q, ElType val){
 
 void dequeue(Queue *q, ElType *val){
     *val = HEAD(*q);
-    if(length(*q) == 1){
+    if(lengthQ(*q) == 1){
         IDX_HEAD(*q) = IDX_UNDEF;
         IDX_TAIL(*q) = IDX_UNDEF;
     }
@@ -62,7 +62,7 @@ void dequeue(Queue *q, ElType *val){
 
 void displayQueue(Queue q){
     int val;
-    int firstLength = length(q);
+    int firstLength = lengthQ(q);
     printf("[");
     for(int i = 0; i < firstLength; i++){
         if(i != firstLength - 1){
