@@ -1,9 +1,21 @@
 #ifndef INCLUDEADT_H
 #define INCLUDEADT_H
 
-#include "../modules/adt.h"
-#include "../modules/wordmachine/wordmachine.c"
-#include "../modules/wordmachine/charmachine.c"
-#include "../modules/liststatik/liststatik.c"
+#include "Balasan/balasan.h"
+#include "Balasan/balasan.c"
+#include "DrafKicauan/DrafKicauan.h"
+#include "DrafKicauan/DrafKicauan.c"
+#include "Kicauan/Kicauan.h"
+#include "Kicauan/Kicauan.c"
+#include "Pengguna/Pengguna.h"
+#include "Pengguna/Pengguna.c"
+#include "PermintaanPertemanan/PermintaanPertemanan.h"
+#include "PermintaanPertemanan/PermintaanPertemanan.c"
+#include "Profil/Profil.h"
+#include "Profil/Profil.c"
+#include "SimpanMuat/SimpanMuat.h"
+#include "SimpanMuat/SimpanMuat.c"
+#include "Teman/Teman.h"
+#include "Teman/Teman.c"
 
 #endif
