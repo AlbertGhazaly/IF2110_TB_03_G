@@ -16,7 +16,7 @@ void CreateListStatik(ListStatik *l)
 /* Proses: Inisialisasi semua elemen List l dengan MARK */
 {
     for (int i = IDX_MIN; i <= CAPACITY-1; i++) {
-        ELMTSTAT(*l, i) = MARK;
+        ELMTSTAT(*l, i) = MARKSTAT;
     }
 }
 /* ********** SELEKTOR (TAMBAHAN) ********** */
@@ -27,7 +27,7 @@ int listLengthStatik(ListStatik l)
 {
     int jumlah = 0;
     for (int i = IDX_MIN; i <= CAPACITY-1;i++) {
-        if (ELMTSTAT(l, i) != MARK) {
+        if (ELMTSTAT(l, i) != MARKSTAT) {
             jumlah++;
         }
     }
@@ -247,7 +247,7 @@ void deleteFirstStatik(ListStatik *l, ElType *val)
         ELMTSTAT(*l,i-1) = temp1 ;
         temp1 = temp;
     }
-    ELMTSTAT(*l,listLengthStatik(*l)-1) = MARK;
+    ELMTSTAT(*l,listLengthStatik(*l)-1) = MARKSTAT;
 }
 /* *** Menghapus elemen pada index tertentu *** */
 
@@ -267,7 +267,7 @@ void deleteAtStatik(ListStatik *l, ElType *val, IdxType idx)
         temp1 = temp;
     }
     
-    ELMTSTAT(*l,listLengthStatik(*l)-1) = MARK;
+    ELMTSTAT(*l,listLengthStatik(*l)-1) = MARKSTAT;
 }
 void deleteLastStatik(ListStatik *l, ElType *val)
 /* Proses : Menghapus elemen terakhir List */
@@ -277,7 +277,7 @@ void deleteLastStatik(ListStatik *l, ElType *val)
 /*      List l mungkin menjadi kosong */
 {
     *val = ELMTSTAT(*l,listLengthStatik(*l)-1);
-    ELMTSTAT(*l,listLengthStatik(*l)-1) = MARK;
+    ELMTSTAT(*l,listLengthStatik(*l)-1) = MARKSTAT;
 }
 /* ********** SORTING ********** */
 void sortListStatik(ListStatik *l, boolean asc)
