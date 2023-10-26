@@ -1,0 +1,7 @@
+{
+    "files.associations": {
+        "liststatik.h": "c",
+        "includeadt.h": "c",
+        "charmachine.h": "c"
+    }
+}
