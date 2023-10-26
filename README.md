@@ -44,5 +44,5 @@ A matrix calculator developed in Java. this repository is an archive of the file
 - C/C++ Compiler
 
 ### Installation
-- Tutor dulu cara install c compiler di sini.
+- Tutor dulu cara install c compiler di sini
 - Download all folder and files on this repository or simply clone this repo!
