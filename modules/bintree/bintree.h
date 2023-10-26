@@ -6,7 +6,7 @@
 #ifndef POHONBINER_H
 #define POHONBINER_H
 
-#include "boolean.h"
+#include "../boolean.h"
 
 /* Selektor */
 #define ROOT(p) (p)->info
