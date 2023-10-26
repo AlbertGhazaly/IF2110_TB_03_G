@@ -7,7 +7,7 @@ void CreateListDin(ListDin *l, int capacity)
 /* F.S. Terbentuk list dinamis l kosong dengan kapasitas capacity */
 {
       BUFFER(*l) = (ElType *) malloc(capacity * sizeof(ElType));
-      CAPACITY(*l) = capacity;
+      CAPACITYDIN(*l) = capacity;
       NEFF(*l) = 0;
 }
 
@@ -16,7 +16,7 @@ void dealocateList(ListDin *l)
 /* F.S. (l) dikembalikan ke system, CAPACITY(l)=0; NEFF(l)=0 */
 {
       free(BUFFER(*l));
-      CAPACITY(*l) = 0;
+      CAPACITYDIN(*l) = 0;
       NEFF(*l) = 0;
 }
 
@@ -51,7 +51,7 @@ boolean isIdxValidDin(ListDin l, IdxType i)
 /* Mengirimkan true jika i adalah indeks yang valid utk kapasitas list l */
 /* yaitu antara indeks yang terdefinisi utk container*/
 {
-      return (i >= 0 && i < (IdxType) CAPACITY(l));
+      return (i >= 0 && i < (IdxType) CAPACITYDIN(l));
 }
 
 boolean isIdxEffDin(ListDin l, IdxType i)
@@ -74,7 +74,7 @@ boolean isEmptyDin(ListDin l)
 boolean isFullDin(ListDin l)
 /* Mengirimkan true jika list l penuh, mengirimkan false jika tidak */
 {
-      return (NEFF(l) == CAPACITY(l));
+      return (NEFF(l) == CAPACITYDIN(l));
 }
 
 /* ********** BACA dan TULIS dengan INPUT/OUTPUT device ********** */
@@ -93,7 +93,7 @@ void readListDin(ListDin *l)
       int i, N;
 
       scanf("%d", &N);
-      while (N<0 || N>CAPACITY(*l))
+      while (N<0 || N>CAPACITYDIN(*l))
       {
             scanf("%d", &N);
       }
@@ -133,7 +133,7 @@ ListDin plusMinusListDin(ListDin l1, ListDin l2, boolean plus)
 /* Jika plus = false, mengirimkan l1-l2, yaitu setiap elemen l1 dikurangi elemen l2 pada indeks yang sama */
 {
       ListDin lnew;
-      CreateListDin(&lnew,CAPACITY(l1));
+      CreateListDin(&lnew,CAPACITYDIN(l1));
       NEFF(lnew) = NEFF(l1);
       int i;
       if (plus) {
@@ -205,7 +205,7 @@ void copyListDin(ListDin lIn, ListDin *lOut)
 /* F.S. lOut berisi salinan dari lIn (identik, nEff dan capacity sama) */
 /* Proses : Menyalin isi lIn ke lOut */ 
 {
-      CreateListDin(lOut, CAPACITY(lIn));
+      CreateListDin(lOut, CAPACITYDIN(lIn));
       NEFF(*lOut) = NEFF(lIn);
       for (int i = IDX_MIN; i <= listLengthDin(lIn)-1;i++)
       {
@@ -320,8 +320,8 @@ void expandListDin(ListDin *l, int num)
       IdxType i;
       ListDin temp;
 
-      copyList(*l, &temp);
-      prevCapacity = CAPACITY(*l);
+      copyListDin(*l, &temp);
+      prevCapacity = CAPACITYDIN(*l);
       prevNeff = NEFF(*l);
 
       dealocateList(l);
@@ -344,7 +344,7 @@ void shrinkListDin(ListDin *l, int num)
       ListDin temp;
 
       copyListDin(*l, &temp);
-      prevCapacity = CAPACITY(*l);
+      prevCapacity = CAPACITYDIN(*l);
       prevNeff = NEFF(*l);
 
       dealocateList(l);

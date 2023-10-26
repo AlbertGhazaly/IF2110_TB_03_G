@@ -7,7 +7,7 @@
 #ifndef LISTDIN_H
 #define LISTDIN_H
 
-#include "boolean.h"
+#include "../boolean.h"
 
 /*  Kamus Umum */
 #define IDX_MIN 0
@@ -40,7 +40,7 @@ typedef struct
 #define NEFF(l) (l).nEff
 #define BUFFER(l) (l).buffer
 #define ELMTDIN(l, i) (l).buffer[i]
-#define CAPACITY(l) (l).capacity
+#define CAPACITYDIN(l) (l).capacity
 
 /* ********** KONSTRUKTOR ********** */
 /* Konstruktor : create list kosong  */

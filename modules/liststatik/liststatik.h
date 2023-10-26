@@ -6,7 +6,7 @@
 #ifndef LISTSTATIK_H
 #define LISTSTATIK_H
 
-#include "boolean.h"
+#include "../boolean.h"
 
 /*  Kamus Umum */
 #define CAPACITY 100
@@ -15,7 +15,7 @@
 /* Indeks minimum list */
 #define IDX_UNDEF -1
 /* Indeks tak terdefinisi*/
-#define MARK -9999
+#define MARKSTAT -9999
 /* Nilai elemen tak terdefinisi*/
 
 /* Definisi elemen dan koleksi objek */
