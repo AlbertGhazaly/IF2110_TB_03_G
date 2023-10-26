@@ -1,4 +1,3 @@
-
 #include "includeADT.h"
 #include "functions.c"
 
@@ -8,16 +7,10 @@ int main() {
     boolean runProgram = true;
     
     // Array untuk menampung user saat ini
-    ListStatik User;
-    CreateListStatik(&User);
-    ELMTSTAT(User,0) = "Smodeng";
-    printListStatik(User);
+    Word User[1] = {{'\0', 0}};
+    
     STARTWORD();
     while (runProgram) {
-        EndWord = false;
-        // printf(">> ");
-        // fflush(stdin);
-
         Word command = currentWord;
         Word tutup_program = {"TUTUP_PROGRAM", 13};
         Word daftar = {"DAFTAR", 6};
@@ -25,9 +18,14 @@ int main() {
         Word keluar = {"KELUAR", 6};
 
         if (WordEqual(command, tutup_program)){
-            runProgram = false; 
+            runProgram = false;
+        }
+        else if (WordEqual(command, daftar)){
+            Word smodeng = {"Smodeng", 7};
+            setUser(User, smodeng);
         }
         ADVWORD();
     }
+    printf("%s", User[0].TabWord);
     return 0;
 }
