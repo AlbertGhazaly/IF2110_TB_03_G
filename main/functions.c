@@ -31,3 +31,7 @@ void printWord(Word w) {
     printf("\n");
     printf("%d\n", w.Length);
 }
+
+void signUp(){
+    
+}

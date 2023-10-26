@@ -1,4 +1,4 @@
-#include <stdio.h>
+
 #include "includeADT.h"
 #include "functions.c"
 
@@ -8,8 +8,13 @@ int main() {
     boolean runProgram = true;
     
     // Array untuk menampung user saat ini
+<<<<<<< HEAD
     ListStatik currentUser;
     CreateListStatik(&currentUser);
+=======
+    // ListStatik currentUser;
+    // CreateListStatik(&currentUser);
+>>>>>>> main
 
     STARTWORD();
     while (runProgram) {
