@@ -39,7 +39,7 @@ typedef struct
 /* ********** SELEKTOR ********** */
 #define NEFF(l) (l).nEff
 #define BUFFER(l) (l).buffer
-#define ELMT(l, i) (l).buffer[i]
+#define ELMTDIN(l, i) (l).buffer[i]
 #define CAPACITY(l) (l).capacity
 
 /* ********** KONSTRUKTOR ********** */
