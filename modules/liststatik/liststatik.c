@@ -16,7 +16,7 @@ void CreateListStatik(ListStatik *l)
 /* Proses: Inisialisasi semua elemen List l dengan MARK */
 {
     for (int i = IDX_MIN; i <= CAPACITY-1; i++) {
-        ELMT(*l, i) = MARK;
+        ELMTSTAT(*l, i) = MARK;
     }
 }
 /* ********** SELEKTOR (TAMBAHAN) ********** */
@@ -27,7 +27,7 @@ int listLengthStatik(ListStatik l)
 {
     int jumlah = 0;
     for (int i = IDX_MIN; i <= CAPACITY-1;i++) {
-        if (ELMT(l, i) != MARK) {
+        if (ELMTSTAT(l, i) != MARK) {
             jumlah++;
         }
     }
@@ -69,7 +69,7 @@ boolean isEmptyStatik(ListStatik l)
 {
     return(listLengthStatik(l) == IDX_MIN);
 }
-boolean isFull(ListStatik l)
+boolean isFullStatik(ListStatik l)
 /* Mengirimkan true jika List l penuh, mengirimkan false jika tidak */
 {
     return(listLengthStatik(l) == CAPACITY);
@@ -97,7 +97,7 @@ void readListStatik(ListStatik *l)
     int x;
     for (int i = 0; i < n; i++) {
         scanf("%d", &x);
-        ELMT(*l, i) = x;
+        ELMTSTAT(*l, i) = x;
     }
     }   
 }
@@ -113,9 +113,9 @@ void printListStatik(ListStatik l)
     printf("[");
     for (int i = 0; i <=listLengthStatik(l)-1; i++) {
         if (i==listLengthStatik(l)-1) {
-            printf("%d", ELMT(l,i));
+            printf("%d", ELMTSTAT(l,i));
         } else {
-            printf("%d,", ELMT(l,i));
+            printf("%d,", ELMTSTAT(l,i));
         }
     } 
     printf("]");
@@ -134,11 +134,11 @@ ListStatik plusMinusListStatik(ListStatik l1, ListStatik l2, boolean plus)
     int i;
     if (plus) {
         for (i=0;i<=listLengthStatik(l1)-1;i++) {
-            ELMT(lnew,i) = ELMT(l1,i) + ELMT(l2,i);
+            ELMTSTAT(lnew,i) = ELMTSTAT(l1,i) + ELMTSTAT(l2,i);
         }
     } else {
         for (i=0;i<=listLengthStatik(l1)-1;i++) {
-            ELMT(lnew,i) = ELMT(l1,i) - ELMT(l2,i);
+            ELMTSTAT(lnew,i) = ELMTSTAT(l1,i) - ELMTSTAT(l2,i);
         }
     }
     return lnew;
@@ -151,7 +151,7 @@ boolean isListEqualStatik(ListStatik l1, ListStatik l2)
 {
     if (listLengthStatik(l1) == listLengthStatik(l2)) {
         for (int i = IDX_MIN; i <= listLengthStatik(l1)-1;i++) {
-            if (ELMT(l1,i)!=ELMT(l2,i)) {
+            if (ELMTSTAT(l1,i)!=ELMTSTAT(l2,i)) {
                 return 0;
             } else if (i == listLengthStatik(l1)-1) {
                 return 1;
@@ -170,7 +170,7 @@ int indexOfStatik(ListStatik l, ElType val)
 /* Skema Searching yang digunakan bebas */
 {
     for (int i=0;i<=listLengthStatik(l)-1;i++) {
-        if (ELMT(l,i) == val) {
+        if (ELMTSTAT(l,i) == val) {
             return i;
         }
     }
@@ -185,11 +185,11 @@ void extremeValuesStatik(ListStatik l, ElType *max, ElType *min)
     *max = -420, *min = 4200;
 
     for (int i = 0;i <=listLengthStatik(l)-1;i++) {
-        if (ELMT(l,i) > *max) {
-            *max = ELMT(l,i);
+        if (ELMTSTAT(l,i) > *max) {
+            *max = ELMTSTAT(l,i);
         }
-        if (ELMT(l,i) < *min) {
-            *min = ELMT(l,i);
+        if (ELMTSTAT(l,i) < *min) {
+            *min = ELMTSTAT(l,i);
         }
     }
 }
@@ -200,13 +200,13 @@ void insertFirstStatik(ListStatik *l, ElType val)
 /* I.S. List l boleh kosong, tetapi tidak penuh */
 /* F.S. val adalah elemen pertama l yang baru */
 {
-    int temp1 = ELMT(*l,0);
+    int temp1 = ELMTSTAT(*l,0);
     for (int i = 0; i <= listLengthStatik(*l)-1;i++) {
-        int temp = ELMT(*l,i+1);
-        ELMT(*l,i+1) = temp1 ;
+        int temp = ELMTSTAT(*l,i+1);
+        ELMTSTAT(*l,i+1) = temp1 ;
         temp1 = temp;
     }
-    ELMT(*l,0) = val;
+    ELMTSTAT(*l,0) = val;
 }
 /* *** Menambahkan elemen pada index tertentu *** */
 void insertAtStatik(ListStatik *l, ElType val, IdxType idx)
@@ -214,13 +214,13 @@ void insertAtStatik(ListStatik *l, ElType val, IdxType idx)
 /* I.S. List l tidak kosong dan tidak penuh, idx merupakan index yang valid di l */
 /* F.S. val adalah elemen yang disisipkan pada index idx l */
 {
-    int temp1 = ELMT(*l, idx);
+    int temp1 = ELMTSTAT(*l, idx);
     for (int i = idx; i <= listLengthStatik(*l)-1;i++) {
-        int temp = ELMT(*l,i+1);
-        ELMT(*l,i+1) = temp1 ;
+        int temp = ELMTSTAT(*l,i+1);
+        ELMTSTAT(*l,i+1) = temp1 ;
         temp1 = temp;
     }
-    ELMT(*l,idx) = val;
+    ELMTSTAT(*l,idx) = val;
 
 }
 /* *** Menambahkan elemen terakhir *** */
@@ -229,7 +229,7 @@ void insertLastStatik(ListStatik *l, ElType val)
 /* I.S. List l boleh kosong, tetapi tidak penuh */
 /* F.S. val adalah elemen terakhir l yang baru */
 {
-    ELMT(*l, listLengthStatik(*l)) = val;
+    ELMTSTAT(*l, listLengthStatik(*l)) = val;
 }
 /* ********** MENGHAPUS ELEMEN ********** */
 /* *** Menghapus elemen pertama *** */
@@ -240,14 +240,14 @@ void deleteFirstStatik(ListStatik *l, ElType *val)
 /*      Banyaknya elemen List berkurang satu */
 /*      List l mungkin menjadi kosong */
 {
-    *val = ELMT(*l,0);
-    int temp1 = ELMT(*l,1);
+    *val = ELMTSTAT(*l,0);
+    int temp1 = ELMTSTAT(*l,1);
     for (int i = 1;i <=listLengthStatik(*l)-1;i++) {
-        int temp = ELMT(*l,i+1);
-        ELMT(*l,i-1) = temp1 ;
+        int temp = ELMTSTAT(*l,i+1);
+        ELMTSTAT(*l,i-1) = temp1 ;
         temp1 = temp;
     }
-    ELMT(*l,listLengthStatik(*l)-1) = MARK;
+    ELMTSTAT(*l,listLengthStatik(*l)-1) = MARK;
 }
 /* *** Menghapus elemen pada index tertentu *** */
 
@@ -259,15 +259,15 @@ void deleteAtStatik(ListStatik *l, ElType *val, IdxType idx)
 /*      List l mungkin menjadi kosong */
 /* *** Menghapus elemen terakhir *** */
 {
-    *val = ELMT(*l,idx);
-    int temp1 = ELMT(*l,idx+1);
+    *val = ELMTSTAT(*l,idx);
+    int temp1 = ELMTSTAT(*l,idx+1);
     for (int i = idx+1;i <=listLengthStatik(*l)-1;i++) {
-        int temp = ELMT(*l,i+1);
-        ELMT(*l,i-1) = temp1 ;
+        int temp = ELMTSTAT(*l,i+1);
+        ELMTSTAT(*l,i-1) = temp1 ;
         temp1 = temp;
     }
     
-    ELMT(*l,listLengthStatik(*l)-1) = MARK;
+    ELMTSTAT(*l,listLengthStatik(*l)-1) = MARK;
 }
 void deleteLastStatik(ListStatik *l, ElType *val)
 /* Proses : Menghapus elemen terakhir List */
@@ -276,8 +276,8 @@ void deleteLastStatik(ListStatik *l, ElType *val)
 /*      Banyaknya elemen List berkurang satu */
 /*      List l mungkin menjadi kosong */
 {
-    *val = ELMT(*l,listLengthStatik(*l)-1);
-    ELMT(*l,listLengthStatik(*l)-1) = MARK;
+    *val = ELMTSTAT(*l,listLengthStatik(*l)-1);
+    ELMTSTAT(*l,listLengthStatik(*l)-1) = MARK;
 }
 /* ********** SORTING ********** */
 void sortListStatik(ListStatik *l, boolean asc)
@@ -292,20 +292,20 @@ void sortListStatik(ListStatik *l, boolean asc)
     if (asc) {
         while (a>=1) {
         for (int i=0; i<a;i++) {
-            if (ELMT(*l,i) > ELMT(*l,i+1)) {
-                temp = ELMT(*l,i); 
-                ELMT(*l,i) = ELMT(*l,i+1);
-                ELMT(*l,i+1) = temp;
+            if (ELMTSTAT(*l,i) > ELMTSTAT(*l,i+1)) {
+                temp = ELMTSTAT(*l,i); 
+                ELMTSTAT(*l,i) = ELMTSTAT(*l,i+1);
+                ELMTSTAT(*l,i+1) = temp;
             }
         }
         a-=1;
         }
     } else  {
         while (a>=0) {for (int i=0; i<a;i++) {
-            if (ELMT(*l,i) < ELMT(*l,i+1)) {
-                temp = ELMT(*l,i); 
-                ELMT(*l,i) = ELMT(*l,i+1);
-                ELMT(*l,i+1) = temp;
+            if (ELMTSTAT(*l,i) < ELMTSTAT(*l,i+1)) {
+                temp = ELMTSTAT(*l,i); 
+                ELMTSTAT(*l,i) = ELMTSTAT(*l,i+1);
+                ELMTSTAT(*l,i+1) = temp;
             }
     }
         a-=1;}
