@@ -12,6 +12,5 @@
 #include "./wordmachine/wordmachine.h"
 #include "./wordmachine/wordmachine.c"
 #include "./wordmachine/charmachine.h"
-#include "./liststatik/liststatik.h"
 
 #endif

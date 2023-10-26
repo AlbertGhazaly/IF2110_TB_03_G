@@ -8,14 +8,10 @@ int main() {
     boolean runProgram = true;
     
     // Array untuk menampung user saat ini
-<<<<<<< HEAD
-    ListStatik currentUser;
-    CreateListStatik(&currentUser);
-=======
-    // ListStatik currentUser;
-    // CreateListStatik(&currentUser);
->>>>>>> main
-
+    ListStatik User;
+    CreateListStatik(&User);
+    ELMTSTAT(User,0) = "Smodeng";
+    printListStatik(User);
     STARTWORD();
     while (runProgram) {
         EndWord = false;
