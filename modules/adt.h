@@ -25,9 +25,5 @@
 #include "./matrix/matrix.h"
 #include "./listlinier/listlinier.h"
 #include "./listlinier/listlinier.c"
-/*
-#include "./bintree/bintree.h"
-#include "./bintree/bintree.c"
-*/
 
 #endif
