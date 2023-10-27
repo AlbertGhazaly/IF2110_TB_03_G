@@ -11,9 +11,10 @@ int main() {
     // ListStatik currentUser;
     // CreateListStatik(&currentUser);
 
-    STARTWORD();
+    
     while (runProgram) {
-        EndWord = false;
+        printf(">> ");
+        STARTWORD();
         // printf(">> ");
         // fflush(stdin);
 
