@@ -9,7 +9,7 @@ int main() {
     // Array untuk menampung user saat ini
     Word User[1] = {{'\0', 0}};
     
-    STARTWORD();
+    Word User[20] = {{"\0", 0}};
     while (runProgram) {
         printf(">> ");
         STARTWORD();
@@ -21,6 +21,7 @@ int main() {
         Word daftar = {"DAFTAR", 6};
         Word masuk = {"MASUK", 6};
         Word keluar = {"KELUAR", 6};
+        Word curr_user = {"USER", 4};
 
         if (WordEqual(command, tutup_program)){
             runProgram = false;
@@ -28,6 +29,9 @@ int main() {
         else if (WordEqual(command, daftar)){
             Word smodeng = {"Smodeng", 7};
             setUser(User, smodeng);
+        }
+        else if(WordEqual(command, curr_user)){
+            printf("Current user: %s\n", User);
         }
         ADVWORD();
     }
