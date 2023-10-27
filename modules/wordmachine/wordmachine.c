@@ -14,6 +14,13 @@ void IgnoreBlanks() {
     }
 }
 
+void IgnoreNewLine() {
+    while (currentChar == '\n'&& currentChar)
+    {
+        ADV();
+    }
+}
+
 void STARTWORD() { 
     /* I.S. : currentChar sembarang
     F.S. : EndWord = true, dan currentChar = MARK;
@@ -21,6 +28,7 @@ void STARTWORD() {
             currentChar karakter pertama sesudah karakter terakhir kata */
     START();
     IgnoreBlanks();
+    IgnoreNewLine();
     if (currentChar == MARK) {
         EndWord = true;
     } else {
