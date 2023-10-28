@@ -22,15 +22,7 @@ boolean WordEqual(Word a, Word b) {
     }
 }
 
-// 2 - PrintWord
-void printWord(Word w) {
-    int i;
-    for (i = 0; i < w.Length; i++) {
-        printf("%c", w.TabWord[i]);
-    }
-    printf("\n");
-    printf("%d\n", w.Length);
-}
+
 
 void signUp(){
     

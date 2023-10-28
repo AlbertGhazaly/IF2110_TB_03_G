@@ -1,4 +1,3 @@
-
 #include "includeADT.h"
 #include "functions.c"
 
@@ -8,9 +7,7 @@ int main() {
     boolean runProgram = true;
     
     // Array untuk menampung user saat ini
-    // ListStatik currentUser;
-    // CreateListStatik(&currentUser);
-
+    Word User[1] = {{'\0', 0}};
     
     Word User[20] = {{"\0", 0}};
     while (runProgram) {
@@ -27,7 +24,7 @@ int main() {
         Word curr_user = {"USER", 4};
 
         if (WordEqual(command, tutup_program)){
-            runProgram = false; 
+            runProgram = false;
         }
         else if (WordEqual(command, daftar)){
             Word smodeng = {"Smodeng", 7};
@@ -38,5 +35,6 @@ int main() {
         }
         ADVWORD();
     }
+    printf("%s", User[0].TabWord);
     return 0;
 }
