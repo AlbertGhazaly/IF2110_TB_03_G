@@ -14,6 +14,13 @@ void IgnoreBlanks() {
     }
 }
 
+void IgnoreNewLine() {
+    while (currentChar == '\n'&& currentChar)
+    {
+        ADV();
+    }
+}
+
 void STARTWORD() { 
     /* I.S. : currentChar sembarang
     F.S. : EndWord = true, dan currentChar = MARK;
@@ -21,6 +28,7 @@ void STARTWORD() {
             currentChar karakter pertama sesudah karakter terakhir kata */
     START();
     IgnoreBlanks();
+    IgnoreNewLine();
     if (currentChar == MARK) {
         EndWord = true;
     } else {
@@ -63,4 +71,12 @@ void CopyWord() {
     } else {
         currentWord.Length = NMax;
     }
+}
+
+void CopyWordTo(Word *destination, Word source) {
+    int i;
+    for (i = 0; i < source.Length; i++) {
+        destination->TabWord[i] = source.TabWord[i];
+    }
+    destination->Length = source.Length;
 }
