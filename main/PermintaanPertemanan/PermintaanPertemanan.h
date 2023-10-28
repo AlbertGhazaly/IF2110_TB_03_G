@@ -5,4 +5,6 @@
 
 void daftarteman(boolean login);
 
+void hapusteman(boolean login);
+
 #endif
