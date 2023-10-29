@@ -7,7 +7,7 @@
 #include "DrafKicauan/DrafKicauan.c"
 #include "Kicauan/Kicauan.h"
 #include "Kicauan/Kicauan.c"
-#include "Pengguna/Pengguna.h"
+// #include "Pengguna/Pengguna.h"
 #include "Pengguna/Pengguna.c"
 #include "PermintaanPertemanan/PermintaanPertemanan.h"
 #include "PermintaanPertemanan/PermintaanPertemanan.c"

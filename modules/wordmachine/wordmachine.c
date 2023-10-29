@@ -186,3 +186,11 @@ Word stringToWord(char character[], int length)
 
     return strWord;
 }
+
+void CopyWordTo(Word *destination, Word source) {
+    int i;
+    for (i = 0; i < source.Length; i++) {
+        destination->TabWord[i] = source.TabWord[i];
+    }
+    destination->Length = source.Length;
+}

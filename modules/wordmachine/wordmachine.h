@@ -80,3 +80,5 @@ Word stringToWord(char character[], int length);
 
 
 #endif
+
+void CopyWordTo(Word *destination, Word source);
