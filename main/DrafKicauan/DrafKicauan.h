@@ -1,3 +1,6 @@
+#ifndef DRAFKICAUAN_H
+#define DRAFKICAUAN_H
+
 #include "../../modules/adt.h"
 
 // Struct untuk menyimpan draf
@@ -21,6 +24,6 @@ void BUAT_DRAF(const char *namaFile);
 // Fungsi untuk melihat semua draf
 void LIHAT_DRAF(const char *namaFile);
 
-
+#endif
 
   
