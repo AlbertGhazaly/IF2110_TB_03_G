@@ -54,6 +54,15 @@ void signup(AccountList *listakun){
     AddAccountToList(listakun, akun);
 }
 
+void CreateAccountEmpty(Account *account) {
+    *Username(*account) = emptyWord;
+    *Password(*account) = emptyWord;
+    *Bio(*account) = emptyWord;
+    *NoHP(*account) = emptyWord;
+    *Weton(*account) = emptyWord;
+    *JenisAkun(*account) = emptyWord;
+}
+
 void CreateAccountList(AccountList *list) {
     list->count = 0;
 }
@@ -130,3 +139,86 @@ boolean cekPassword(AccountList *list, Word username, Word password){
     }
     return found;
 }
+
+void ReadUser_FILE(char filename[], AccountList *list, Matrix *teman){
+    int N;
+    STARTWORD_FILE(filename);
+    //Akuisisi Nilai N
+    N = WordToInt(currentWord);
+    printf("%d\n", N);
+    ADVSENTENCE();
+    int i;
+    for (i = 0; i < N; i++)
+    {
+        printf("test\n");
+        Word username, password, bio, noHP, weton, jenisakun;
+        Matrix profil;
+        Account akun;
+        CreateAccountEmpty(&akun);
+        int j = 0;
+        int batas = 11;
+        while (j < batas)
+        {
+            if (currentChar == '\n' && j == 0)
+            {
+                CopyWordTo(Username(akun), currentWord);
+                j++;
+                printWord(currentWord);
+            }
+            else if (currentChar == '\n' && j == 1)
+            {
+                CopyWordTo(Password(akun), currentWord);
+                j++;
+                printWord(currentWord);
+            }
+            else if (currentChar == '\n' && j == 2)
+            {
+                if (WordEqual(*Password(akun),currentWord))
+                {
+                    CopyWordTo(Bio(akun), emptyWord);
+                }
+                else
+                {
+                    CopyWordTo(Bio(akun), currentWord);
+                }
+                j++;
+            }
+            else if (currentChar == '\n' && j == 3)
+            {
+                if (WordEqual(*Bio(akun), currentWord) || WordEqual(*Password(akun),currentWord))
+                {
+                    CopyWordTo(NoHP(akun), emptyWord);
+                }
+                else
+                {
+                    CopyWordTo(NoHP(akun), currentWord);
+                }
+                j++;
+            }
+            else if (currentChar == '\n' && j == 4)
+            {
+                if (WordEqual(*Bio(akun), currentWord) || WordEqual(*Password(akun),currentWord) || WordEqual(*NoHP(akun), currentWord))
+                {
+                    CopyWordTo(Weton(akun), emptyWord);
+                }
+                else{
+                    CopyWordTo(Weton(akun), currentWord);
+                }
+                j++;
+            }
+            else if (currentChar == '\n' && j == 5)
+            {
+                CopyWordTo(JenisAkun(akun), currentWord);
+                j++;
+            }
+            else if (currentChar == '\n' && j > 5 && j < 11)
+            {
+                //Foto Profil pengguna.config disini
+                j++;
+            }
+            ADVSENTENCE();
+        }
+        AddAccountToList(list, akun);
+    }
+}
+//"../cfg/map.txt"

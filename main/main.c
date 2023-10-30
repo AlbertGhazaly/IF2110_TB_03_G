@@ -6,8 +6,8 @@ int main() {
     printf("Selamat datang di Burbir. Selamat berkicau!\n\n");
 
     boolean runProgram = true;
-    
-    // Array untuk menampung user saat ini
+
+    //Array untuk menampung user saat ini
     AccountList akun;
     CreateAccountList(&akun);
 

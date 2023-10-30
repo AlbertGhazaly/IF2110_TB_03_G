@@ -77,8 +77,6 @@ int WordToInt(Word string);
 Word stringToWord(char character[], int length);
 /*Mengubah character(char) menjadi sebuah kata(Word).*/
 
-
+void CopyWordTo(Word *destination, Word source);
 
 #endif
-
-void CopyWordTo(Word *destination, Word source);

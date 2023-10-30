@@ -9,13 +9,13 @@ void IgnoreBlanks() {
     /* Mengabaikan satu atau beberapa BLANK
     I.S. : currentChar sembarang
     F.S. : currentChar ≠ BLANK atau currentChar = MARK */
-    while (currentChar == BLANK && currentChar != MARK) {
+    while (currentChar == BLANK) {
         ADV();
     }
 }
 
 void IgnoreNewLine() {
-    while (currentChar == '\n'&& currentChar != MARK)
+    if (currentChar == '\n')
     {
         ADV();
     }
@@ -53,6 +53,21 @@ void ADVWORD() {
     }
 }
 
+void ADVSENTENCE() { 
+    /* I.S. : currentChar adalah karakter pertama kata yang akan diakuisisi
+    F.S. : currentWord adalah kata terakhir yang sudah diakuisisi,
+            currentChar adalah karakter pertama dari kata berikutnya, mungkin MARK
+            Jika currentChar = MARK, EndWord = true.
+    Proses : Akuisisi kata menggunakan procedure SalinWord */
+    IgnoreBlanks();
+    IgnoreNewLine();
+    if (currentChar == MARKBaris) {
+        EndWord = true;
+    } else {
+        CopyWordSpace();
+    }
+}
+
 void CopyWord() { 
     /* Mengakuisisi kata, menyimpan dalam currentWord
     I.S. : currentChar adalah karakter pertama dari kata
@@ -76,20 +91,19 @@ void CopyWord() {
 void CopyWordSpace()
 /*Mengakuisisi kata, dengan enter atau NewLine sebagai MARK*/
 {
-   int i = 0;
-   while (currentChar != MARKBaris){
-      currentWord.TabWord[i] = currentChar;
-      ADV();
-      i++;
-   }
-
-   if (i > NMax){
-      currentWord.Length = NMax;
-   }
-
-   else{
-      currentWord.Length = i;
-   }
+    int i = 0;
+    while (currentChar != MARKBaris){
+        currentWord.TabWord[i] = currentChar;
+        ADV();
+        i++;
+    }
+    if (i > NMax){
+        currentWord.Length = NMax;
+    }
+    else{
+        currentWord.Length = i;
+    }
+    EndWord = true;
 }
 
 void printWord(Word w) 
@@ -120,15 +134,16 @@ void STARTWORD_FILE(char filename[])
 /*Pita dari file eksternal siap dibaca oleh mesin kata. MARKFile merupakan NULL atau \0 dimana EndWord akan (menyala) bernilai TRUE saat
     Pita menyentuh NULL atau \0.*/
 {
-   START_FILE(filename);
-   IgnoreBlanks();
-   if (currentChar == MARKFile){
-      EndWord = true;
-   }
-   else{
-      EndWord = false;
-      ADVWORD();
-   }
+    STARTFILE(filename);
+    IgnoreBlanks();
+    IgnoreNewLine();
+    if (currentChar == MARK || currentChar == MARKBaris){
+        EndWord = true;
+    }
+    else{
+        EndWord = false;
+        ADVSENTENCE();
+    }
 }
 
 boolean WordEqual(Word a, Word b) 
@@ -169,7 +184,9 @@ int WordToInt(Word string)
             bilangan = bilangan * 10;
         }
         hasil += 38 * bilangan;
-        }
+    }
+
+    return hasil;
 }
 
 Word stringToWord(char character[], int length)
