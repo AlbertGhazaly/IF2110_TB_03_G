@@ -127,6 +127,19 @@ boolean IsUsernameInAccountList(AccountList *list, Word username) {
     return found;
 }
 
+int GetAccountIdx(AccountList *list, Word username) {
+    int i = 0;
+    boolean found = false;
+    while (!found && i < list->count) {
+        if (WordEqualAccount(list->accounts[i].username[0], username)) {
+            found = true;
+        } else {
+            i++;
+        }
+    }
+    return i;
+}
+
 boolean cekPassword(AccountList *list, Word username, Word password){
     int i = 0;
     boolean found = false;
@@ -222,3 +235,32 @@ void ReadUser_FILE(char filename[], AccountList *list, Matrix *teman){
     }
 }
 //"../cfg/map.txt"
+
+void edit_account(AccountList *list, Word user){
+    printf("| Nama: %s\n", list->accounts[GetAccountIdx(list, user)].username);
+    printf("| Bio Akun: %s\n", list->accounts[GetAccountIdx(list, user)].bio);
+    printf("| No HP: %s\n", list->accounts[GetAccountIdx(list, user)].noHP);
+    printf("| Weton: %s\n", list->accounts[GetAccountIdx(list, user)].weton);
+    
+    printf("Masukkan Bio Akun: ");
+    STARTWORD();
+    Word attemptBio = currentWord;
+    while(attemptBio.Length > 135){
+        printf("Bio akun terlalu panjang, masukkan maksimal 135 karakter!\n");
+        printf("Masukkan Bio Akun: ");
+        STARTWORD();
+        attemptBio = currentWord;
+    }
+
+    ADVWORD();
+    printf("Masukkan No HP: ");
+    STARTWORD();
+    Word attemptNoHP = currentWord;
+    while(attemptNoHP.Length > 20){
+        printf("No HP tidak valid, masukkan No HP yang valid!\n");
+        printf("Masukkan No HP: ");
+        STARTWORD();
+        attemptNoHP = currentWord;
+    }
+    ADVWORD;
+}

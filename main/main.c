@@ -76,6 +76,8 @@ int main() {
                 ADVWORD;
                 inUser(account, attemptUsername);
                 isLogin = true;
+                printf("Selamat datang, %s!\n", account);
+
             }
         }
         else if(WordEqual(command, keluar)){
@@ -88,8 +90,20 @@ int main() {
                 isLogin = false;
             }
         }
+        else if(WordEqual(command, ganti_profil)){
+            if(isLogin == false){
+                printf("Anda belum masuk, silakan masuk terlebih dahulu.\n");
+            }
+            else{
+                edit_account(&akun, account[0]);
+            }
+        }
         else if(WordEqual(command, curr_user)){
             DisplayAccounts(&akun);
+        }
+
+        else{
+            printf("Tidak ada perintah %s", currentWord);
         }
         ADVWORD();
     }

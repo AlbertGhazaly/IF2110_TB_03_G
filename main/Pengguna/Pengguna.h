@@ -62,3 +62,5 @@ boolean IsUsernameInAccountList(AccountList *list, Word username);
 boolean cekPassword(AccountList *list, Word username, Word password);
 
 void ReadUser_FILE(char filename[], AccountList *list, Matrix *teman);
+
+void edit_account(AccountList *list, Word user);
