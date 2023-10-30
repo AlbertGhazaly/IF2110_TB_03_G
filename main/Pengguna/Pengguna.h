@@ -39,7 +39,11 @@ boolean isOnline(Word *array);
 
 void CreateAccount(Account *account, Word username, Word password);
 
+void signup(AccountList *listakun);
+
 void fillAccount(AccountList *listakun);
+
+void CreateAccountEmpty(Account *account);
 
 void CreateAccountList(AccountList *list);
 
@@ -49,6 +53,12 @@ void DisplayAccounts(AccountList *list);
 
 boolean IsAccountListFull(AccountList *list);
 
+boolean WordEqualAccount(Word a, Word b);
+
 boolean IsEqualUsername(Word *word1, Word *word2);
 
 boolean IsUsernameInAccountList(AccountList *list, Word username);
+
+boolean cekPassword(AccountList *list, Word username, Word password);
+
+void ReadUser_FILE(char filename[], AccountList *list, Matrix *teman);
