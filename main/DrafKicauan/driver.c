@@ -5,7 +5,7 @@
 int main()
 {
   Word kata;
-  boolean sama;
+  boolean isBuatDraf, isLihatDraf;
 
   printf("BUAT_DRAF atau LIHAT_DRAF? ");
   STARTWORD();
@@ -14,18 +14,24 @@ int main()
   CopyWordTo(&kata, currentWord);
 
   // Membandingkan kata dengan kata referensi
-  sama = WordEqual(kata, stringToWord("BUAT_DRAF", 9));
+  isBuatDraf = WordEqual(kata, stringToWord("BUAT_DRAF", 9));
+  isLihatDraf = WordEqual(kata, stringToWord("LIHAT_DRAF", 10));
   // input harus diakhiri titik koma ";"
 
-  while (getchar() != '\n');
+  while (getchar() != '\n')
+    ;
 
-  if (sama)
+  if (isBuatDraf)
   {
     BUAT_DRAF("../../cfg/draf.config");
   }
+  else if (isLihatDraf)
+  {
+    LIHAT_DRAF("../../cfg/draf.config");
+  }
   else
   {
-    LIHAT_DRAF("draf.config");
+    printf("ulangi masukan");
   }
 
   return 0;
