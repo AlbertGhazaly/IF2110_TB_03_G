@@ -25,5 +25,7 @@
 #include "./matrix/matrix.h"
 #include "./listlinier/listlinier.h"
 #include "./listlinier/listlinier.c"
+#include "./graf/graf.h"
+#include "./graf/graf.c"
 
 #endif

@@ -4,12 +4,11 @@ Word emptyWord = {{'\0', 0}};
 Word privat = {"Privat", 6};
 Word publik = {"Publik", 6};
 
-void inUser(Word *array, Word username){
-    array[0] = username;
+void inUser(Account *account, Word username){
+    *Username(*account) = username;
 }
-void outUser(Word *array){
-    Word emptyWord = {{'\0', 0}};
-    array[0] = emptyWord;
+void outUser(Account *account){
+    *Username(*account) = emptyWord;
 }
 
 void CreateAccount(Account *account, Word username, Word password){
@@ -118,11 +117,10 @@ boolean IsUsernameInAccountList(AccountList *list, Word username) {
     int i = 0;
     boolean found = false;
     while (!found && i < list->count) {
-        if (WordEqualAccount(list->accounts[i].username[0], username)) {
+        if (WordEqualAccount(*list->accounts[i].username, username)) {
             found = true;
-        } else {
-            i++;
         }
+        i++;
     }
     return found;
 }
@@ -140,14 +138,14 @@ boolean cekPassword(AccountList *list, Word username, Word password){
     return found;
 }
 
-void ReadUser_FILE(char filename[], AccountList *list, Matrix *teman){
+void ReadUser_FILE(char filename[], AccountList *list, Graf *teman){
     int N;
     STARTWORD_FILE(filename);
     //Akuisisi Nilai N
     N = WordToInt(currentWord);
     printf("%d\n", N);
     ADVSENTENCE();
-    int i;
+    int i,j;
     for (i = 0; i < N; i++)
     {
         printf("test\n");
@@ -163,13 +161,11 @@ void ReadUser_FILE(char filename[], AccountList *list, Matrix *teman){
             {
                 CopyWordTo(Username(akun), currentWord);
                 j++;
-                printWord(currentWord);
             }
             else if (currentChar == '\n' && j == 1)
             {
                 CopyWordTo(Password(akun), currentWord);
                 j++;
-                printWord(currentWord);
             }
             else if (currentChar == '\n' && j == 2)
             {
@@ -220,5 +216,13 @@ void ReadUser_FILE(char filename[], AccountList *list, Matrix *teman){
         }
         AddAccountToList(list, akun);
     }
+    for(i = 0; i < N; i++)
+    {
+        for(j = 0; j < N; j++)
+        {
+            ELMTGRAF(*teman,i,j) = CharToInt(currentWord.TabWord[j*2]);
+            printf("%d\n", ELMTGRAF(*teman,i,j));
+        }
+        ADVSENTENCE();
+    }
 }
-//"../cfg/map.txt"

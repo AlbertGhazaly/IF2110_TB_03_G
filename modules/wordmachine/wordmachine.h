@@ -74,6 +74,10 @@ int WordToInt(Word string);
 /*I.S. Kata yang telah diakuisi berisi string bilangan [0..9].
    F.S. Mengembalikan nilai integer dari kata yang diakuisisi.*/
 
+int CharToInt(char character);
+/*I.S. character yang telah diakuisi berisi string bilangan [0..9].
+   F.S. Mengembalikan nilai integer dari character yang diakuisisi.*/
+
 Word stringToWord(char character[], int length);
 /*Mengubah character(char) menjadi sebuah kata(Word).*/
 

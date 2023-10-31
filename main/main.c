@@ -2,16 +2,22 @@
 #include "functions.c"
 
 
+
 int main() {
     printf("Selamat datang di Burbir. Selamat berkicau!\n\n");
 
     boolean runProgram = true;
-
     //Array untuk menampung user saat ini
     AccountList akun;
     CreateAccountList(&akun);
+    Graf teman;
+    createEmptyGraf(&teman);
+    ReadUser_FILE("../cfg/pengguna.config", &akun, &teman);
+    DisplayAccounts(&akun);
+    Account akunLogin;
+    Word tuan_bri = {"Tuan Bri", 8};
+    inUser(&akunLogin, tuan_bri);
 
-    Word account[20] = {{'\0', 0}};
     boolean isLogin = false;
     while (runProgram) {
         printf(">> ");
@@ -24,6 +30,7 @@ int main() {
         Word keluar = {"KELUAR", 6};
         Word ganti_profil = {"GANTI_PROFIL", 12};
         Word curr_user = {"USER", 4};
+        Word daftar_teman = {"DAFTAR_TEMAN", 12};
 
         if (WordEqual(command, tutup_program)){
             runProgram = false;
@@ -39,7 +46,7 @@ int main() {
         }
         else if(WordEqual(command, masuk)){
             if (isLogin){
-                printf("Anda sudah login dengan akun %s\n", account);
+                printf("Anda sudah login dengan akun %s\n", akunLogin.username);
             }
             else{
                 printf("Masukkan nama: ");
@@ -74,7 +81,7 @@ int main() {
                     attemptPassword = currentWord;
                 }
                 ADVWORD;
-                inUser(account, attemptUsername);
+                inUser(&akunLogin, attemptUsername);
                 isLogin = true;
             }
         }
@@ -83,16 +90,19 @@ int main() {
                 printf("Anda belum login, sehingga tidak bisa keluar.\n");
             }
             else{
-                printf("Keluar dari akun dengan username %s\n", account);
-                outUser(account);
+                printf("Keluar dari akun dengan username %s\n", akunLogin.username);
+                outUser(&akunLogin);
                 isLogin = false;
             }
         }
         else if(WordEqual(command, curr_user)){
             DisplayAccounts(&akun);
         }
+        else if (WordEqual(command,daftar_teman)){
+            daftarteman(true, akunLogin, &akun, teman);
+
+        }
         ADVWORD();
     }
-    printf("%s", account[0].TabWord);
     return 0;
 }

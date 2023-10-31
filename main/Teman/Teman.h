@@ -3,7 +3,7 @@
 
 #include "../../modules/adt.h"
 
-void daftarteman(boolean login);
+void daftarteman(boolean login, Account akunlogin, AccountList* listakun, Graf teman);
 
 void hapusteman(boolean login);
 

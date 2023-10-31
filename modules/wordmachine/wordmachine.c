@@ -61,7 +61,7 @@ void ADVSENTENCE() {
     Proses : Akuisisi kata menggunakan procedure SalinWord */
     IgnoreBlanks();
     IgnoreNewLine();
-    if (currentChar == MARKBaris) {
+    if (currentChar == MARKBaris || currentChar == MARK) {
         EndWord = true;
     } else {
         CopyWordSpace();
@@ -187,6 +187,13 @@ int WordToInt(Word string)
     }
 
     return hasil;
+}
+
+int CharToInt(char character)
+/*I.S. character yang telah diakuisi berisi string bilangan [0..9].
+   F.S. Mengembalikan nilai integer dari character yang diakuisisi.*/
+{
+    return character - 48;
 }
 
 Word stringToWord(char character[], int length)
