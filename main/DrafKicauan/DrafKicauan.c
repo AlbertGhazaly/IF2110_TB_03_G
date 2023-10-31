@@ -113,30 +113,18 @@ void BUAT_DRAF(const char *namaFile)
 }
 
 // Fungsi untuk melihat semua draf
-void LIHAT_DRAF(const char *namaFile)
-{
-  FILE *file = fopen(namaFile, "r");
-  if (file == NULL)
-  {
-    perror("Error opening file");
-    return;
-  }
+void LIHAT_DRAF (const char *filename) {
+    FILE *file = fopen(filename, "r");
+    char c;
 
-  printf("Daftar Draf:\n");
+    if (file == NULL) {
+        printf("File '%s' tidak ditemukan.\n", filename);
+        return;
+    }
 
-  struct Draft draft;
-  int id;
-  while (fscanf(file, "%d # draf dengan ID ke-%d", &id, &id) == 2)
-  {
-    printf("ID: %d\n", id);
-    fgets(draft.text, sizeof(draft.text), file);
-    fgets(draft.author, sizeof(draft.author), file);
-    fgets(draft.datetime, sizeof(draft.datetime), file);
-    printf("Teks: %s", draft.text);
-    printf("Penulis: %s", draft.author);
-    printf("Tanggal dan Waktu: %s", draft.datetime);
-    printf("\n");
-  }
+    while ((c = fgetc(file)) != EOF) {
+        putchar(c);
+    }
 
-  fclose(file);
+    fclose(file);
 }
