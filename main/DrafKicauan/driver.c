@@ -21,7 +21,7 @@ int main()
 
   if (sama)
   {
-    BUAT_DRAF("draf.config");
+    BUAT_DRAF("../../cfg/draf.config");
   }
   else
   {
