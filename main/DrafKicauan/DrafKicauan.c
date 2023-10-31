@@ -97,7 +97,7 @@ void BUAT_DRAF(const char *namaFile)
 
   newDraft.id = jumlahBaris / 4 + 1; // ID adalah jumlah baris dibagi 4
 
-  // Tulis draf ke file draft.config dengan pemisah newline
+  // Tulis draf ke file draf.config dengan pemisah newline
   fprintf(file, "%d\n", newDraft.id);
   fprintf(file, "%s", newDraft.text);
   fprintf(file, "%s", newDraft.author);
@@ -105,13 +105,13 @@ void BUAT_DRAF(const char *namaFile)
 
   fclose(file);
 
-  const char filename[] = "draft.config";
+  const char filename[] = "draf.config";
   int line_number = 1;
   char new_text[20]; // Sesuaikan ukuran buffer sesuai kebutuhan
   snprintf(new_text, sizeof(new_text), "%d", newDraft.id);
   editConfigFile(filename, line_number, new_text);
 
-  printf("Draf baru telah ditambahkan ke draft.config.\n");
+  printf("Draf baru telah ditambahkan ke draf.config.\n");
 }
 
 // Fungsi untuk melihat semua draf
@@ -141,49 +141,4 @@ void LIHAT_DRAF(const char *namaFile)
   }
 
   fclose(file);
-}
-
-// int main()
-// {
-  // Contoh penggunaan fungsi BUAT_DRAF dan LIHAT_DRAF
-
-  // char pilihan[20];
-  // scanf("%s", pilihan);
-  // getchar(); // Membersihkan karakter newline
-
-
-  // if (strcmp(pilihan, "BUAT_DRAF") == 0)
-  // {
-  //   BUAT_DRAF("draft.config");
-  // }
-  // else if (strcmp(pilihan, "LIHAT_DRAFT") == 0)
-  // {
-  //   LIHAT_DRAF("draft.config");
-  //}
-//}
-
-int main() {
-    Word kata;
-    boolean sama;
-
-    printf("BUAT_DRAF atau LIHAT_DRAF? ");
-    STARTWORD();
-    
-    // Memasukkan kata yang diakuisisi ke dalam variabel 'kata'
-    CopyWordTo(&kata, currentWord);
-    
-    // Membandingkan kata dengan kata referensi
-    sama = WordEqual(kata, stringToWord("BUAT_DRAF", 9));
-    //input harus diakhiri titik koma ";"
-
-    while (getchar() != '\n');
-    
-    if (sama) {
-      BUAT_DRAF("draft.config");
-    } else {
-      LIHAT_DRAF("draft.config");
-    }
-
-    return 0;
-  //INPUT DIAKHIRI TITIK KOMA
 }
