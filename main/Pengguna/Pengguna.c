@@ -24,27 +24,31 @@ void CreateAccount(Account *account, Word username, Word password){
 void signup(AccountList *listakun){
     Account akun;
     printf("Masukkan nama: ");
-    STARTSENTENCE();
+    STARTWORD();
     Word attemptUsername = currentWord;
     while(attemptUsername.Length > 20){
         printf("Nama terlalu panjang, masukkan maksimal 20 karakter!\n");
         printf("Masukkan nama: ");
-        ADVWORD();
+        STARTWORD();
         attemptUsername = currentWord;
     }
-    STARTWORD();
+
     ADVWORD();
     printf("Masukkan kata sandi: ");
+    STARTWORD();
     Word attemptPassword = currentWord;
     while(attemptPassword.Length > 20){
         printf("Kata sandi terlalu panjang, masukkan maksimal 20 karakter!\n");
         printf("Masukkan kata sandi: ");
-        ADVWORD();
+        STARTWORD();
         attemptPassword = currentWord;
     }
+
+    ADVWORD();
     CreateAccount(&akun, attemptUsername, attemptPassword);
     AddAccountToList(listakun, akun);
 }
+
 
 
 void CreateAccountEmpty(Account *account) {
@@ -245,6 +249,10 @@ void edit_account(AccountList *list, Word user){
         attemptBio = currentWord;
     }
 
+    if (!WordEqual(attemptBio, emptyWord)){
+        CopyWordTo(list->accounts[GetAccountIdx(list, user)].bio, attemptBio);
+    }
+
     ADVWORD();
     printf("Masukkan No HP: ");
     STARTWORD();
@@ -255,5 +263,24 @@ void edit_account(AccountList *list, Word user){
         STARTWORD();
         attemptNoHP = currentWord;
     }
+
+    if (!WordEqual(attemptNoHP, emptyWord)){
+        CopyWordTo(list->accounts[GetAccountIdx(list, user)].noHP, attemptNoHP);
+    }
+
     ADVWORD;
+    printf("Masukkan Weton: ");
+    STARTWORD();
+    Word attemptWeton = currentWord;
+    while(attemptWeton.Length > 20){
+        printf("Weton tidak valid, masukkan Weton yang valid!\n");
+        printf("Masukkan Weton: ");
+        STARTWORD();
+        attemptWeton = currentWord;
+    }
+    ADVWORD;
+
+    if (!WordEqual(attemptWeton, emptyWord)){
+        CopyWordTo(list->accounts[GetAccountIdx(list, user)].bio, attemptWeton);
+    }
 }
