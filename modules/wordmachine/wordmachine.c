@@ -168,6 +168,19 @@ boolean WordEqual(Word a, Word b)
     }
 }
 
+boolean isWordInteger(Word angka)
+/*Mengirimkan true apabila Word merupakan bilangan atau integer.*/
+{
+    int i;
+    boolean cek = true;
+    for (i=0; i < angka.Length; i++){
+        if (angka.TabWord[i] < 48 && angka.TabWord[i] > 57){
+            cek = false;
+        }
+    }
+    return cek;
+}
+
 int WordToInt(Word string)
 /*I.S. Kata yang telah diakuisi berisi string bilangan [0..9].
    F.S. Mengembalikan nilai integer dari kata yang diakuisisi.*/
