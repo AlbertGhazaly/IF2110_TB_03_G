@@ -69,6 +69,9 @@ void STARTWORD_FILE(char filename[]);
 boolean WordEqual(Word a, Word b);
 /*Mengirimkan true apabila Word a dan Word b identik.*/
 
+boolean isWordInteger(Word angka);
+/*Mengirimkan true apabila Word merupakan bilangan atau integer.*/
+
 /* ********** KONVERTOR ********** */
 int WordToInt(Word string);
 /*I.S. Kata yang telah diakuisi berisi string bilangan [0..9].
