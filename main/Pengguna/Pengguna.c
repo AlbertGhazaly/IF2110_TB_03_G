@@ -24,35 +24,28 @@ void CreateAccount(Account *account, Word username, Word password){
 void signup(AccountList *listakun){
     Account akun;
     printf("Masukkan nama: ");
-    STARTWORD();
+    STARTSENTENCE();
     Word attemptUsername = currentWord;
     while(attemptUsername.Length > 20){
         printf("Nama terlalu panjang, masukkan maksimal 20 karakter!\n");
         printf("Masukkan nama: ");
-        STARTWORD();
+        ADVWORD();
         attemptUsername = currentWord;
     }
-    while(IsUsernameInAccountList(listakun, attemptUsername)){
-        printf("Nama tersebut sudah dipakai, silahkan masukkan nama lain!\n");
-        printf("Masukkan nama: ");
-        STARTWORD();
-        attemptUsername = currentWord;
-    }
-
+    STARTWORD();
     ADVWORD();
     printf("Masukkan kata sandi: ");
-    STARTWORD();
     Word attemptPassword = currentWord;
     while(attemptPassword.Length > 20){
         printf("Kata sandi terlalu panjang, masukkan maksimal 20 karakter!\n");
         printf("Masukkan kata sandi: ");
-        STARTWORD();
+        ADVWORD();
         attemptPassword = currentWord;
     }
-    ADVWORD;
     CreateAccount(&akun, attemptUsername, attemptPassword);
     AddAccountToList(listakun, akun);
 }
+
 
 void CreateAccountEmpty(Account *account) {
     *Username(*account) = emptyWord;

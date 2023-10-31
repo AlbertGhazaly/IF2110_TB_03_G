@@ -61,7 +61,7 @@ void ADVSENTENCE() {
     Proses : Akuisisi kata menggunakan procedure SalinWord */
     IgnoreBlanks();
     IgnoreNewLine();
-    if (currentChar == MARKBaris) {
+    if (currentChar == MARKBaris || currentChar == MARK) {
         EndWord = true;
     } else {
         CopyWordSpace();
@@ -120,14 +120,16 @@ void STARTSENTENCE()
 /* I.S. : currentChar sembarang
    F.S. : Mengakuisisi kata dengan pembatas NEWLINE terhadap kata berikutnya*/
 {
-   START();
-   if (currentChar == MARKBaris){
-      EndWord = true;
-   }
-   else{
-      EndWord = false;
-      CopyWordSpace();
-   }
+    IgnoreBlanks();
+    IgnoreNewLine();
+    START();
+    if (currentChar == MARKBaris){
+        EndWord = true;
+    }
+    else{
+        EndWord = false;
+        CopyWordSpace();
+    }
 }
 
 void STARTWORD_FILE(char filename[])
