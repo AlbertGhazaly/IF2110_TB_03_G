@@ -61,7 +61,7 @@ void ADVSENTENCE() {
     Proses : Akuisisi kata menggunakan procedure SalinWord */
     IgnoreBlanks();
     IgnoreNewLine();
-    if (currentChar == MARKBaris) {
+    if (currentChar == MARKBaris || currentChar == MARK) {
         EndWord = true;
     } else {
         CopyWordSpace();
