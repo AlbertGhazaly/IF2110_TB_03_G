@@ -25,5 +25,3 @@ void BUAT_DRAF(const char *namaFile);
 void LIHAT_DRAF(const char *namaFile);
 
 #endif
-
-  
