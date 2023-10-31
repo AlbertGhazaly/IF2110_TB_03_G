@@ -38,10 +38,10 @@ void editConfigFile(const char *filename, int line_number, const char *new_text)
 
   // Loop untuk mencapai baris yang ingin diubah
   int current_line = 0;
-  char buffer[1024];
+  char buffer[524]; // 1024 artinya maksimal 524 karakter per baris
   while (current_line < line_number)
   {
-    if (fgets(buffer, sizeof(buffer), file) == NULL)
+    if (fgets(buffer, sizeof(buffer), file) == NULL) // Jika EOF
     {
       printf("Baris yang ingin diubah tidak ditemukan.\n");
       fclose(file);
@@ -61,6 +61,7 @@ void editConfigFile(const char *filename, int line_number, const char *new_text)
 }
 
 // Fungsi untuk membuat draf baru
+// Fungsi untuk membuat draf baru
 void BUAT_DRAF(const char *namaFile)
 {
   FILE *file = fopen(namaFile, "a");
@@ -79,9 +80,6 @@ void BUAT_DRAF(const char *namaFile)
     fprintf(file, "1\n");
   }
 
-  // Kembali ke awal file
-  rewind(file);
-
   // Kembali ke akhir file untuk menambahkan draf baru
   fseek(file, 0, SEEK_END);
 
@@ -98,16 +96,16 @@ void BUAT_DRAF(const char *namaFile)
   newDraft.id = jumlahBaris / 4 + 1; // ID adalah jumlah baris dibagi 4
 
   // Tulis draf ke file draf.config dengan pemisah newline
-  fprintf(file, "%d\n", newDraft.id);
+  fprintf(file, "%d # draf dengan ID ke-%d\n", newDraft.id, newDraft.id);
   fprintf(file, "%s", newDraft.text);
   fprintf(file, "%s", newDraft.author);
   fprintf(file, "%s", newDraft.datetime);
 
   fclose(file);
 
-  const char filename[] = "draf.config";
-  int line_number = 1;
-  char new_text[20]; // Sesuaikan ukuran buffer sesuai kebutuhan
+  const char filename[] = "../../cfg/draf.config";
+  int line_number = newDraft.id; // Sesuaikan line_number dengan ID draf yang sesuai
+  char new_text[20];             // Sesuaikan ukuran buffer sesuai kebutuhan
   snprintf(new_text, sizeof(new_text), "%d", newDraft.id);
   editConfigFile(filename, line_number, new_text);
 
