@@ -92,7 +92,7 @@ void CopyWordSpace()
 /*Mengakuisisi kata, dengan enter atau NewLine sebagai MARK*/
 {
     int i = 0;
-    while (currentChar != MARKBaris){
+    while (currentChar != MARKBaris && currentChar != MARK){
         currentWord.TabWord[i] = currentChar;
         ADV();
         i++;
@@ -112,24 +112,22 @@ void printWord(Word w)
     for (i = 0; i < w.Length; i++) {
         printf("%c", w.TabWord[i]);
     }
-    printf("\n");
-    printf("%d\n", w.Length);
+    //printf("\n");
+    //printf("%d\n", w.Length);
 }
 
 void STARTSENTENCE()
 /* I.S. : currentChar sembarang
    F.S. : Mengakuisisi kata dengan pembatas NEWLINE terhadap kata berikutnya*/
 {
-    IgnoreBlanks();
-    IgnoreNewLine();
-    START();
-    if (currentChar == MARKBaris){
-        EndWord = true;
-    }
-    else{
-        EndWord = false;
-        CopyWordSpace();
-    }
+   START();
+   if (currentChar == MARKBaris || currentChar == MARK){
+      EndWord = true;
+   }
+   else{
+      EndWord = false;
+      CopyWordSpace();
+   }
 }
 
 void STARTWORD_FILE(char filename[])
@@ -170,6 +168,19 @@ boolean WordEqual(Word a, Word b)
     }
 }
 
+boolean isWordInteger(Word angka)
+/*Mengirimkan true apabila Word merupakan bilangan atau integer.*/
+{
+    int i;
+    boolean cek = true;
+    for (i=0; i < angka.Length; i++){
+        if (angka.TabWord[i] < 48 && angka.TabWord[i] > 57){
+            cek = false;
+        }
+    }
+    return cek;
+}
+
 int WordToInt(Word string)
 /*I.S. Kata yang telah diakuisi berisi string bilangan [0..9].
    F.S. Mengembalikan nilai integer dari kata yang diakuisisi.*/
@@ -189,6 +200,13 @@ int WordToInt(Word string)
     }
 
     return hasil;
+}
+
+int CharToInt(char character)
+/*I.S. character yang telah diakuisi berisi string bilangan [0..9].
+   F.S. Mengembalikan nilai integer dari character yang diakuisisi.*/
+{
+    return character - 48;
 }
 
 Word stringToWord(char character[], int length)

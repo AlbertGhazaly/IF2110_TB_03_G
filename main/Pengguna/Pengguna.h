@@ -1,3 +1,6 @@
+#ifndef Pengguna_H
+#define Pengguna_H
+
 #include "../../modules/adt.h"
 
 #define MAX_USERNAME_LENGTH 20
@@ -31,11 +34,11 @@ typedef struct {
     int count;
 } AccountList;
 
-void inUser(Word *array, Word username);
+void inUser(Account *account, Word username);
 
-void outUser(Word *array);
+void outUser(Account *account);
 
-boolean isOnline(Word *array);
+boolean isOnline(Account *account);
 
 void CreateAccount(Account *account, Word username, Word password);
 
@@ -61,6 +64,6 @@ boolean IsUsernameInAccountList(AccountList *list, Word username);
 
 boolean cekPassword(AccountList *list, Word username, Word password);
 
-void ReadUser_FILE(char filename[], AccountList *list, Matrix *teman);
+void ReadUser_FILE(char filename[], AccountList *list, Graf *teman);
 
-void edit_account(AccountList *list, Word user);
+#endif

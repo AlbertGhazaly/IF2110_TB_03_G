@@ -4,12 +4,22 @@ Word emptyWord = {{'\0', 0}};
 Word privat = {"Privat", 6};
 Word publik = {"Publik", 6};
 
-void inUser(Word *array, Word username){
-    array[0] = username;
+Word yes = {"y", 1};
+Word no = {"n", 1};
+
+Word wetonJawa[] = {
+        {"pon", 3},
+        {"wage", 4},
+        {"kliwon", 6},
+        {"legi", 4},
+        {"pahing", 6}
+    };
+
+void inUser(Account *account, Word username){
+    *Username(*account) = username;
 }
-void outUser(Word *array){
-    Word emptyWord = {{'\0', 0}};
-    array[0] = emptyWord;
+void outUser(Account *account){
+    *Username(*account) = emptyWord;
 }
 
 void CreateAccount(Account *account, Word username, Word password){
@@ -23,30 +33,35 @@ void CreateAccount(Account *account, Word username, Word password){
 
 void signup(AccountList *listakun){
     Account akun;
+    STARTSENTENCE();
     printf("Masukkan nama: ");
-    STARTWORD();
+    STARTSENTENCE();
     Word attemptUsername = currentWord;
     while(attemptUsername.Length > 20){
+        STARTSENTENCE();
         printf("Nama terlalu panjang, masukkan maksimal 20 karakter!\n");
         printf("Masukkan nama: ");
-        STARTWORD();
+        STARTSENTENCE();
         attemptUsername = currentWord;
     }
 
-    ADVWORD();
+    ADVSENTENCE();
+    STARTSENTENCE();
     printf("Masukkan kata sandi: ");
-    STARTWORD();
+    STARTSENTENCE();
     Word attemptPassword = currentWord;
     while(attemptPassword.Length > 20){
+        STARTSENTENCE();
         printf("Kata sandi terlalu panjang, masukkan maksimal 20 karakter!\n");
         printf("Masukkan kata sandi: ");
-        STARTWORD();
+        STARTSENTENCE();
         attemptPassword = currentWord;
     }
 
-    ADVWORD();
+    ADVSENTENCE();
     CreateAccount(&akun, attemptUsername, attemptPassword);
     AddAccountToList(listakun, akun);
+    printf("\nAkun berhasil ditambahkan ke daftar pengguna. Silahkan masuk untuk menikmati fitur Burbir.\n");
 }
 
 
@@ -67,7 +82,6 @@ void CreateAccountList(AccountList *list) {
 void AddAccountToList(AccountList *list, Account account){
     list->accounts[list->count] = account;
     list->count++;
-    printf("\nAkun berhasil ditambahkan ke daftar pengguna. Silahkan masuk untuk menikmati fitur Burbir.\n");
 }
 
 void DisplayAccounts(AccountList *list){
@@ -115,49 +129,46 @@ boolean IsUsernameInAccountList(AccountList *list, Word username) {
     int i = 0;
     boolean found = false;
     while (!found && i < list->count) {
-        if (WordEqualAccount(list->accounts[i].username[0], username)) {
+        if (WordEqualAccount(*list->accounts[i].username, username)) {
             found = true;
-        } else {
-            i++;
         }
+        i++;
     }
     return found;
 }
 
-int GetAccountIdx(AccountList *list, Word username) {
+int GetAccountIdx(AccountList *list, Account account){
     int i = 0;
     boolean found = false;
     while (!found && i < list->count) {
-        if (WordEqualAccount(list->accounts[i].username[0], username)) {
+        if (WordEqualAccount(*list->accounts[i].username, *Username(account))) {
             found = true;
-        } else {
-            i++;
         }
+        i++;
     }
-    return i;
+    return i-1;
 }
 
 boolean cekPassword(AccountList *list, Word username, Word password){
     int i = 0;
     boolean found = false;
     while (!found && i < list->count) {
-        if (WordEqualAccount(list->accounts[i].username[0], username) && WordEqualAccount(list->accounts[0].password[0], password)) {
+        if (WordEqualAccount(*list->accounts[i].username, username) && WordEqualAccount(*list->accounts[i].password, password)) {
             found = true;
-        } else {
-            i++;
         }
+        i++;
     }
     return found;
 }
 
-void ReadUser_FILE(char filename[], AccountList *list, Matrix *teman){
+void ReadUser_FILE(char filename[], AccountList *list, Graf *teman){
     int N;
     STARTWORD_FILE(filename);
     //Akuisisi Nilai N
     N = WordToInt(currentWord);
     printf("%d\n", N);
     ADVSENTENCE();
-    int i;
+    int i,j;
     for (i = 0; i < N; i++)
     {
         printf("test\n");
@@ -173,13 +184,11 @@ void ReadUser_FILE(char filename[], AccountList *list, Matrix *teman){
             {
                 CopyWordTo(Username(akun), currentWord);
                 j++;
-                printWord(currentWord);
             }
             else if (currentChar == '\n' && j == 1)
             {
                 CopyWordTo(Password(akun), currentWord);
                 j++;
-                printWord(currentWord);
             }
             else if (currentChar == '\n' && j == 2)
             {
@@ -230,22 +239,77 @@ void ReadUser_FILE(char filename[], AccountList *list, Matrix *teman){
         }
         AddAccountToList(list, akun);
     }
+    for(i = 0; i < N; i++)
+    {
+        for(j = 0; j < N; j++)
+        {
+            ELMTGRAF(*teman,i,j) = CharToInt(currentWord.TabWord[j*2]);
+            printf("%d\n", ELMTGRAF(*teman,i,j));
+        }
+        ADVSENTENCE();
+    }
 }
-//"../cfg/map.txt"
 
-void edit_account(AccountList *list, Word user){
+boolean isPhoneNumberValid(const Word phoneNumber) {
+    for (int i = 0; i < phoneNumber.Length; i++) {
+        char c = phoneNumber.TabWord[i];
+        if (!((c >= '0' && c <= '9') || c == '+' || c == '-')) {
+            return false;
+        }
+    }
+    return true;
+}
+
+boolean isWetonJawa(Word word) {
+    int i;
+    for (i = 0; i < sizeof(wetonJawa) / sizeof(wetonJawa[0]); i++) {
+        if (word.Length == wetonJawa[i].Length) {
+            int j;
+            boolean match = true;
+            for (j = 0; j < word.Length; j++) {
+                if (word.TabWord[j] != wetonJawa[i].TabWord[j]) {
+                    match = false;
+                    break;
+                }
+            }
+            if (match) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
+Word toLowerCase(Word word) {
+    Word result;
+    int length = word.Length;
+    result.Length = length;
+
+    for (int i = 0; i < length; i++) {
+        if (word.TabWord[i] >= 'A' && word.TabWord[i] <= 'Z') {
+            result.TabWord[i] = word.TabWord[i] + 32;
+        } else {
+            result.TabWord[i] = word.TabWord[i];
+        }
+    }
+    return result;
+}
+
+void edit_profile(AccountList *list, Account user){
     printf("| Nama: %s\n", list->accounts[GetAccountIdx(list, user)].username);
     printf("| Bio Akun: %s\n", list->accounts[GetAccountIdx(list, user)].bio);
     printf("| No HP: %s\n", list->accounts[GetAccountIdx(list, user)].noHP);
     printf("| Weton: %s\n", list->accounts[GetAccountIdx(list, user)].weton);
     
+    STARTSENTENCE();
     printf("Masukkan Bio Akun: ");
-    STARTWORD();
+    STARTSENTENCE();
     Word attemptBio = currentWord;
     while(attemptBio.Length > 135){
+        STARTSENTENCE();
         printf("Bio akun terlalu panjang, masukkan maksimal 135 karakter!\n");
         printf("Masukkan Bio Akun: ");
-        STARTWORD();
+        STARTSENTENCE();
         attemptBio = currentWord;
     }
 
@@ -253,14 +317,16 @@ void edit_account(AccountList *list, Word user){
         CopyWordTo(list->accounts[GetAccountIdx(list, user)].bio, attemptBio);
     }
 
-    ADVWORD();
+    ADVSENTENCE();
+    STARTSENTENCE();
     printf("Masukkan No HP: ");
-    STARTWORD();
+    STARTSENTENCE();
     Word attemptNoHP = currentWord;
-    while(attemptNoHP.Length > 20){
+    while(attemptNoHP.Length > 20 || !isPhoneNumberValid(currentWord)){
+        STARTSENTENCE();
         printf("No HP tidak valid, masukkan No HP yang valid!\n");
         printf("Masukkan No HP: ");
-        STARTWORD();
+        STARTSENTENCE();
         attemptNoHP = currentWord;
     }
 
@@ -268,19 +334,68 @@ void edit_account(AccountList *list, Word user){
         CopyWordTo(list->accounts[GetAccountIdx(list, user)].noHP, attemptNoHP);
     }
 
-    ADVWORD;
+    ADVSENTENCE();
+    STARTSENTENCE();
     printf("Masukkan Weton: ");
-    STARTWORD();
+    STARTSENTENCE();
     Word attemptWeton = currentWord;
-    while(attemptWeton.Length > 20){
+    while(attemptWeton.Length > 20 || !isWetonJawa(toLowerCase(attemptWeton))){
+        STARTSENTENCE();
         printf("Weton tidak valid, masukkan Weton yang valid!\n");
         printf("Masukkan Weton: ");
-        STARTWORD();
+        STARTSENTENCE();
         attemptWeton = currentWord;
     }
-    ADVWORD;
+    ADVSENTENCE();
 
     if (!WordEqual(attemptWeton, emptyWord)){
-        CopyWordTo(list->accounts[GetAccountIdx(list, user)].bio, attemptWeton);
+        CopyWordTo(list->accounts[GetAccountIdx(list, user)].weton, attemptWeton);
+    }
+}
+
+void ganti_jenis_akun(AccountList *list, Account user){
+    if(WordEqualAccount(*list->accounts[GetAccountIdx(list, user)].jenisAkun, publik)){
+        STARTSENTENCE();
+        printf("Saat ini, akun Anda adalah akun Publik. Ingin mengubah ke akun Privat? (Y/N): ");
+        STARTSENTENCE();
+        Word attemptJenis = currentWord;
+        while(!(WordEqual(toLowerCase(attemptJenis), yes) || WordEqual(toLowerCase(attemptJenis), no))){
+            STARTSENTENCE();
+            printf("Input tidak valid!\n");
+            printf("Saat ini, akun Anda adalah akun Publik. Ingin mengubah ke akun Privat? (Y/N): ");
+            STARTSENTENCE();
+            attemptJenis = currentWord;
+        }
+        ADVSENTENCE();
+
+        if(WordEqual(attemptJenis, yes)){
+            CopyWordTo(list->accounts[GetAccountIdx(list, user)].jenisAkun, privat);
+            printf("Akun anda sudah diubah menjadi akun Privat.\n");
+        }
+        else{
+            printf("Akun anda tetap akun Publik.\n");
+        }
+    }
+    else{
+        STARTSENTENCE();
+        printf("Saat ini, akun Anda adalah akun Privat. Ingin mengubah ke akun Publik? (Y/N): ");
+        STARTSENTENCE();
+        Word attemptJenis = currentWord;
+        while(!(WordEqual(toLowerCase(attemptJenis), yes) || WordEqual(toLowerCase(attemptJenis), no))){
+            STARTSENTENCE();
+            printf("Input tidak valid!\n");
+            printf("Saat ini, akun Anda adalah akun Privat. Ingin mengubah ke akun Publik? (Y/N): ");
+            STARTSENTENCE();
+            attemptJenis = currentWord;
+        }
+        ADVSENTENCE();
+
+        if(WordEqual(attemptJenis, yes)){
+            CopyWordTo(list->accounts[GetAccountIdx(list, user)].jenisAkun, publik);
+            printf("Akun anda sudah diubah menjadi akun Publik.\n");
+        }
+        else{
+            printf("Akun anda tetap akun Privat.\n");
+        }
     }
 }

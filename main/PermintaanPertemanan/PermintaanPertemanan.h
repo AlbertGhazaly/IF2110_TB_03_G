@@ -3,8 +3,8 @@
 
 #include "../../modules/adt.h"
 
-void daftarteman(boolean login);
+void darteman(boolean login);
 
-void hapusteman(boolean login);
+void hasteman(boolean login);
 
 #endif
