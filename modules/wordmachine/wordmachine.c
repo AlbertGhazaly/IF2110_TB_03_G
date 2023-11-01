@@ -92,7 +92,7 @@ void CopyWordSpace()
 /*Mengakuisisi kata, dengan enter atau NewLine sebagai MARK*/
 {
     int i = 0;
-    while (currentChar != MARKBaris){
+    while (currentChar != MARKBaris && currentChar != MARK){
         currentWord.TabWord[i] = currentChar;
         ADV();
         i++;
@@ -112,8 +112,8 @@ void printWord(Word w)
     for (i = 0; i < w.Length; i++) {
         printf("%c", w.TabWord[i]);
     }
-    printf("\n");
-    printf("%d\n", w.Length);
+    //printf("\n");
+    //printf("%d\n", w.Length);
 }
 
 void STARTSENTENCE()
@@ -121,7 +121,7 @@ void STARTSENTENCE()
    F.S. : Mengakuisisi kata dengan pembatas NEWLINE terhadap kata berikutnya*/
 {
    START();
-   if (currentChar == MARKBaris){
+   if (currentChar == MARKBaris || currentChar == MARK){
       EndWord = true;
    }
    else{

@@ -1,5 +1,4 @@
 #include "includeADT.h"
-#include "functions.c"
 
 
 
@@ -31,6 +30,7 @@ int main() {
         Word ganti_profil = {"GANTI_PROFIL", 12};
         Word curr_user = {"USER", 4};
         Word daftar_teman = {"DAFTAR_TEMAN", 12};
+        Word hapus_teman = {"HAPUS_TEMAN", 11};
 
         if (WordEqual(command, tutup_program)){
             runProgram = false;
@@ -100,7 +100,9 @@ int main() {
         }
         else if (WordEqual(command,daftar_teman)){
             daftarteman(true, akunLogin, &akun, teman);
-
+        }
+        else if (WordEqual(command,hapus_teman)){
+            hapusteman(true, akunLogin, &akun, &teman);
         }
         ADVWORD();
     }
