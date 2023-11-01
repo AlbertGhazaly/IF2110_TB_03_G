@@ -1,3 +1,6 @@
+#ifndef Pengguna_H
+#define Pengguna_H
+
 #include "../../modules/adt.h"
 
 #define MAX_USERNAME_LENGTH 20
@@ -62,3 +65,5 @@ boolean IsUsernameInAccountList(AccountList *list, Word username);
 boolean cekPassword(AccountList *list, Word username, Word password);
 
 void ReadUser_FILE(char filename[], AccountList *list, Graf *teman);
+
+#endif
