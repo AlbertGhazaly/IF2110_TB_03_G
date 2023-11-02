@@ -92,12 +92,12 @@ void DisplayAccounts(AccountList *list){
         int i;
         for (i = 0; i < list->count; i++) {
             printf("Akun %d:\n", i + 1);
-            printf("Username: %s\n", list->accounts[i].username);
-            printf("Password: %s\n", list->accounts[i].password);
-            printf("Bio Akun: %s\n", list->accounts[i].bio);
-            printf("No HP: %s\n", list->accounts[i].noHP);
-            printf("Weton: %s\n", list->accounts[i].weton);
-            printf("Jenis Akun: %s\n", list->accounts[i].jenisAkun);
+            printf("Username: %s\n", list->accounts[i].username->TabWord);
+            printf("Password: %s\n", list->accounts[i].password->TabWord);
+            printf("Bio Akun: %s\n", list->accounts[i].bio->TabWord);
+            printf("No HP: %s\n", list->accounts[i].noHP->TabWord);
+            printf("Weton: %s\n", list->accounts[i].weton->TabWord);
+            printf("Jenis Akun: %s\n", list->accounts[i].jenisAkun->TabWord);
         }
     }
 }
@@ -297,10 +297,10 @@ Word toLowerCase(Word word) {
 }
 
 void edit_profile(AccountList *list, Account user){
-    printf("| Nama: %s\n", list->accounts[GetAccountIdx(list, user)].username);
-    printf("| Bio Akun: %s\n", list->accounts[GetAccountIdx(list, user)].bio);
-    printf("| No HP: %s\n", list->accounts[GetAccountIdx(list, user)].noHP);
-    printf("| Weton: %s\n", list->accounts[GetAccountIdx(list, user)].weton);
+    printf("| Nama: %s\n", list->accounts[GetAccountIdx(list, user)].username->TabWord);
+    printf("| Bio Akun: %s\n", list->accounts[GetAccountIdx(list, user)].bio->TabWord);
+    printf("| No HP: %s\n", list->accounts[GetAccountIdx(list, user)].noHP->TabWord);
+    printf("| Weton: %s\n", list->accounts[GetAccountIdx(list, user)].weton->TabWord);
     
     STARTSENTENCE();
     printf("Masukkan Bio Akun: ");

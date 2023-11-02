@@ -21,17 +21,17 @@ void daftarteman(boolean login, Account akunlogin, AccountList* listakun, Graf t
         getOne(teman,idAkun,&l);
         if (isEmptylistGraf(l))
         {
-            printf("%s belum mempunyai teman\n", akunlogin.username);
+            printf("%s belum mempunyai teman\n", akunlogin.username->TabWord);
         }
         else{
-            printf("%s memiliki %d teman\n", akunlogin.username, listEffGraf(l));
-            printf("Daftar teman %s\n", akunlogin.username);
+            printf("%s memiliki %d teman\n", akunlogin.username->TabWord, listEffGraf(l));
+            printf("Daftar teman %s\n", akunlogin.username->TabWord);
             int i;
             for (i = 0; i < CAPACITYGRAF; i++)
             {
                 if (ELMTLISTGRAF(l,i) == 1)
                 {
-                    printf("| %s\n", listakun->accounts[i].username);
+                    printf("| %s\n", listakun->accounts[i].username->TabWord);
                 }
             }
         }
