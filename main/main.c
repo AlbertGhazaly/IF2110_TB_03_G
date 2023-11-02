@@ -11,11 +11,9 @@ int main() {
     CreateAccountList(&akun);
     Graf teman;
     createEmptyGraf(&teman);
-    // ReadUser_FILE("../cfg/pengguna.config", &akun, &teman);
-    // DisplayAccounts(&akun);
+    ReadUser_FILE("../cfg/pengguna.config", &akun, &teman);
+    DisplayAccounts(&akun);
     Account akunLogin;
-    Word tuan_bri = {"Tuan Bri", 8};
-    inUser(&akunLogin, tuan_bri);
 
     boolean isLogin = false;
     while (runProgram) {
@@ -88,8 +86,9 @@ int main() {
                 ADVSENTENCE();
                 inUser(&akunLogin, attemptUsername);
                 isLogin = true;
-                printf("Selamat datang, %s!\n", akunLogin.username);
-
+                printf("Selamat datang, ");
+                printWord(attemptUsername);
+                printf("!\n");
             }
         }
         
