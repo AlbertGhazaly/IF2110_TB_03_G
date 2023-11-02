@@ -16,7 +16,8 @@ Word wetonJawa[] = {
     };
 
 void inUser(Account *account, Word username){
-    *Username(*account) = username;
+    *Username(*account) = emptyWord;
+    CopyWordTo(Username(*account), username);
 }
 void outUser(Account *account){
     *Username(*account) = emptyWord;
