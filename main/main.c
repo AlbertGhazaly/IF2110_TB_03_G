@@ -5,6 +5,8 @@
 int main() {
     printf("Selamat datang di Burbir. Selamat berkicau!\n\n");
 
+    //Utilities
+    boolean login = false;
     boolean runProgram = true;
     //Array untuk menampung user saat ini
     AccountList akun;
@@ -31,6 +33,7 @@ int main() {
         Word curr_user = {"USER", 4};
         Word daftar_teman = {"DAFTAR_TEMAN", 12};
         Word hapus_teman = {"HAPUS_TEMAN", 11};
+
 
         if (WordEqual(command, tutup_program)){
             runProgram = false;
@@ -104,6 +107,8 @@ int main() {
         else if (WordEqual(command,hapus_teman)){
             hapusteman(true, akunLogin, &akun, &teman);
         }
+        
+
         ADVWORD();
     }
     return 0;
