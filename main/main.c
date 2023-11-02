@@ -131,10 +131,10 @@ int main() {
             DisplayAccounts(&akun);
         }
         else if (WordEqual(command,daftar_teman)){
-            daftarteman(true, akunLogin, &akun, teman);
+            daftarteman(isLogin, akunLogin, &akun, teman);
         }
         else if (WordEqual(command,hapus_teman)){
-            hapusteman(true, akunLogin, &akun, &teman);
+            hapusteman(isLogin, akunLogin, &akun, &teman);
         }
         
 
