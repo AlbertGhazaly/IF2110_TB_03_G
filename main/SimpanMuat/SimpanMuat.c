@@ -2,24 +2,29 @@
 #include <sys/stat.h>
 
 void muat(char floderName[]){
+    char path[] = "../cfg/";
 
-    for (int i=0;i<5;i++){
-        if (i==0){ // User config
+    if (!isDirExist(concat(path,floderName))){
+        printf("Tidak ada folder yang dimaksud!\n");
+    }else{
+        for (int i=0;i<5;i++){
+            if (i==0){ // User config
+
+            }
+            else if (i==1){ // Tweet config
+
+            } 
+            else if (i==2){ // Reply config
+
+            }
+            else if (i==3){ // Draft config
+
+            }
+            else if (i==4){ //Utas config
+
+            }
 
         }
-        else if (i==1){ // Tweet config
-
-        } 
-        else if (i==2){ // Reply config
-
-        }
-        else if (i==3){ // Draft config
-
-        }
-        else if (i==4){ //Utas config
-
-        }
-
     }
 }
 
@@ -27,7 +32,8 @@ void simpan(char folderName[]){
     // concat path to cfg folder
     char path[]= "../cfg/";
     if (!isDirExist(concat(path,folderName))){
-        printf("Belum terdapat Folder1.\nAkan dilakukan pembuatan Folder1 terlebih dahulu.");
+        printf("Belum terdapat Folder1.\nAkan dilakukan pembuatan Folder1 terlebih dahulu.\n");
+        printf("Mohon tunggu...\n1...\n2...\n3...\n%s sudah berhasil dibuat.\n",folderName);
     }
     for (int i= 0;i<5;i++){
         if (i==0){ // User config
