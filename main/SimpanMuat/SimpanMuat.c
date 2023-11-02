@@ -2,6 +2,7 @@
 #include <sys/stat.h>
 
 void muat(char floderName[]){
+
     for (int i=0;i<5;i++){
         if (i==0){ // User config
 
@@ -24,16 +25,10 @@ void muat(char floderName[]){
 
 void simpan(char folderName[]){
     // concat path to cfg folder
-    int i;
-    char path[] = "../cfg/";
-    for (i=0;path[i]!='\0';i++);
-    for (int j=0;folderName[j]!='\0';j++){
-        path[i] = folderName[j];
-        i++;
+    char path[]= "../cfg/";
+    if (!isDirExist(concat(path,folderName))){
+        printf("Belum terdapat Folder1.\nAkan dilakukan pembuatan Folder1 terlebih dahulu.");
     }
-    path[i] = '\0';
-
-
     for (int i= 0;i<5;i++){
         if (i==0){ // User config
 
@@ -62,4 +57,14 @@ boolean isDirExist(char path[]){
         return true;
     }
     return false;
+}
+char* concat(char path[],char folder[]){
+    int i;
+    for (i=0;path[i]!='\0';i++);
+    for (int j=0;folder[j]!='\0';j++){
+        path[i] = folder[j];
+        i++;
+    }
+    path[i] = '\0';
+    return path;
 }
