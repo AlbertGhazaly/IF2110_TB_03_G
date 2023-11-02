@@ -92,12 +92,13 @@ void DisplayAccounts(AccountList *list){
         int i;
         for (i = 0; i < list->count; i++) {
             printf("Akun %d:\n", i + 1);
-            printf("Username: %s\n", list->accounts[i].username->TabWord);
-            printf("Password: %s\n", list->accounts[i].password->TabWord);
-            printf("Bio Akun: %s\n", list->accounts[i].bio->TabWord);
-            printf("No HP: %s\n", list->accounts[i].noHP->TabWord);
-            printf("Weton: %s\n", list->accounts[i].weton->TabWord);
-            printf("Jenis Akun: %s\n", list->accounts[i].jenisAkun->TabWord);
+            printf("Username: %s\n", list->accounts[i].username);
+            printf("Password: %s\n", list->accounts[i].password);
+            printf("Bio Akun: %s\n", list->accounts[i].bio);
+            printf("No HP: %s\n", list->accounts[i].noHP);
+            printf("Weton: %s\n", list->accounts[i].weton);
+            printf("Jenis Akun: %s\n", list->accounts[i].jenisAkun);
+            displayMatrixChar(list->accounts->fotoprofil);
         }
     }
 }
@@ -167,12 +168,10 @@ void ReadUser_FILE(char filename[], AccountList *list, Graf *teman){
     STARTWORD_FILE(filename);
     //Akuisisi Nilai N
     N = WordToInt(currentWord);
-    printf("%d\n", N);
     ADVSENTENCE();
     int i,j;
     for (i = 0; i < N; i++)
     {
-        printf("test\n");
         Word username, password, bio, noHP, weton, jenisakun;
         Matrix profil;
         Account akun;
@@ -234,6 +233,11 @@ void ReadUser_FILE(char filename[], AccountList *list, Graf *teman){
             else if (currentChar == '\n' && j > 5 && j < 11)
             {
                 //Foto Profil pengguna.config disini
+                createMatrixchar(5, 10, &akun.fotoprofil);
+                int k;
+                for(k = 0; k < 10; k++){
+                    ELMTChar(akun.fotoprofil,j-6,k) = currentWord.TabWord[k*2];
+                }
                 j++;
             }
             ADVSENTENCE();
@@ -245,7 +249,6 @@ void ReadUser_FILE(char filename[], AccountList *list, Graf *teman){
         for(j = 0; j < N; j++)
         {
             ELMTGRAF(*teman,i,j) = CharToInt(currentWord.TabWord[j*2]);
-            printf("%d\n", ELMTGRAF(*teman,i,j));
         }
         ADVSENTENCE();
     }

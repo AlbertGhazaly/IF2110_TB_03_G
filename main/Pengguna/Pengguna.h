@@ -18,6 +18,7 @@ typedef struct {
     Word noHP[MAX_HP_LENGTH];
     Word weton[MAX_WETON_LENGTH];
     Word jenisAkun[MAX_JENIS_LENGTH];
+    MatrixChar fotoprofil;
 } Account;
 
 #define Username(U) (U).username
