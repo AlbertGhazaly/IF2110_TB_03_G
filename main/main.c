@@ -13,8 +13,7 @@ int main() {
     CreateAccountList(&akun);
     Graf teman;
     createEmptyGraf(&teman);
-    // ReadUser_FILE("../cfg/pengguna.config", &akun, &teman);
-    // DisplayAccounts(&akun);
+    ReadUser_FILE("../cfg/pengguna.config", &akun, &teman);
     Account akunLogin;
     Word tuan_bri = {"Tuan Bri", 8};
     inUser(&akunLogin, tuan_bri);
@@ -59,12 +58,14 @@ int main() {
                 STARTSENTENCE();
                 Word attemptUsername = currentWord;
                 while(attemptUsername.Length > 20){
+                    STARTSENTENCE();
                     printf("Nama terlalu panjang, masukkan maksimal 20 karakter!\n");
                     printf("Masukkan nama: ");
                     STARTSENTENCE();
                     attemptUsername = currentWord;
                 }
                 while(!IsUsernameInAccountList(&akun, attemptUsername)){
+                    STARTSENTENCE();
                     printf("Tidak ada akun dengan nama tersebut, silahkan masukkan nama lain.\n");
                     printf("Masukkan nama: ");
                     STARTSENTENCE();
@@ -77,12 +78,14 @@ int main() {
                 STARTSENTENCE();
                 Word attemptPassword = currentWord;
                 while(attemptPassword.Length > 20){
+                    STARTSENTENCE();
                     printf("Kata sandi terlalu panjang, masukkan maksimal 20 karakter!\n");
                     printf("Masukkan kata sandi: ");
                     STARTSENTENCE();
                     attemptPassword = currentWord;
                 }
                 while(!cekPassword(&akun, attemptUsername, attemptPassword)){
+                    STARTSENTENCE();
                     printf("Kata sandi salah, coba lagi.\n");
                     printf("Masukkan kata sandi: ");
                     STARTSENTENCE();
