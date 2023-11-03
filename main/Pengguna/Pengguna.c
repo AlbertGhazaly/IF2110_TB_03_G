@@ -65,6 +65,52 @@ void signup(AccountList *listakun){
     printf("\nAkun berhasil ditambahkan ke daftar pengguna. Silahkan masuk untuk menikmati fitur Burbir.\n");
 }
 
+void signin(AccountList *akun, Account *akunLogin){
+    STARTSENTENCE();
+    printf("Masukkan nama: ");
+    STARTSENTENCE();
+    Word attemptUsername = currentWord;
+    while(attemptUsername.Length > 20){
+        STARTSENTENCE();
+        printf("Nama terlalu panjang, masukkan maksimal 20 karakter!\n");
+        printf("Masukkan nama: ");
+        STARTSENTENCE();
+        attemptUsername = currentWord;
+    }
+    while(!IsUsernameInAccountList(akun, attemptUsername)){
+        STARTSENTENCE();
+        printf("Tidak ada akun dengan nama tersebut, silahkan masukkan nama lain.\n");
+        printf("Masukkan nama: ");
+        STARTSENTENCE();
+        attemptUsername = currentWord;
+    }
+    ADVSENTENCE();
+
+    STARTSENTENCE();
+    printf("Masukkan kata sandi: ");
+    STARTSENTENCE();
+    Word attemptPassword = currentWord;
+    while(attemptPassword.Length > 20){
+        STARTSENTENCE();
+        printf("Kata sandi terlalu panjang, masukkan maksimal 20 karakter!\n");
+        printf("Masukkan kata sandi: ");
+        STARTSENTENCE();
+        attemptPassword = currentWord;
+    }
+    while(!cekPassword(akun, attemptUsername, attemptPassword)){
+        STARTSENTENCE();
+        printf("Kata sandi salah, coba lagi.\n");
+        printf("Masukkan kata sandi: ");
+        STARTSENTENCE();
+        attemptPassword = currentWord;
+    }
+    ADVSENTENCE();
+    inUser(akunLogin, attemptUsername);
+    printf("Selamat datang, ");
+    printWord(attemptUsername);
+    printf("!\n");
+}
+
 
 
 void CreateAccountEmpty(Account *account) {

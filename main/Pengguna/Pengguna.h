@@ -45,6 +45,8 @@ void CreateAccount(Account *account, Word username, Word password);
 
 void signup(AccountList *listakun);
 
+void signin(AccountList *list, Account *akunLogin);
+
 void fillAccount(AccountList *listakun);
 
 void CreateAccountEmpty(Account *account);

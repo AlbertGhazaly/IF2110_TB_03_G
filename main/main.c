@@ -28,6 +28,7 @@ int main() {
         Word keluar = {"KELUAR", 6};
         Word ganti_profil = {"GANTI_PROFIL", 12};
         Word jenis_akun = {"ATUR_JENIS_AKUN", 15};
+        Word ubah_foto = {"UBAH_FOTO_PROFIL", 16};
         Word curr_user = {"USER", 4};
         Word daftar_teman = {"DAFTAR_TEMAN", 12};
         Word hapus_teman = {"HAPUS_TEMAN", 11};
@@ -51,50 +52,8 @@ int main() {
                 printf("Anda sudah login dengan akun %s\n", akunLogin.username->TabWord);
             }
             else{
-                STARTSENTENCE();
-                printf("Masukkan nama: ");
-                STARTSENTENCE();
-                Word attemptUsername = currentWord;
-                while(attemptUsername.Length > 20){
-                    STARTSENTENCE();
-                    printf("Nama terlalu panjang, masukkan maksimal 20 karakter!\n");
-                    printf("Masukkan nama: ");
-                    STARTSENTENCE();
-                    attemptUsername = currentWord;
-                }
-                while(!IsUsernameInAccountList(&akun, attemptUsername)){
-                    STARTSENTENCE();
-                    printf("Tidak ada akun dengan nama tersebut, silahkan masukkan nama lain.\n");
-                    printf("Masukkan nama: ");
-                    STARTSENTENCE();
-                    attemptUsername = currentWord;
-                }
-                ADVSENTENCE();
-
-                STARTSENTENCE();
-                printf("Masukkan kata sandi: ");
-                STARTSENTENCE();
-                Word attemptPassword = currentWord;
-                while(attemptPassword.Length > 20){
-                    STARTSENTENCE();
-                    printf("Kata sandi terlalu panjang, masukkan maksimal 20 karakter!\n");
-                    printf("Masukkan kata sandi: ");
-                    STARTSENTENCE();
-                    attemptPassword = currentWord;
-                }
-                while(!cekPassword(&akun, attemptUsername, attemptPassword)){
-                    STARTSENTENCE();
-                    printf("Kata sandi salah, coba lagi.\n");
-                    printf("Masukkan kata sandi: ");
-                    STARTSENTENCE();
-                    attemptPassword = currentWord;
-                }
-                ADVSENTENCE();
-                inUser(&akunLogin, attemptUsername);
+                signin(&akun, &akunLogin);
                 isLogin = true;
-                printf("Selamat datang, ");
-                printWord(attemptUsername);
-                printf("!\n");
             }
         }
         
@@ -125,6 +84,10 @@ int main() {
             else{
                 ganti_jenis_akun(&akun, akunLogin);
             }
+        }
+
+        else if(WordEqual(command, ubah_foto)){
+
         }
 
         else if(WordEqual(command, curr_user)){
