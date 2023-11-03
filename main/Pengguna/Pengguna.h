@@ -27,6 +27,7 @@ typedef struct {
 #define NoHP(U) (U).noHP
 #define Weton(U) (U).weton
 #define JenisAkun(U) (U).jenisAkun
+#define FotoProfil(U) (U).fotoprofil
 
 
 #define MAX_ACCOUNTS 20
@@ -68,5 +69,7 @@ boolean IsUsernameInAccountList(AccountList *list, Word username);
 boolean cekPassword(AccountList *list, Word username, Word password);
 
 void ReadUser_FILE(char filename[], AccountList *list, Graf *teman);
+
+void colorizedProfil(MatrixChar mc);
 
 #endif

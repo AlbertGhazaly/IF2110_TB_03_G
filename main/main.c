@@ -3,7 +3,6 @@
 
 
 int main() {
-    printf("Selamat datang di Burbir. Selamat berkicau!\n\n");
 
     //Utilities
     boolean login = false;
@@ -17,6 +16,13 @@ int main() {
     Account akunLogin;
 
     boolean isLogin = false;
+    printf("           ____  __  __  ____  ____  ____  ____ /\\ \n");
+    printf("    __    (  _ \\(  )(  )(  _ \\(  _ \\(_  _)(  _ \\)(    __    \n");
+    printf("___( o)>   ) _ < )(__)(  )   / ) _ < _)(_  )   /\\/  <(o )___\n");
+    printf("\\ <_. )   (____/(______)(_)\\_)(____/(____)(_)\\_)()   ( ._> /\n");
+    printf(" `---'              Tempat Anda Mencibir              `---' \n\n");
+
+    printf("Selamat datang di Burbir. Selamat berkicau!\n");
     while (runProgram) {
         printf(">> ");
         STARTWORD();
@@ -38,13 +44,15 @@ int main() {
             runProgram = false;
         }
         else if (WordEqual(command, daftar)){
-            if(IsAccountListFull(&akun)){
+            if (isLogin){
+                printf("Anda sedang login dengan akun %s, silahkan keluar dulu.\n", akunLogin.username->TabWord);
+            }
+            else if(IsAccountListFull(&akun)){
                 printf("Batas jumlah pengguna sudah tercapai, tidak dapat menambahkan akun baru.\n");
             }
             else{
                 signup(&akun);
             }
-
         }
         
         else if(WordEqual(command, masuk)){
@@ -87,7 +95,7 @@ int main() {
         }
 
         else if(WordEqual(command, ubah_foto)){
-
+            edit_foto(&akun, akunLogin);
         }
 
         else if(WordEqual(command, curr_user)){
@@ -98,6 +106,9 @@ int main() {
         }
         else if (WordEqual(command,hapus_teman)){
             hapusteman(isLogin, akunLogin, &akun, &teman);
+        }
+        else{
+            printf("Perintah tidak valid!\n");
         }
         
 

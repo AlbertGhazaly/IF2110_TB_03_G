@@ -27,5 +27,7 @@
 #include "./listlinier/listlinier.c"
 #include "./graf/graf.h"
 #include "./graf/graf.c"
+#include "./pcolor/pcolor.h"
+#include "./pcolor/pcolor.c"
 
 #endif

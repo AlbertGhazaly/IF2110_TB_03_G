@@ -34,6 +34,12 @@ void copyMatrix(Matrix mIn, Matrix *mOut){
     *mOut = mIn;
 }
 
+void copyMatrixChar(MatrixChar mcIn, MatrixChar *mcOut){
+    ROW_EFFChar(*mcOut) = ROW_EFFChar(mcIn);
+    COL_EFFChar(*mcOut) = COL_EFFChar(mcIn);
+    *mcOut = mcIn;
+}
+
 void readMatrix(Matrix *m, int nRow, int nCol){
     int i, j;
     ElType elm;
@@ -76,6 +82,7 @@ void displayMatrixChar(MatrixChar mc){
     }
     printf("\n");
 }
+
 
 Matrix addMatrix(Matrix m1, Matrix m2){
     Matrix m3;
