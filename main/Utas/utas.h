@@ -29,12 +29,9 @@ typedef struct kicausambung {
 
 } KicauSambung;
 
-#define NEXT(X) (X)->next;
-
-typedef struct {
+typedef struct{
     int IDUtas;
     kSambungAdd content;
-
 } Utas;
 
 #define MAX_USERNAME_LENGTH 20
@@ -66,3 +63,4 @@ void sambungUtas(int idUtas, int index, Account account);
 void createUtas(int id, KicauList* list, Account account);
 void hapusUtas(int idUtas, int index, Account account);
 kSambungAdd createKicauanSambung(Word tex, Account account, int index);
+boolean lanjut(Word input);
