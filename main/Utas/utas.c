@@ -61,7 +61,7 @@ void createUtas(int id, KicauList* kList, Account account, int jumlahUtas){
     }
 }
 
-void sambungUtas(int idUtas, KicauList* kList,int index, Account account){
+void sambungUtas(int idUtas,int index,  KicauList* kList,Account account){
     boolean isFound = false;
     Kicau* kicauan;
     for (int i=0;(i<kList->count) && (!isFound);i++){
@@ -105,6 +105,7 @@ void sambungUtas(int idUtas, KicauList* kList,int index, Account account){
                     }else{
                         newKSam->next = kSam->next;
                         kSam->next = newKSam;
+                        
                     }
                 }
 
@@ -116,7 +117,50 @@ void sambungUtas(int idUtas, KicauList* kList,int index, Account account){
 
 }
 
-void hapusUtas(int idUtas, int index, Account account);
+void hapusUtas(int idUtas, int index,KicauList* kList ,Account account){
+    boolean isFound = false;
+    Kicau* kicauan;
+    for (int i=0;(i<kList->count) && (!isFound);i++){
+        if (kList->kicauan[i].utas.IDUtas == idUtas){
+            isFound = true;
+            *kicauan = kList->kicauan[i];
+        }
+    }
+    if (!isFound){
+        printf("Utas tidak ditemukan!\n");
+    }else{
+        if (!WordEqual(kicauan->author,account.username[0])){
+            printf("Anda tidak bisa menghapus kicauan dalam utas ini!\n");
+        }else{
+            if (index==0){
+                printf("Anda tidak bisa menghapus kicauan utama!\n");
+            }else{
+                kSambungAdd kSam = kicauan->utas.content;
+                kSambungAdd delKSam;
+                if (index==1){
+                    delKSam = kSam;
+                    kSam = kSam->next;
+                    kicauan->utas.content = kSam;
+                    free(delKSam);
+                }else{
+                    for (int i=2;i<index&&kSam!=NULL;i++){
+                        kSam = kSam->next;
+                    }
+                    if (kSam==NULL){
+                        printf("Kicauan sambungan dengan index %d tidak ditemukan pada utas!\n",index);
+                    }else{
+                        delKSam = kSam->next;
+                        kSam->next = delKSam->next;
+                        free(delKSam);
+                    }
+                    
+                }
+
+            }
+        }
+
+    }
+}
 
 kSambungAdd createKicauanSambung(Word tex, Account account){
     kSambungAdd kicauSam = (kSambungAdd)malloc(sizeof(KicauSambung));
