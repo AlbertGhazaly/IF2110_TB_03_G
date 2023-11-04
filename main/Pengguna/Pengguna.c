@@ -338,10 +338,10 @@ Word toLowerCase(Word word) {
 }
 
 void edit_profile(AccountList *list, Account user){
-    printf("| Nama: %s\n", list->accounts[GetAccountIdx(list, user)].username);
-    printf("| Bio Akun: %s\n", list->accounts[GetAccountIdx(list, user)].bio);
-    printf("| No HP: %s\n", list->accounts[GetAccountIdx(list, user)].noHP);
-    printf("| Weton: %s\n", list->accounts[GetAccountIdx(list, user)].weton);
+    printf("| Nama: %s\n", list->accounts[GetAccountIdx(list, user)].username->TabWord);
+    printf("| Bio Akun: %s\n", list->accounts[GetAccountIdx(list, user)].bio->TabWord);
+    printf("| No HP: %s\n", list->accounts[GetAccountIdx(list, user)].noHP->TabWord);
+    printf("| Weton: %s\n", list->accounts[GetAccountIdx(list, user)].weton->TabWord);
     
     STARTSENTENCE();
     printf("Masukkan Bio Akun: ");

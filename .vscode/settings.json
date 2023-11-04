@@ -6,7 +6,9 @@
         "stack.h": "c",
         "pengguna.h": "c",
         "permintaanpertemanan.h": "c",
-        "adt.h": "c",
         "prioqueuefren.h": "c"
+        "adt.h": "c",
+        "time.h": "c",
+        "datetime.h": "c"
     }
 }

@@ -52,7 +52,7 @@ int main() {
         
         else if(WordEqual(command, masuk)){
             if (isLogin){
-                printf("Anda sudah login dengan akun %s\n", akunLogin.username);
+                printf("Anda sudah login dengan akun %s\n", akunLogin.username->TabWord);
             }
             else{
                 STARTSENTENCE();
@@ -116,7 +116,7 @@ int main() {
                 printf("Anda belum login, sehingga tidak bisa keluar.\n");
             }
             else{
-                printf("Keluar dari akun dengan username %s\n", akunLogin.username);
+                printf("Keluar dari akun dengan username %s\n", akunLogin.username->TabWord);
                 outUser(&akunLogin);
                 isLogin = false;
             }
