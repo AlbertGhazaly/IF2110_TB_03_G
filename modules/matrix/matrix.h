@@ -21,6 +21,16 @@ typedef struct
 /* Indeks matriks yang digunakan: [0..ROW_CAP-1][0..COL_CAP-1] */
 /* Memori matriks yang dipakai selalu di "ujung kiri atas" */
 
+typedef char charType;
+typedef struct
+{
+   /* data */
+   charType memc[ROW_CAP][COL_CAP];
+   int rowEffchar;
+   int colEffchar;
+} MatrixChar;
+
+
 /* ********** DEFINISI PROTOTIPE PRIMITIF ********** */
 /* *** Konstruktor membentuk Matrix *** */
 void createMatrix(int nRows, int nCols, Matrix *m);
@@ -28,10 +38,19 @@ void createMatrix(int nRows, int nCols, Matrix *m);
 /* I.S. nRow dan nCol adalah valid untuk memori matriks yang dibuat */
 /* F.S. Matriks m sesuai dengan definisi di atas terbentuk */
 
+void createMatrixchar(int nRows,int nCols, MatrixChar *mc);
+/* Membentuk sebuah Matrix Character "kosong" yang siap diisi berukuran nRow x nCol di "ujung kiri" memori */
+/* I.S. nRow dan nCol adalah valid untuk memori matriks yang dibuat */
+/* F.S. Matriks m sesuai dengan definisi di atas terbentuk */
+
 /* *** Selektor *** */
 #define ROW_EFF(M) (M).rowEff
 #define COL_EFF(M) (M).colEff
 #define ELMT(M, i, j) (M).mem[(i)][(j)]
+
+#define ROW_EFFChar(MC) (MC).rowEffchar
+#define COL_EFFChar(MC) (MC).colEffchar
+#define ELMTChar(MC, i, j) (MC).memc[(i)][(j)]
 
 /* *** Selektor "Dunia Matrix" *** */
 boolean isMatrixIdxValid(int i, int j);
@@ -71,6 +90,17 @@ void displayMatrix(Matrix m);
 1 2 3
 4 5 6
 8 9 10
+*/
+
+void displayMatrixChar(MatrixChar mc);
+/* I.S. m terdefinisi */
+/* F.S. Nilai m(i,j) ditulis ke layar per baris per kolom, masing-masing elemen per baris 
+   dipisahkan sebuah spasi. Baris terakhir tidak diakhiri dengan newline */
+/* Proses: Menulis nilai setiap elemen m ke layar dengan traversal per baris dan per kolom */
+/* Contoh: menulis matriks 3x3 (ingat di akhir tiap baris, tidak ada spasi)
+'a' 'b' 'c'
+'d' 'e' 'f'
+'g' 'h' 'i'
 */
 
 /* ********** KELOMPOK OPERASI ARITMATIKA TERHADAP TYPE ********** */

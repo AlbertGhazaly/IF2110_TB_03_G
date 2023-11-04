@@ -3,8 +3,10 @@
 
 #include "../../modules/adt.h"
 
-void darteman(boolean login);
+void tambahteman(boolean login, Account akunlogin, AccountList* listakun, Graf Teman, prioqueuefren* Q);
 
-void hasteman(boolean login);
+void daftarpermintaanteman(boolean login, Account akunlogin, AccountList* listakun, prioqueuefren *Q);
+
+void setujuipermintaanteman(boolean login, Account akunlogin, AccountList* listakun, Graf* Teman, prioqueuefren* Q);
 
 #endif

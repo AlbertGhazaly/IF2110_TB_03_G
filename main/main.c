@@ -13,8 +13,9 @@ int main() {
     CreateAccountList(&akun);
     Graf teman;
     createEmptyGraf(&teman);
-    ReadUser_FILE("../cfg/pengguna.config", &akun, &teman);
-    DisplayAccounts(&akun);
+    prioqueuefren Q;
+    MakeEmptyprio(&Q,100);
+    ReadUser_FILE("../cfg/pengguna.config", &akun, &teman, &Q);
     Account akunLogin;
 
     boolean isLogin = false;
@@ -32,7 +33,9 @@ int main() {
         Word curr_user = {"USER", 4};
         Word daftar_teman = {"DAFTAR_TEMAN", 12};
         Word hapus_teman = {"HAPUS_TEMAN", 11};
-
+        Word tambah_teman = {"TAMBAH_TEMAN", 12};
+        Word daftar_permintaan_teman = {"DAFTAR_PERMINTAAN_PERTEMANAN", 28};
+        Word setujui_pertemanan = {"SETUJUI_PERTEMANAN", 18};
 
         if (WordEqual(command, tutup_program)){
             runProgram = false;
@@ -57,12 +60,14 @@ int main() {
                 STARTSENTENCE();
                 Word attemptUsername = currentWord;
                 while(attemptUsername.Length > 20){
+                    STARTSENTENCE();
                     printf("Nama terlalu panjang, masukkan maksimal 20 karakter!\n");
                     printf("Masukkan nama: ");
                     STARTSENTENCE();
                     attemptUsername = currentWord;
                 }
                 while(!IsUsernameInAccountList(&akun, attemptUsername)){
+                    STARTSENTENCE();
                     printf("Tidak ada akun dengan nama tersebut, silahkan masukkan nama lain.\n");
                     printf("Masukkan nama: ");
                     STARTSENTENCE();
@@ -75,12 +80,14 @@ int main() {
                 STARTSENTENCE();
                 Word attemptPassword = currentWord;
                 while(attemptPassword.Length > 20){
+                    STARTSENTENCE();
                     printf("Kata sandi terlalu panjang, masukkan maksimal 20 karakter!\n");
                     printf("Masukkan kata sandi: ");
                     STARTSENTENCE();
                     attemptPassword = currentWord;
                 }
                 while(!cekPassword(&akun, attemptUsername, attemptPassword)){
+                    STARTSENTENCE();
                     printf("Kata sandi salah, coba lagi.\n");
                     printf("Masukkan kata sandi: ");
                     STARTSENTENCE();
@@ -128,13 +135,21 @@ int main() {
             DisplayAccounts(&akun);
         }
         else if (WordEqual(command,daftar_teman)){
-            daftarteman(true, akunLogin, &akun, teman);
+            daftarteman(isLogin, akunLogin, &akun, teman);
         }
         else if (WordEqual(command,hapus_teman)){
-            hapusteman(true, akunLogin, &akun, &teman);
+            hapusteman(isLogin, akunLogin, &akun, &teman);
+        }
+        else if (WordEqual(command, tambah_teman)){
+            tambahteman(isLogin, akunLogin, &akun, teman, &Q);
+        }
+        else if (WordEqual(command, daftar_permintaan_teman)){
+            daftarpermintaanteman(isLogin, akunLogin, &akun, &Q);
+        }
+        else if (WordEqual(command, setujui_pertemanan)){
+            setujuipermintaanteman(isLogin, akunLogin, &akun, &teman, &Q);
         }
         
-
         ADVWORD();
     }
     return 0;

@@ -6,6 +6,11 @@ void createMatrix(int nRows, int nCols, Matrix *m){
     COL_EFF(*m) = nCols;
 }
 
+void createMatrixchar(int nRows,int nCols, MatrixChar *mc){
+    ROW_EFFChar(*mc) = nRows;
+    COL_EFFChar(*mc) = nCols;
+}
+
 boolean isMatrixIdxValid(int i, int j){
     return (i >= 0) && (i < ROW_CAP) && (j >= 0) && (j < COL_CAP);
 }
@@ -50,6 +55,22 @@ void displayMatrix(Matrix m){
             }
         }
         if (i != ROW_EFF(m) - 1){
+            printf("\n");
+        }
+    }
+    printf("\n");
+}
+
+void displayMatrixChar(MatrixChar mc){
+    int i, j;
+    for (i = 0; i < ROW_EFFChar(mc); i++){
+        for (j = 0; j < COL_EFFChar(mc); j++){
+            printf("%c", ELMTChar(mc, i, j));
+            if (j != COL_EFFChar(mc) - 1){
+                printf(" ");
+            }
+        }
+        if (i != COL_EFFChar(mc) - 1){
             printf("\n");
         }
     }
