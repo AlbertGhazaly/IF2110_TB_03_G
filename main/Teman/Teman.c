@@ -90,11 +90,15 @@ void hapusteman(boolean login, Account akunlogin, AccountList* listakun, Graf* t
                 printWord(defriend);
                 printf(" berhasil dihapus dari daftar teman Anda.\n");
                 ELMTGRAF(*teman, idAkun, idTeman) = 0;
+                ELMTGRAF(*teman, idTeman, idAkun) = 0;
 
             }
             else if (WordEqual(TIDAK,cmd))
             {
                 printf("Penghapusan teman dibatalkan.\n");
+            }
+            else{
+                printf("Perintah tidak sesuai!\n\n");
             }
         }
         else
