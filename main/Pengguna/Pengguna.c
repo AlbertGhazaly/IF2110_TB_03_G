@@ -163,7 +163,7 @@ boolean cekPassword(AccountList *list, Word username, Word password){
     return found;
 }
 
-void ReadUser_FILE(char filename[], AccountList *list, Graf *teman){
+void ReadUser_FILE(char filename[], AccountList *list, Graf *Teman, prioqueuefren *Q){
     int N;
     STARTWORD_FILE(filename);
     //Akuisisi Nilai N
@@ -248,9 +248,47 @@ void ReadUser_FILE(char filename[], AccountList *list, Graf *teman){
     {
         for(j = 0; j < N; j++)
         {
-            ELMTGRAF(*teman,i,j) = CharToInt(currentWord.TabWord[j*2]);
+            ELMTGRAF(*Teman,i,j) = CharToInt(currentWord.TabWord[j*2]);
         }
         ADVSENTENCE();
+    }
+    int countQ = WordToInt(currentWord);
+    if(countQ != 0)
+    {
+        for(i = 0; i < countQ-1; i++){
+            ADVSENTENCE();
+            teman temp;
+            printf("b");
+            for(j = 0; j < 3; j++){
+                if(j == 0){
+                    temp.IDpengirim = CharToInt(currentWord.TabWord[j*2]);
+                }
+                if(j == 1){
+                    temp.IDpenerima = CharToInt(currentWord.TabWord[j*2]);
+                }
+                if(j == 2){
+                    temp.Jumlahteman = CharToInt(currentWord.TabWord[j*2]);
+                    printf("%d\n", temp.Jumlahteman);
+                }
+            }
+            Enqueueprio(Q, temp);
+        }
+        i = 0;
+        teman temp;
+        while (i < 5){
+            ADV();
+            if(i == 0){
+                temp.IDpengirim = CharToInt(currentChar);
+            }
+            else if(i == 2){
+                temp.IDpenerima = CharToInt(currentChar);
+            }
+            else if (i == 4){
+                temp.Jumlahteman = CharToInt(currentChar);
+            }
+            i++;
+        }
+        Enqueueprio(Q, temp);
     }
 }
 
@@ -401,5 +439,48 @@ void ganti_jenis_akun(AccountList *list, Account user){
         else{
             printf("Akun anda tetap akun Privat.\n");
         }
+    }
+}
+
+void PrintPrioQueue (prioqueuefren Q, AccountList * listakun)
+{
+    if(IsEmptyPrio(Q))
+    {
+        printf("Tidak ada permintaan pertemanan untuk Anda.\n");
+    }
+    else{
+        int count = NBElmtPrio(Q);
+        printf("Terdapat %d permintaan pertemanan untuk Anda.\n", count);
+        printf("\n");
+        int i = HeadQ(Q);
+        while (i != TailQ(Q)+1){
+            teman temp = Q.T[i];
+            printf("| ");
+            printWord(*listakun->accounts[temp.IDpengirim].username);
+            printf("\n");
+            printf("| Jumlah teman: %d\n\n", temp.Jumlahteman);
+            i = (i + 1) % MaxElQ(Q);
+        }
+    }
+}
+
+void PrintTopPrioQueueChar (prioqueuefren Q, int IDuser, AccountList * listakun, int *idteman)
+{
+    if(IsEmptyPrio(Q))
+    {
+        printf("Tidak ada permintaan pertemanan untuk Anda.\n");
+    }
+    else{
+        teman temp;
+        printf("Permintaan pertemanan teratas dari ");
+        printWord(*listakun->accounts[IDuser].username);
+        printf("\n\n");
+        int i = HeadQ(Q);
+        temp = Q.T[i];
+        printf("| ");
+        printWord(*listakun->accounts[temp.IDpengirim].username);
+        printf("\n");
+        printf("| Jumlah teman: %d\n\n", temp.Jumlahteman);
+        *idteman = temp.IDpengirim;
     }
 }
