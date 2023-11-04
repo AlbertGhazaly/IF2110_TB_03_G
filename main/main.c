@@ -12,7 +12,9 @@ int main() {
     CreateAccountList(&akun);
     Graf teman;
     createEmptyGraf(&teman);
-    ReadUser_FILE("../cfg/pengguna.config", &akun, &teman);
+    prioqueuefren Q;
+    MakeEmptyprio(&Q,100);
+    ReadUser_FILE("../cfg/pengguna.config", &akun, &teman, &Q);
     Account akunLogin;
 
     boolean isLogin = false;
@@ -38,7 +40,9 @@ int main() {
         Word curr_user = {"USER", 4};
         Word daftar_teman = {"DAFTAR_TEMAN", 12};
         Word hapus_teman = {"HAPUS_TEMAN", 11};
-
+        Word tambah_teman = {"TAMBAH_TEMAN", 12};
+        Word daftar_permintaan_teman = {"DAFTAR_PERMINTAAN_PERTEMANAN", 28};
+        Word setujui_pertemanan = {"SETUJUI_PERTEMANAN", 18};
 
         if (WordEqual(command, tutup_program)){
             runProgram = false;
@@ -107,11 +111,19 @@ int main() {
         else if (WordEqual(command,hapus_teman)){
             hapusteman(isLogin, akunLogin, &akun, &teman);
         }
+        else if (WordEqual(command, tambah_teman)){
+            tambahteman(isLogin, akunLogin, &akun, teman, &Q);
+        }
+        else if (WordEqual(command, daftar_permintaan_teman)){
+            daftarpermintaanteman(isLogin, akunLogin, &akun, &Q);
+        }
+        else if (WordEqual(command, setujui_pertemanan)){
+            setujuipermintaanteman(isLogin, akunLogin, &akun, &teman, &Q);
+        }
         else{
             printf("Perintah tidak valid!\n");
         }
         
-
         ADVWORD();
     }
     return 0;
