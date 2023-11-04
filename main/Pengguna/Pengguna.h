@@ -65,6 +65,27 @@ boolean IsUsernameInAccountList(AccountList *list, Word username);
 
 boolean cekPassword(AccountList *list, Word username, Word password);
 
-void ReadUser_FILE(char filename[], AccountList *list, Graf *teman);
+void ReadUser_FILE(char filename[], AccountList *list, Graf *teman, prioqueuefren * Q);
+
+void PrintPrioQueue (prioqueuefren Q, AccountList * listakun);
+/* Mencetak isi queue Q ke layar */
+/* I.S. Q terdefinisi, mungkin kosong */
+/* F.S. Q tercetak ke layar dengan format:
+    | "nama user 1"
+    | Jumlah teman: "sum"
+...
+    | "nama user n"
+    | Jumlah teman: "sum"
+#
+*/
+
+void PrintTopPrioQueueChar (prioqueuefren Q, int IDuser, AccountList * listakun, int * idteman);
+/* Mencetak isi queue Q ke layar */
+/* I.S. Q terdefinisi, mungkin kosong */
+/* F.S. Q tercetak ke layar dengan format:
+    | "nama user teratas"
+    | Jumlah teman: "sum terbesar"
+
+*/
 
 #endif
