@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include "kicauan.h"
+#include "Kicauan.h"
 #include "../../modules/wordmachine/charmachine.h"
 #include "../../modules/wordmachine/wordmachine.h"
 #include "../../modules/time/datetime.h"
