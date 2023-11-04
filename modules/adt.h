@@ -27,6 +27,8 @@
 #include "./listlinier/listlinier.c"
 #include "./graf/graf.h"
 #include "./graf/graf.c"
+#include "./pcolor/pcolor.h"
+#include "./pcolor/pcolor.c"
 #include "./prioqueuefren/prioqueuefren.h"
 #include "./prioqueuefren/prioqueuefren.c"
 

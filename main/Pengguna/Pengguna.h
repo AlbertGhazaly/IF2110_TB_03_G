@@ -27,6 +27,7 @@ typedef struct {
 #define NoHP(U) (U).noHP
 #define Weton(U) (U).weton
 #define JenisAkun(U) (U).jenisAkun
+#define FotoProfil(U) (U).fotoprofil
 
 
 #define MAX_ACCOUNTS 20
@@ -44,6 +45,8 @@ boolean isOnline(Account *account);
 void CreateAccount(Account *account, Word username, Word password);
 
 void signup(AccountList *listakun);
+
+void signin(AccountList *list, Account *akunLogin);
 
 void fillAccount(AccountList *listakun);
 
@@ -87,5 +90,7 @@ void PrintTopPrioQueueChar (prioqueuefren Q, int IDuser, AccountList * listakun,
     | Jumlah teman: "sum terbesar"
 
 */
+
+void colorizedProfil(MatrixChar mc);
 
 #endif

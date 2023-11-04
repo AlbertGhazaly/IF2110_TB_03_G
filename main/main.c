@@ -3,7 +3,6 @@
 
 
 int main() {
-    printf("Selamat datang di Burbir. Selamat berkicau!\n\n");
 
     //Utilities
     boolean login = false;
@@ -19,6 +18,13 @@ int main() {
     Account akunLogin;
 
     boolean isLogin = false;
+    printf("           ____  __  __  ____  ____  ____  ____ /\\ \n");
+    printf("    __    (  _ \\(  )(  )(  _ \\(  _ \\(_  _)(  _ \\)(    __    \n");
+    printf("___( o)>   ) _ < )(__)(  )   / ) _ < _)(_  )   /\\/  <(o )___\n");
+    printf("\\ <_. )   (____/(______)(_)\\_)(____/(____)(_)\\_)()   ( ._> /\n");
+    printf(" `---'              Tempat Anda Mencibir              `---' \n\n");
+
+    printf("Selamat datang di Burbir. Selamat berkicau!\n");
     while (runProgram) {
         printf(">> ");
         STARTWORD();
@@ -30,6 +36,7 @@ int main() {
         Word keluar = {"KELUAR", 6};
         Word ganti_profil = {"GANTI_PROFIL", 12};
         Word jenis_akun = {"ATUR_JENIS_AKUN", 15};
+        Word ubah_foto = {"UBAH_FOTO_PROFIL", 16};
         Word curr_user = {"USER", 4};
         Word daftar_teman = {"DAFTAR_TEMAN", 12};
         Word hapus_teman = {"HAPUS_TEMAN", 11};
@@ -41,13 +48,15 @@ int main() {
             runProgram = false;
         }
         else if (WordEqual(command, daftar)){
-            if(IsAccountListFull(&akun)){
+            if (isLogin){
+                printf("Anda sedang login dengan akun %s, silahkan keluar dulu.\n", akunLogin.username->TabWord);
+            }
+            else if(IsAccountListFull(&akun)){
                 printf("Batas jumlah pengguna sudah tercapai, tidak dapat menambahkan akun baru.\n");
             }
             else{
                 signup(&akun);
             }
-
         }
         
         else if(WordEqual(command, masuk)){
@@ -55,50 +64,8 @@ int main() {
                 printf("Anda sudah login dengan akun %s\n", akunLogin.username->TabWord);
             }
             else{
-                STARTSENTENCE();
-                printf("Masukkan nama: ");
-                STARTSENTENCE();
-                Word attemptUsername = currentWord;
-                while(attemptUsername.Length > 20){
-                    STARTSENTENCE();
-                    printf("Nama terlalu panjang, masukkan maksimal 20 karakter!\n");
-                    printf("Masukkan nama: ");
-                    STARTSENTENCE();
-                    attemptUsername = currentWord;
-                }
-                while(!IsUsernameInAccountList(&akun, attemptUsername)){
-                    STARTSENTENCE();
-                    printf("Tidak ada akun dengan nama tersebut, silahkan masukkan nama lain.\n");
-                    printf("Masukkan nama: ");
-                    STARTSENTENCE();
-                    attemptUsername = currentWord;
-                }
-                ADVSENTENCE();
-
-                STARTSENTENCE();
-                printf("Masukkan kata sandi: ");
-                STARTSENTENCE();
-                Word attemptPassword = currentWord;
-                while(attemptPassword.Length > 20){
-                    STARTSENTENCE();
-                    printf("Kata sandi terlalu panjang, masukkan maksimal 20 karakter!\n");
-                    printf("Masukkan kata sandi: ");
-                    STARTSENTENCE();
-                    attemptPassword = currentWord;
-                }
-                while(!cekPassword(&akun, attemptUsername, attemptPassword)){
-                    STARTSENTENCE();
-                    printf("Kata sandi salah, coba lagi.\n");
-                    printf("Masukkan kata sandi: ");
-                    STARTSENTENCE();
-                    attemptPassword = currentWord;
-                }
-                ADVSENTENCE();
-                inUser(&akunLogin, attemptUsername);
+                signin(&akun, &akunLogin);
                 isLogin = true;
-                printf("Selamat datang, ");
-                printWord(attemptUsername);
-                printf("!\n");
             }
         }
         
@@ -131,6 +98,10 @@ int main() {
             }
         }
 
+        else if(WordEqual(command, ubah_foto)){
+            edit_foto(&akun, akunLogin);
+        }
+
         else if(WordEqual(command, curr_user)){
             DisplayAccounts(&akun);
         }
@@ -148,6 +119,9 @@ int main() {
         }
         else if (WordEqual(command, setujui_pertemanan)){
             setujuipermintaanteman(isLogin, akunLogin, &akun, &teman, &Q);
+        }
+        else{
+            printf("Perintah tidak valid!\n");
         }
         
         ADVWORD();
