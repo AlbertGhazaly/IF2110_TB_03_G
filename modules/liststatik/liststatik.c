@@ -19,6 +19,7 @@ void CreateListStatik(ListStatik *l)
         ELMTSTAT(*l, i) = MARKSTAT;
     }
 }
+
 /* ********** SELEKTOR (TAMBAHAN) ********** */
 /* *** Banyaknya elemen *** */
 int listLengthStatik(ListStatik l)
@@ -120,6 +121,7 @@ void printListStatik(ListStatik l)
     } 
     printf("]");
 }
+
 /* ********** OPERATOR ARITMATIKA ********** */
 /* *** Aritmatika List : Penjumlahan, pengurangan, perkalian, ... *** */
 ListStatik plusMinusListStatik(ListStatik l1, ListStatik l2, boolean plus)

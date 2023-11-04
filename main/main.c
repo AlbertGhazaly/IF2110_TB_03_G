@@ -7,6 +7,10 @@ int main() {
     //Utilities
     boolean login = false;
     boolean runProgram = true;
+
+    //Array untuk menampung command
+    Word commandList[2];
+
     //Array untuk menampung user saat ini
     AccountList akun;
     CreateAccountList(&akun);
@@ -25,8 +29,8 @@ int main() {
     printf("Selamat datang di Burbir. Selamat berkicau!\n");
     while (runProgram) {
         printf(">> ");
-        STARTWORD();
-
+        STARTCOMMAND();
+        
         Word command = currentWord;
         Word tutup_program = {"TUTUP_PROGRAM", 13};
         Word daftar = {"DAFTAR", 6};
@@ -35,6 +39,7 @@ int main() {
         Word ganti_profil = {"GANTI_PROFIL", 12};
         Word jenis_akun = {"ATUR_JENIS_AKUN", 15};
         Word ubah_foto = {"UBAH_FOTO_PROFIL", 16};
+        Word lihat_profil = {"LIHAT_PROFIL", 12};
         Word curr_user = {"USER", 4};
         Word daftar_teman = {"DAFTAR_TEMAN", 12};
         Word hapus_teman = {"HAPUS_TEMAN", 11};
@@ -67,7 +72,7 @@ int main() {
         
         else if(WordEqual(command, ganti_profil)){
             if(!isLogin){
-                printf("Anda belum login, silahkan login terlebih dahulu.\n");
+                printf("Anda belum masuk! Masuk terlebih dahulu untuk menikmati layanan BurBir.\n");
             }
             else{
                 edit_profile(&akun, akunLogin);
@@ -76,7 +81,7 @@ int main() {
 
         else if(WordEqual(command, keluar)){
             if (!isLogin){
-                printf("Anda belum login, sehingga tidak bisa keluar.\n");
+                printf("Anda belum masuk! Masuk terlebih dahulu untuk menikmati layanan BurBir.\n");
             }
             else{
                 printf("Keluar dari akun dengan username %s\n", akunLogin.username->TabWord);
@@ -87,7 +92,7 @@ int main() {
 
         else if(WordEqual(command, jenis_akun)){
             if(!isLogin){
-                printf("Anda belum login, silahkan login terlebih dahulu.\n");
+                printf("Anda belum masuk! Masuk terlebih dahulu untuk menikmati layanan BurBir.\n");
             }
             else{
                 ganti_jenis_akun(&akun, akunLogin);
@@ -95,24 +100,40 @@ int main() {
         }
 
         else if(WordEqual(command, ubah_foto)){
-            edit_foto(&akun, akunLogin);
+            if(!isLogin){
+                printf("Anda belum masuk! Masuk terlebih dahulu untuk menikmati layanan BurBir.\n");
+            }
+            else{
+                edit_foto(&akun, akunLogin);
+            }
         }
 
         else if(WordEqual(command, curr_user)){
             DisplayAccounts(&akun);
         }
-        else if (WordEqual(command,daftar_teman)){
+        else if (WordEqual(command, daftar_teman)){
             daftarteman(isLogin, akunLogin, &akun, teman);
         }
-        else if (WordEqual(command,hapus_teman)){
-            hapusteman(isLogin, akunLogin, &akun, &teman);
+        else if (WordEqual(command, hapus_teman)){
+            if(!isLogin){
+                printf("Anda belum masuk! Masuk terlebih dahulu untuk menikmati layanan BurBir.\n");
+            }
+            else{
+                hapusteman(isLogin, akunLogin, &akun, &teman);
+            }
+        }
+        else if(wordCheck(command, 0, 11, lihat_profil) && command.Length > 12){
+            if(!isLogin){
+                printf("Anda belum masuk! Masuk terlebih dahulu untuk menikmati layanan BurBir.\n");
+            }
+            else{
+                show_profile(&akun, wordFromIndex(command, 13));
+            }
         }
         else{
             printf("Perintah tidak valid!\n");
         }
-        
-
-        ADVWORD();
     }
+    ADVCOMMAND();
     return 0;
 }
