@@ -5,7 +5,7 @@
 Word iya = {"IYA",3};
 Word tidak = {"TIDAK",5};
 
-void createUtas(int id, KicauList* kList, Account account){
+void createUtas(int id, KicauList* kList, Account account, int jumlahUtas){
 
     boolean isFound = false;
     int i;
@@ -28,8 +28,10 @@ void createUtas(int id, KicauList* kList, Account account){
                 printf("Utas berhasil dibuat!\n");
                 printf("Masukkan kicauan: \n");
                 STARTSENTENCE();
-                kSambungAdd kSam = createKicauanSambung(currentWord,account,1);
-                kicau->utas = kSam;
+                kSambungAdd kSam = createKicauanSambung(currentWord,account);
+                kicau->utas.content = kSam;
+                jumlahUtas++;
+                kicau->utas.IDUtas = jumlahUtas;
                 printf("Apakah Anda ingin melanjutkan utas ini? (YA/TIDAK) ");
                 STARTWORD();
                 if (!lanjut){
@@ -37,13 +39,11 @@ void createUtas(int id, KicauList* kList, Account account){
                 }else{
                     isStop = false;
                 }
-                int i=2;
                 while (!isStop)
                 {
                     printf("Masukkan kicauan:\n");
                     STARTSENTENCE();
-                    kSam->next = createKicauanSambung(currentWord,account,i);
-                    i++;
+                    kSam->next = createKicauanSambung(currentWord,account);
                     kSam = kSam->next;
                     printf("Apakah Anda ingin melanjutkan utas ini? (YA/TIDAK) ");
                     STARTWORD();
@@ -61,14 +61,66 @@ void createUtas(int id, KicauList* kList, Account account){
     }
 }
 
-void sambungUtas(int idUtas, int index, Account account);
+void sambungUtas(int idUtas, KicauList* kList,int index, Account account){
+    boolean isFound = false;
+    Kicau* kicauan;
+    for (int i=0;(i<kList->count) && (!isFound);i++){
+        if (kList->kicauan[i].utas.IDUtas == idUtas){
+            isFound = true;
+            *kicauan = kList->kicauan[i];
+        }
+    }
+    if (!isFound){
+        printf("Utas tidak ditemukan!\n");
+    }else{
+        if (!WordEqual(kicauan->author,account.username[0])){
+            printf("Anda tidak bisa menyambung utas ini!\n");
+        }else{
+            int i =1;
+            kSambungAdd kSam= kicauan->utas.content;
+            while (kSam->next!=NULL)
+            {
+                i++;
+                kSam = kSam->next;
+            }
+            
+            if (index<1){
+                printf("Index terlalu rendah!\n");
+            }else if (index>i+1){
+                printf("Index terlalu tinggi!\n");
+            }else{
+                printf("Masukkan kicauan:\n");
+                STARTSENTENCE();
+                kSam = kicauan->utas.content;
+                kSambungAdd newKSam = createKicauanSambung(currentWord,account);
+                if (index==1){
+                    newKSam->next = kSam;
+                    kicauan->utas.content = newKSam;
+                }else{
+                    for (int j=2;j<index;j++){
+                       kSam = kSam->next;
+                    }
+                    if ((kSam->next)==NULL){
+                        kSam->next = newKSam;
+                    }else{
+                        newKSam->next = kSam->next;
+                        kSam->next = newKSam;
+                    }
+                }
+
+            }
+        }
+
+    }
+
+
+}
 
 void hapusUtas(int idUtas, int index, Account account);
 
-kSambungAdd createKicauanSambung(Word tex, Account account, int index){
+kSambungAdd createKicauanSambung(Word tex, Account account){
     kSambungAdd kicauSam = (kSambungAdd)malloc(sizeof(KicauSambung));
     if (kicauSam!=NULL){
-        kicauSam->index = index;
         kicauSam->next = NULL;
         CopyWordTo(&kicauSam->text,tex);
         CopyWordTo(&kicauSam->author,account.username[0]);

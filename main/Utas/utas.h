@@ -11,7 +11,7 @@ typedef struct kicau {
     char text[MAXChar];
     Word author;
     time_t datetime;
-    Utas* utas;
+    utas utas;
 } Kicau;
 
 typedef struct {
@@ -29,7 +29,7 @@ typedef struct kicausambung {
 
 } KicauSambung;
 
-typedef struct{
+typedef struct utas{
     int IDUtas;
     kSambungAdd content;
 } Utas;
@@ -59,8 +59,8 @@ typedef struct {
 #define Weton(U) (U).weton
 #define JenisAkun(U) (U).jenisAkun
 
-void sambungUtas(int idUtas, int index, Account account);
-void createUtas(int id, KicauList* list, Account account);
+void sambungUtas(int idUtas, KicauList* kList,int index, Account account);
+void createUtas(int id, KicauList* list, Account account, int jumlahUtas);
 void hapusUtas(int idUtas, int index, Account account);
-kSambungAdd createKicauanSambung(Word tex, Account account, int index);
+kSambungAdd createKicauanSambung(Word tex, Account account);
 boolean lanjut(Word input);
