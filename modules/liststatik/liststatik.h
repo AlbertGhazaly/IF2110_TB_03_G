@@ -85,6 +85,7 @@ void readListStatik(ListStatik *l);
 /* 2. Jika 0 < n <= CAPACITY; Lakukan n kali: 
           Baca elemen mulai dari indeks 0 satu per satu diakhiri enter */
 /*    Jika n = 0; hanya terbentuk List kosong */
+
 void printListStatik(ListStatik l);
 /* Proses : Menuliskan isi List dengan traversal, List ditulis di antara kurung 
    siku; antara dua elemen dipisahkan dengan separator "koma", tanpa tambahan 

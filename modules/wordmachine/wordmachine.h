@@ -88,4 +88,16 @@ Word stringToWord(char character[], int length);
 
 void CopyWordTo(Word *destination, Word source);
 
+void CopyWordCommand();
+
+boolean wordCheck(Word perintah, int idxawal, int idxakhir, Word katauji);
+
+Word wordFromIndex(Word word, int index);
+
+void CopyWordCommand();
+
+void STARTCOMMAND();
+
+void ADVCOMMAND();
+
 #endif
