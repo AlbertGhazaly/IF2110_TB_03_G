@@ -93,4 +93,10 @@ void PrintTopPrioQueueChar (prioqueuefren Q, int IDuser, AccountList * listakun,
 
 void colorizedProfil(MatrixChar mc);
 
+void ReadDraf_FILE(char filename[], AccountList *list, Stack *S);
+/*Membaca file Draf dari Draf.config kedalam program
+    I.S. Stack terdefinisi dan AccountList sudah diakuisisi dari user.config
+    F.S. Stack terisi dengan drafkicauan dari Draf.Config
+    */
+
 #endif
