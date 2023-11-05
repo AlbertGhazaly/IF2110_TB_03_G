@@ -4,8 +4,8 @@ Word emptyWord = {{'\0', 0}};
 Word privat = {"Privat", 6};
 Word publik = {"Publik", 6};
 
-Word yes = {"y", 1};
-Word no = {"n", 1};
+Word yes = {"ya", 2};
+Word no = {"tidak", 5};
 
 Word wetonJawa[] = {
         {"pon", 3},
@@ -72,7 +72,6 @@ void signup(AccountList *listakun){
         attemptUsername = currentWord;
     }
 
-
     ADVSENTENCE();
     STARTSENTENCE();
     printf("Masukkan kata sandi: ");
@@ -93,52 +92,59 @@ void signup(AccountList *listakun){
 }
 
 void signin(AccountList *akun, Account *akunLogin){
-    STARTSENTENCE();
-    printf("Masukkan nama: ");
-    STARTSENTENCE();
-    Word attemptUsername = currentWord;
-    while(attemptUsername.Length > 20){
+    if(isEmptyAccountList(akun)){
+        printf("Tidak ada akun terdaftar.\n\n");
+    }
+    else{
         STARTSENTENCE();
-        printf("Nama terlalu panjang, masukkan maksimal 20 karakter!\n");
         printf("Masukkan nama: ");
         STARTSENTENCE();
-        attemptUsername = currentWord;
-    }
-    while(!IsUsernameInAccountList(akun, attemptUsername)){
-        STARTSENTENCE();
-        printf("Tidak ada akun dengan nama tersebut, silahkan masukkan nama lain.\n");
-        printf("Masukkan nama: ");
-        STARTSENTENCE();
-        attemptUsername = currentWord;
-    }
-    ADVSENTENCE();
+        Word attemptUsername = currentWord;
+        while(attemptUsername.Length > 20){
+            STARTSENTENCE();
+            printf("Nama terlalu panjang, masukkan maksimal 20 karakter!\n");
+            printf("Masukkan nama: ");
+            STARTSENTENCE();
+            attemptUsername = currentWord;
+        }
+        while(!IsUsernameInAccountList(akun, attemptUsername)){
+            STARTSENTENCE();
+            printf("Tidak ada akun dengan nama tersebut, silahkan masukkan nama lain.\n");
+            printf("Masukkan nama: ");
+            STARTSENTENCE();
+            attemptUsername = currentWord;
+        }
+        ADVSENTENCE();
 
-    STARTSENTENCE();
-    printf("Masukkan kata sandi: ");
-    STARTSENTENCE();
-    Word attemptPassword = currentWord;
-    while(attemptPassword.Length > 20){
         STARTSENTENCE();
-        printf("Kata sandi terlalu panjang, masukkan maksimal 20 karakter!\n");
         printf("Masukkan kata sandi: ");
         STARTSENTENCE();
-        attemptPassword = currentWord;
+        Word attemptPassword = currentWord;
+        while(attemptPassword.Length > 20){
+            STARTSENTENCE();
+            printf("Kata sandi terlalu panjang, masukkan maksimal 20 karakter!\n");
+            printf("Masukkan kata sandi: ");
+            STARTSENTENCE();
+            attemptPassword = currentWord;
+        }
+        while(!cekPassword(akun, attemptUsername, attemptPassword)){
+            STARTSENTENCE();
+            printf("Kata sandi salah, coba lagi.\n");
+            printf("Masukkan kata sandi: ");
+            STARTSENTENCE();
+            attemptPassword = currentWord;
+        }
+        ADVSENTENCE();
+        inUser(akunLogin, attemptUsername);
+        printf("Selamat datang, ");
+        printWord(attemptUsername);
+        printf("!\n\n");
     }
-    while(!cekPassword(akun, attemptUsername, attemptPassword)){
-        STARTSENTENCE();
-        printf("Kata sandi salah, coba lagi.\n");
-        printf("Masukkan kata sandi: ");
-        STARTSENTENCE();
-        attemptPassword = currentWord;
-    }
-    ADVSENTENCE();
-    inUser(akunLogin, attemptUsername);
-    printf("Selamat datang, ");
-    printWord(attemptUsername);
-    printf("!\n");
 }
 
-
+boolean isEmptyAccountList(AccountList *list){
+    return list->count == 0;
+}
 
 void CreateAccountEmpty(Account *account) {
     *Username(*account) = emptyWord;
@@ -160,7 +166,7 @@ void AddAccountToList(AccountList *list, Account account){
 
 void DisplayAccounts(AccountList *list){
     if (list->count == 0) {
-        printf("Tidak ada akun dalam list.\n");
+        printf("Tidak ada akun dalam list.\n\n");
     } else {
         int i;
         for (i = 0; i < list->count; i++) {
@@ -170,11 +176,10 @@ void DisplayAccounts(AccountList *list){
             printf("Bio Akun: %s\n", list->accounts[i].bio);
             printf("No HP: %s\n", list->accounts[i].noHP);
             printf("Weton: %s\n", list->accounts[i].weton);
-            printf("Jenis Akun: %s\n", list->accounts[i].jenisAkun);
+            printf("Jenis Akun: %s\n\n", list->accounts[i].jenisAkun);
             printf("Foto Profil:\n");
-            // displayMatrixChar(list->accounts[i].fotoprofil);
             colorizedProfil(list->accounts[i].fotoprofil);
-            // colorizedProfil(list->accounts[i]->fotoprofil);
+            printf("\n");
         }
     }
 }
@@ -414,10 +419,11 @@ Word toLowerCase(Word word) {
 }
 
 void edit_profile(AccountList *list, Account user){
+    currentWord = emptyWord;
     printf("| Nama: %s\n", list->accounts[GetAccountIdx(list, user)].username->TabWord);
     printf("| Bio Akun: %s\n", list->accounts[GetAccountIdx(list, user)].bio->TabWord);
     printf("| No HP: %s\n", list->accounts[GetAccountIdx(list, user)].noHP->TabWord);
-    printf("| Weton: %s\n", list->accounts[GetAccountIdx(list, user)].weton->TabWord);
+    printf("| Weton: %s\n\n", list->accounts[GetAccountIdx(list, user)].weton->TabWord);
     
     STARTSENTENCE();
     printf("Masukkan Bio Akun: ");
@@ -434,45 +440,48 @@ void edit_profile(AccountList *list, Account user){
     if (!WordEqual(attemptBio, emptyWord)){
         CopyWordTo(list->accounts[GetAccountIdx(list, user)].bio, attemptBio);
     }
-
+    currentWord = emptyWord;
     ADVSENTENCE();
     STARTSENTENCE();
     printf("Masukkan No HP: ");
     STARTSENTENCE();
     Word attemptNoHP = currentWord;
-    while(attemptNoHP.Length > 20 || !isPhoneNumberValid(currentWord)){
-        STARTSENTENCE();
-        printf("No HP tidak valid, masukkan No HP yang valid!\n");
-        printf("Masukkan No HP: ");
-        STARTSENTENCE();
-        attemptNoHP = currentWord;
-    }
-
     if (!WordEqual(attemptNoHP, emptyWord)){
+        while(attemptNoHP.Length > 20 || !isPhoneNumberValid(currentWord)){
+            STARTSENTENCE();
+            printf("No HP tidak valid, masukkan No HP yang valid!\n");
+            printf("Masukkan No HP: ");
+            STARTSENTENCE();
+            attemptNoHP = currentWord;
+        }
         CopyWordTo(list->accounts[GetAccountIdx(list, user)].noHP, attemptNoHP);
     }
-
+    currentWord = emptyWord;
     ADVSENTENCE();
     STARTSENTENCE();
     printf("Masukkan Weton: ");
     STARTSENTENCE();
     Word attemptWeton = currentWord;
-    while(attemptWeton.Length > 20 || !isWetonJawa(toLowerCase(attemptWeton))){
-        STARTSENTENCE();
-        printf("Weton tidak valid, masukkan Weton yang valid!\n");
-        printf("Masukkan Weton: ");
-        STARTSENTENCE();
-        attemptWeton = currentWord;
-    }
-    ADVSENTENCE();
-
     if (!WordEqual(attemptWeton, emptyWord)){
-        CopyWordTo(list->accounts[GetAccountIdx(list, user)].weton, attemptWeton);
+        while(attemptWeton.Length > 20 || !isWetonJawa(toLowerCase(attemptWeton))){
+            STARTSENTENCE();
+            printf("Weton tidak valid, masukkan Weton yang valid!\n");
+            printf("Masukkan Weton: ");
+            STARTSENTENCE();
+            attemptWeton = currentWord;
+        }
+        ADVSENTENCE();
+
+        if (!WordEqual(attemptWeton, emptyWord)){
+            CopyWordTo(list->accounts[GetAccountIdx(list, user)].weton, attemptWeton);
+        }
     }
+    printf("Akun anda berasil diperbaharui!\n\n");
 }
 
 void ganti_jenis_akun(AccountList *list, Account user){
     if(WordEqualAccount(*list->accounts[GetAccountIdx(list, user)].jenisAkun, publik)){
+        currentWord = emptyWord;
         STARTSENTENCE();
         printf("Saat ini, akun Anda adalah akun Publik. Ingin mengubah ke akun Privat? (Y/N): ");
         STARTSENTENCE();
@@ -483,18 +492,19 @@ void ganti_jenis_akun(AccountList *list, Account user){
             printf("Saat ini, akun Anda adalah akun Publik. Ingin mengubah ke akun Privat? (Y/N): ");
             STARTSENTENCE();
             attemptJenis = currentWord;
+            printWord(attemptJenis);
         }
         ADVSENTENCE();
-
-        if(WordEqual(attemptJenis, yes)){
+        if(WordEqual(toLowerCase(attemptJenis), yes)){
             CopyWordTo(list->accounts[GetAccountIdx(list, user)].jenisAkun, privat);
-            printf("Akun anda sudah diubah menjadi akun Privat.\n");
+            printf("Akun anda sudah diubah menjadi akun Privat.\n\n");
         }
         else{
-            printf("Akun anda tetap akun Publik.\n");
+            printf("Akun anda tetap akun Publik.\n\n");
         }
     }
     else{
+        currentWord = emptyWord;
         STARTSENTENCE();
         printf("Saat ini, akun Anda adalah akun Privat. Ingin mengubah ke akun Publik? (Y/N): ");
         STARTSENTENCE();
@@ -508,12 +518,12 @@ void ganti_jenis_akun(AccountList *list, Account user){
         }
         ADVSENTENCE();
 
-        if(WordEqual(attemptJenis, yes)){
+        if(WordEqual(toLowerCase(attemptJenis), yes)){
             CopyWordTo(list->accounts[GetAccountIdx(list, user)].jenisAkun, publik);
-            printf("Akun anda sudah diubah menjadi akun Publik.\n");
+            printf("Akun anda sudah diubah menjadi akun Publik.\n\n");
         }
         else{
-            printf("Akun anda tetap akun Privat.\n");
+            printf("Akun anda tetap akun Privat.\n\n");
         }
     }
 }
@@ -549,8 +559,33 @@ void edit_foto(AccountList *list, Account user){
         }
         ADVSENTENCE();
     }
-    printf("Foto profil berhasil diubah!\n");
+    printf("Foto profil berhasil diubah!\n\n");
 }
+
+void show_profile(AccountList *l, Word username){
+    int i = 0;
+    boolean found = false;
+    while (!found && i < l->count) {
+        if (WordEqualAccount(*l->accounts[i].username, username)) {
+            found = true;
+        }
+        i++;
+    }
+    if(found){
+        printf("| Nama: %s\n", l->accounts[i-1].username->TabWord);
+        printf("| Bio Akun: %s\n", l->accounts[i-1].bio->TabWord);
+        printf("| No HP: %s\n", l->accounts[i-1].noHP->TabWord);
+        printf("| Weton: %s\n", l->accounts[i-1].weton->TabWord);
+        printf("| Jenis Akun: %s\n\n", l->accounts[i-1].jenisAkun->TabWord);
+        printf("| Foto Profil:\n");
+        colorizedProfil(l->accounts[i-1].fotoprofil);
+        printf("\n");
+    }
+    else{
+        printf("Username tidak ditemukan.\n\n");
+    }
+}
+
 void PrintPrioQueue (prioqueuefren Q, AccountList * listakun)
 {
     if(IsEmptyPrio(Q))

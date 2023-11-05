@@ -231,3 +231,63 @@ void CopyWordTo(Word *destination, Word source) {
     }
     destination->Length = source.Length;
 }
+
+boolean wordCheck(Word perintah, int idxawal, int idxakhir, Word katauji){
+    /*Mengembalikan true apabila katauji sama dengan kata yang ada di perintah dari idxawal sampai idxakhir*/
+    boolean cek = true;
+    int i;
+    for (i=idxawal; i<=idxakhir; i++){
+        if (perintah.TabWord[i] != katauji.TabWord[i]){
+            cek = false;
+        }
+    }
+    return cek;
+}
+
+// Fungsi yang mengembalikan Word dari index tertentu sampai akhir word lain
+Word wordFromIndex(Word word, int index){
+    Word newWord;
+    int i;
+    for (i = index; i < word.Length; i++) {
+        newWord.TabWord[i - index] = word.TabWord[i];
+    }
+    newWord.Length = word.Length - index;
+    return newWord;
+}
+
+void CopyWordCommand(){
+    int i = 0;
+    while (currentChar != MARK){
+        currentWord.TabWord[i] = currentChar;
+        ADV();
+        i++;
+    }
+    if (i > NMax){
+        currentWord.Length = NMax;
+    }
+    else{
+        currentWord.Length = i;
+    }
+    EndWord = true;
+}
+
+void STARTCOMMAND(){
+    START();
+    IgnoreBlanks();
+    IgnoreNewLine();
+    if (currentChar == MARK) {
+        EndWord = true;
+    } else {
+        EndWord = false;
+        CopyWordCommand();
+    }
+}
+
+void ADVCOMMAND(){
+    IgnoreBlanks();
+    if (currentChar == MARK) {
+        EndWord = true;
+    } else {
+        CopyWordCommand();
+    }
+}
