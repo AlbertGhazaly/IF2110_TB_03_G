@@ -4,8 +4,8 @@ Word emptyWord = {{'\0', 0}};
 Word privat = {"Privat", 6};
 Word publik = {"Publik", 6};
 
-Word yes = {"y", 1};
-Word no = {"n", 1};
+Word yes = {"ya", 2};
+Word no = {"tidak", 5};
 
 Word wetonJawa[] = {
         {"pon", 3},
@@ -481,6 +481,7 @@ void edit_profile(AccountList *list, Account user){
 
 void ganti_jenis_akun(AccountList *list, Account user){
     if(WordEqualAccount(*list->accounts[GetAccountIdx(list, user)].jenisAkun, publik)){
+        currentWord = emptyWord;
         STARTSENTENCE();
         printf("Saat ini, akun Anda adalah akun Publik. Ingin mengubah ke akun Privat? (Y/N): ");
         STARTSENTENCE();
@@ -491,10 +492,10 @@ void ganti_jenis_akun(AccountList *list, Account user){
             printf("Saat ini, akun Anda adalah akun Publik. Ingin mengubah ke akun Privat? (Y/N): ");
             STARTSENTENCE();
             attemptJenis = currentWord;
+            printWord(attemptJenis);
         }
         ADVSENTENCE();
-
-        if(WordEqual(attemptJenis, yes)){
+        if(WordEqual(toLowerCase(attemptJenis), yes)){
             CopyWordTo(list->accounts[GetAccountIdx(list, user)].jenisAkun, privat);
             printf("Akun anda sudah diubah menjadi akun Privat.\n\n");
         }
@@ -503,6 +504,7 @@ void ganti_jenis_akun(AccountList *list, Account user){
         }
     }
     else{
+        currentWord = emptyWord;
         STARTSENTENCE();
         printf("Saat ini, akun Anda adalah akun Privat. Ingin mengubah ke akun Publik? (Y/N): ");
         STARTSENTENCE();
@@ -516,7 +518,7 @@ void ganti_jenis_akun(AccountList *list, Account user){
         }
         ADVSENTENCE();
 
-        if(WordEqual(attemptJenis, yes)){
+        if(WordEqual(toLowerCase(attemptJenis), yes)){
             CopyWordTo(list->accounts[GetAccountIdx(list, user)].jenisAkun, publik);
             printf("Akun anda sudah diubah menjadi akun Publik.\n\n");
         }
