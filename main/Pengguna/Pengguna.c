@@ -482,13 +482,13 @@ void ganti_jenis_akun(AccountList *list, Account user){
     if(WordEqualAccount(*list->accounts[GetAccountIdx(list, user)].jenisAkun, publik)){
         currentWord = emptyWord;
         STARTSENTENCE();
-        printf("Saat ini, akun Anda adalah akun Publik. Ingin mengubah ke akun Privat? (Y/N): ");
+        printf("Saat ini, akun Anda adalah akun Publik. Ingin mengubah ke akun Privat? (YA/TIDAK): ");
         STARTSENTENCE();
         Word attemptJenis = currentWord;
         while(!(WordEqual(toLowerCase(attemptJenis), yes) || WordEqual(toLowerCase(attemptJenis), no))){
             STARTSENTENCE();
             printf("Input tidak valid!\n");
-            printf("Saat ini, akun Anda adalah akun Publik. Ingin mengubah ke akun Privat? (Y/N): ");
+            printf("Saat ini, akun Anda adalah akun Publik. Ingin mengubah ke akun Privat? (YA/TIDAK): ");
             STARTSENTENCE();
             attemptJenis = currentWord;
             printWord(attemptJenis);
@@ -505,13 +505,13 @@ void ganti_jenis_akun(AccountList *list, Account user){
     else{
         currentWord = emptyWord;
         STARTSENTENCE();
-        printf("Saat ini, akun Anda adalah akun Privat. Ingin mengubah ke akun Publik? (Y/N): ");
+        printf("Saat ini, akun Anda adalah akun Privat. Ingin mengubah ke akun Publik? (YA/TIDAK): ");
         STARTSENTENCE();
         Word attemptJenis = currentWord;
         while(!(WordEqual(toLowerCase(attemptJenis), yes) || WordEqual(toLowerCase(attemptJenis), no))){
             STARTSENTENCE();
             printf("Input tidak valid!\n");
-            printf("Saat ini, akun Anda adalah akun Privat. Ingin mengubah ke akun Publik? (Y/N): ");
+            printf("Saat ini, akun Anda adalah akun Privat. Ingin mengubah ke akun Publik? (YA/TIDAK): ");
             STARTSENTENCE();
             attemptJenis = currentWord;
         }
