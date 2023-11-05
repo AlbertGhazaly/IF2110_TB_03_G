@@ -1,23 +1,9 @@
-#include "../modules/adt.h"
+#include "../../modules/adt.h"
 #include <time.h>
 #include <stdlib.h>
 #include <stdio.h>
 
 #define MAXChar 280
-
-typedef struct kicau {
-    int id;
-    int like;
-    char text[MAXChar];
-    Word author;
-    time_t datetime;
-    utas utas = NULL;
-} Kicau;
-
-typedef struct {
-    Kicau kicauan[1000];
-    int count;
-} KicauList;
 
 typedef struct kicausambung *kSambungAdd;
 typedef struct kicausambung {
@@ -29,10 +15,25 @@ typedef struct kicausambung {
 
 } KicauSambung;
 
-typedef struct utas{
+typedef struct {
     int IDUtas;
     kSambungAdd content;
 } Utas;
+typedef struct kicau {
+    int id;
+    int like;
+    char text[MAXChar];
+    Word author;
+    time_t datetime;
+    Utas* utasKicau;
+ } Kicau;
+
+typedef struct {
+    Kicau kicauan[1000];
+    int count;
+} KicauList;
+
+
 
 #define MAX_USERNAME_LENGTH 20
 #define MAX_PASSWORD_LENGTH 20
@@ -58,9 +59,15 @@ typedef struct {
 #define NoHP(U) (U).noHP
 #define Weton(U) (U).weton
 #define JenisAkun(U) (U).jenisAkun
-
+#define MAX_ACCOUNTS 20
+typedef struct {
+    Account accounts[MAX_ACCOUNTS];
+    int count;
+} AccountList;
 void sambungUtas(int idUtas,int index, KicauList* kList, Account account);
-void createUtas(int id, KicauList* list, Account account, int jumlahUtas);
+void createUtas(int id, KicauList* list, Account account, int* jumlahUtas);
 void hapusUtas(int idUtas, int index,KicauList* kList ,Account account);
+void cetakUtas(int idUtas, KicauList kList,Account account, AccountList listAccount,Graf teman);
 kSambungAdd createKicauanSambung(Word tex, Account account);
 boolean lanjut(Word input);
+void copyWordToString(char (destination[MAXChar]),Word input);

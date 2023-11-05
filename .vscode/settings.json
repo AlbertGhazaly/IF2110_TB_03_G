@@ -11,6 +11,7 @@
         "time.h": "c",
         "datetime.h": "c",
         "stat.h": "c",
-        "sstream": "c"
+        "sstream": "c",
+        "stdlib.h": "c"
     }
 }
