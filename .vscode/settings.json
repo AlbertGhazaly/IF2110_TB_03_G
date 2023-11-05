@@ -10,6 +10,7 @@
         "permintaanpertemanan.h": "c",
         "prioqueuefren.h": "c",
         "time.h": "c",
-        "datetime.h": "c"
+        "datetime.h": "c",
+        "kicauan.h": "c"
     }
 }
