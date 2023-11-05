@@ -10,6 +10,9 @@
         "adt.h": "c",
         "time.h": "c",
         "datetime.h": "c",
-        "kicauan.h": "c"
+        "kicauan.h": "c",
+        "stat.h": "c",
+        "sstream": "c",
+        "stdlib.h": "c"
     }
 }

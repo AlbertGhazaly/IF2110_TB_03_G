@@ -14,4 +14,6 @@ void saveReplyCnfg();
 void saveDraftCnfg();
 void saveUtasCnfg();
 
+boolean isDirExist(char path[]);
+
 #endif
