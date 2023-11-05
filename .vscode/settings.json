@@ -6,9 +6,10 @@
         "stack.h": "c",
         "pengguna.h": "c",
         "permintaanpertemanan.h": "c",
-        "prioqueuefren.h": "c"
+        "prioqueuefren.h": "c",
         "adt.h": "c",
         "time.h": "c",
-        "datetime.h": "c"
+        "datetime.h": "c",
+        "kicauan.h": "c"
     }
 }

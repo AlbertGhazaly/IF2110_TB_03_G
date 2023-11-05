@@ -15,6 +15,7 @@
 #include "./wordmachine/charmachine.c"
 #include "./time/datetime.h"
 #include "./time/datetime.c"
+#include "./time/time.h"
 #include "./time/time.c"
 #include "./stack/stack.h"
 #include "./stack/stack.c"

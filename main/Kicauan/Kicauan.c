@@ -1,10 +1,5 @@
-#include <stdio.h>
-#include "kicauan.h"
-#include "time.h"
-#include "../../modules/wordmachine/charmachine.h"
-#include "../../modules/wordmachine/wordmachine.h"
-#include "../../modules/time/datetime.h"
-#include "../../modules/time/time.h"
+#include "Kicauan.h"
+
 
 void CreateKicau (Kicau *k, char author[])
 {
