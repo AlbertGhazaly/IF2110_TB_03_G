@@ -13,6 +13,7 @@
         "kicauan.h": "c",
         "stat.h": "c",
         "sstream": "c",
-        "stdlib.h": "c"
+        "stdlib.h": "c",
+        "stdio.h": "c"
     }
 }
