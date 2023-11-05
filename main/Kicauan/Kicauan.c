@@ -1,4 +1,5 @@
-#include "kicauan.h"
+#include "Kicauan.h"
+
 
 void CreateKicau (Kicau *k, char author[])
 {

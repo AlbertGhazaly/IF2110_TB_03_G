@@ -15,7 +15,10 @@ int main() {
     createEmptyGraf(&teman);
     prioqueuefren Q;
     MakeEmptyprio(&Q,100);
+    Stack draf;
+    CreateEmpty(&draf);
     ReadUser_FILE("../cfg/pengguna.config", &akun, &teman, &Q);
+    ReadDraf_FILE("../cfg/draf.config", &akun, &draf);
     Account akunLogin;
 
     boolean isLogin = false;

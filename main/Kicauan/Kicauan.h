@@ -1,3 +1,6 @@
+#ifndef Kicauan_H
+#define Kicauan_H
+
 #include "../../modules/adt.h"
 
 #define MAXChar 280
@@ -27,3 +30,4 @@ void AddKicauToList (Kicau k, KicauList *list);
 
 void Kicauan (KicauList *list);
 
+#endif
