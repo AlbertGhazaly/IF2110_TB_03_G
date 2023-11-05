@@ -15,6 +15,23 @@ Word wetonJawa[] = {
         {"pahing", 6}
     };
 
+MatrixChar default_foto(){
+    MatrixChar mc;
+    createMatrixchar(5, 10, &mc);
+    int i, j;
+    for (i = 0; i < 5; i++){
+        for (j = 0; j < 10; j++){
+            if( j % 2 == 0){
+                ELMTChar(mc, i, j) = 'R';
+            }
+            else{
+                ELMTChar(mc, i, j) = '*';
+            }
+        }
+    }
+    return mc;
+}
+
 void inUser(Account *account, Word username){
     *Username(*account) = emptyWord;
     CopyWordTo(Username(*account), username);
@@ -30,6 +47,7 @@ void CreateAccount(Account *account, Word username, Word password){
     CopyWordTo(NoHP(*account), emptyWord);
     CopyWordTo(Weton(*account), emptyWord);
     CopyWordTo(JenisAkun(*account), publik);
+    copyMatrixChar(default_foto(), &FotoProfil(*account));
 }
 
 void signup(AccountList *listakun){
@@ -45,6 +63,15 @@ void signup(AccountList *listakun){
         STARTSENTENCE();
         attemptUsername = currentWord;
     }
+    
+    while(IsUsernameInAccountList(listakun, attemptUsername)){
+        STARTSENTENCE();
+        printf("Nama tersebut sudah terdaftar, masukkan nama lain!\n");
+        printf("Masukkan nama: ");
+        STARTSENTENCE();
+        attemptUsername = currentWord;
+    }
+
 
     ADVSENTENCE();
     STARTSENTENCE();
@@ -63,6 +90,52 @@ void signup(AccountList *listakun){
     CreateAccount(&akun, attemptUsername, attemptPassword);
     AddAccountToList(listakun, akun);
     printf("\nAkun berhasil ditambahkan ke daftar pengguna. Silahkan masuk untuk menikmati fitur Burbir.\n");
+}
+
+void signin(AccountList *akun, Account *akunLogin){
+    STARTSENTENCE();
+    printf("Masukkan nama: ");
+    STARTSENTENCE();
+    Word attemptUsername = currentWord;
+    while(attemptUsername.Length > 20){
+        STARTSENTENCE();
+        printf("Nama terlalu panjang, masukkan maksimal 20 karakter!\n");
+        printf("Masukkan nama: ");
+        STARTSENTENCE();
+        attemptUsername = currentWord;
+    }
+    while(!IsUsernameInAccountList(akun, attemptUsername)){
+        STARTSENTENCE();
+        printf("Tidak ada akun dengan nama tersebut, silahkan masukkan nama lain.\n");
+        printf("Masukkan nama: ");
+        STARTSENTENCE();
+        attemptUsername = currentWord;
+    }
+    ADVSENTENCE();
+
+    STARTSENTENCE();
+    printf("Masukkan kata sandi: ");
+    STARTSENTENCE();
+    Word attemptPassword = currentWord;
+    while(attemptPassword.Length > 20){
+        STARTSENTENCE();
+        printf("Kata sandi terlalu panjang, masukkan maksimal 20 karakter!\n");
+        printf("Masukkan kata sandi: ");
+        STARTSENTENCE();
+        attemptPassword = currentWord;
+    }
+    while(!cekPassword(akun, attemptUsername, attemptPassword)){
+        STARTSENTENCE();
+        printf("Kata sandi salah, coba lagi.\n");
+        printf("Masukkan kata sandi: ");
+        STARTSENTENCE();
+        attemptPassword = currentWord;
+    }
+    ADVSENTENCE();
+    inUser(akunLogin, attemptUsername);
+    printf("Selamat datang, ");
+    printWord(attemptUsername);
+    printf("!\n");
 }
 
 
@@ -98,7 +171,10 @@ void DisplayAccounts(AccountList *list){
             printf("No HP: %s\n", list->accounts[i].noHP);
             printf("Weton: %s\n", list->accounts[i].weton);
             printf("Jenis Akun: %s\n", list->accounts[i].jenisAkun);
-            displayMatrixChar(list->accounts->fotoprofil);
+            printf("Foto Profil:\n");
+            // displayMatrixChar(list->accounts[i].fotoprofil);
+            colorizedProfil(list->accounts[i].fotoprofil);
+            // colorizedProfil(list->accounts[i]->fotoprofil);
         }
     }
 }
@@ -442,6 +518,39 @@ void ganti_jenis_akun(AccountList *list, Account user){
     }
 }
 
+void colorizedProfil(MatrixChar mc){
+    int i, j;
+    for (i = 0; i < ROW_EFFChar(mc); i++){
+        for (j = 0; j < COL_EFFChar(mc) - 1; j++){
+            if(ELMTChar(mc, i, j) == 'R'){
+                print_red(ELMTChar(mc, i, j + 1));
+            }
+            else if(ELMTChar(mc, i, j) == 'G'){
+                print_green(ELMTChar(mc, i, j + 1));
+            }
+            else if(ELMTChar(mc, i, j) == 'B'){
+                print_blue(ELMTChar(mc, i, j + 1));
+            }
+        }
+        printf("\n");
+    }
+}
+
+void edit_foto(AccountList *list, Account user){
+    printf("Foto Profil:\n");
+    colorizedProfil(list->accounts[GetAccountIdx(list, user)].fotoprofil);
+    printf("Masukkan foto profil baru:\n");
+    int i, j;
+    STARTSENTENCE();
+    ADVSENTENCE();
+    for (i = 0; i < ROW_EFFChar(list->accounts[GetAccountIdx(list, user)].fotoprofil); i++){
+        for (j = 0; j < COL_EFFChar(list->accounts[GetAccountIdx(list, user)].fotoprofil); j++){
+            ELMTChar(list->accounts[GetAccountIdx(list, user)].fotoprofil,i,j) = currentWord.TabWord[j*2];
+        }
+        ADVSENTENCE();
+    }
+    printf("Foto profil berhasil diubah!\n");
+}
 void PrintPrioQueue (prioqueuefren Q, AccountList * listakun)
 {
     if(IsEmptyPrio(Q))
