@@ -2,24 +2,8 @@
 #include <time.h>
 #include <stdlib.h>
 #include <stdio.h>
-#include "../Kicauan/Kicauan.h"
 #include "../Pengguna/Pengguna.h"
-#define MAXChar 280
-
-typedef struct kicausambung *kSambungAdd;
-typedef struct kicausambung {
-    int index;
-    char text[MAXChar];
-    time_t datetime;
-    Word author;
-    kSambungAdd next;
-
-} KicauSambung;
-
-typedef struct {
-    int IDUtas;
-    kSambungAdd content;
-} Utas;
+#include "../Kicauan/Kicauan.h"
 
 void sambungUtas(int idUtas,int index, KicauList* kList, Account account);
 void createUtas(int id, KicauList* list, Account account, int* jumlahUtas);

@@ -192,7 +192,7 @@ void cetakUtas(int idUtas, KicauList kList,Account account, AccountList listAcco
         }else{
             printf("| ID = %d\n",kicauan->id);
             printf("| %s\n",kicauan->author.TabWord);
-            struct tm *tm_struct = kicauan->datetime;
+            struct tm *tm_struct = localtime(&kicauan->datetime);
             DATETIME local;
             CreateDATETIME(&local, tm_struct->tm_mday, tm_struct->tm_mon + 1, tm_struct->tm_year + 1900, tm_struct->tm_hour, tm_struct->tm_min, tm_struct->tm_sec);
             printf("| ");TulisDATETIME(local);printf("\n");
@@ -203,7 +203,7 @@ void cetakUtas(int idUtas, KicauList kList,Account account, AccountList listAcco
             while(kSam!=NULL){
                 printf("   | INDEX = %d\n",i+1 );
                 printf("   | %s\n",kSam->author.TabWord);
-                tm_struct = kSam->datetime;
+                tm_struct = localtime(&kSam->datetime);
                 CreateDATETIME(&local, tm_struct->tm_mday, tm_struct->tm_mon + 1, tm_struct->tm_year + 1900, tm_struct->tm_hour, tm_struct->tm_min, tm_struct->tm_sec);
                 printf("   | " );TulisDATETIME(local);printf("\n");
                 printf("   | %s\n",kSam->text);

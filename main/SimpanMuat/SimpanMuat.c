@@ -4,7 +4,7 @@
 void muat(char floderName[]){
     char path[] = "../cfg/";
 
-    if (!isDirExist(concat(path,floderName))){
+    if (!isDirExist(concatStr(path,floderName))){
         printf("Tidak ada folder yang dimaksud!\n");
     }else{
         for (int i=0;i<5;i++){
@@ -31,7 +31,7 @@ void muat(char floderName[]){
 void simpan(char folderName[]){
     // concat path to cfg folder
     char path[]= "../cfg/";
-    if (!isDirExist(concat(path,folderName))){
+    if (!isDirExist(concatStr(path,folderName))){
         printf("Belum terdapat Folder1.\nAkan dilakukan pembuatan Folder1 terlebih dahulu.\n");
         printf("Mohon tunggu...\n1...\n2...\n3...\n%s sudah berhasil dibuat.\n",folderName);
     }
@@ -64,7 +64,7 @@ boolean isDirExist(char path[]){
     }
     return false;
 }
-char* concat(char path[],char folder[]){
+char* concatStr(char path[],char folder[]){
     int i;
     for (i=0;path[i]!='\0';i++);
     for (int j=0;folder[j]!='\0';j++){

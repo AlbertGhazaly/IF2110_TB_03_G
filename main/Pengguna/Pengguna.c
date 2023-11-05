@@ -171,12 +171,12 @@ void DisplayAccounts(AccountList *list){
         int i;
         for (i = 0; i < list->count; i++) {
             printf("Akun %d:\n", i + 1);
-            printf("Username: %s\n", list->accounts[i].username);
-            printf("Password: %s\n", list->accounts[i].password);
-            printf("Bio Akun: %s\n", list->accounts[i].bio);
-            printf("No HP: %s\n", list->accounts[i].noHP);
-            printf("Weton: %s\n", list->accounts[i].weton);
-            printf("Jenis Akun: %s\n\n", list->accounts[i].jenisAkun);
+            printf("Username: %s\n", list->accounts[i].username[0].TabWord);
+            printf("Password: %s\n", list->accounts[i].password[0].TabWord);
+            printf("Bio Akun: %s\n", list->accounts[i].bio[0].TabWord);
+            printf("No HP: %s\n", list->accounts[i].noHP[0].TabWord);
+            printf("Weton: %s\n", list->accounts[i].weton[0].TabWord);
+            printf("Jenis Akun: %s\n\n", list->accounts[i].jenisAkun[0].TabWord);
             printf("Foto Profil:\n");
             colorizedProfil(list->accounts[i].fotoprofil);
             printf("\n");

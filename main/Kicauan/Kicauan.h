@@ -5,6 +5,22 @@
 
 #define MAXChar 280
 
+typedef struct kicausambung *kSambungAdd;
+typedef struct kicausambung {
+    int index;
+    char text[MAXChar];
+    time_t datetime;
+    Word author;
+    kSambungAdd next;
+
+} KicauSambung;
+
+typedef struct {
+    int IDUtas;
+    kSambungAdd content;
+} Utas;
+#define MAXChar 280
+
 typedef struct kicau {
     int id;
     int like;
@@ -18,6 +34,8 @@ typedef struct {
     Kicau kicauan[1000];
     int count;
 } KicauList;
+
+
 
 void CreateKicau (Kicau *k, char author[]);
 

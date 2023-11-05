@@ -13,7 +13,7 @@ void saveTweetCnfg();
 void saveReplyCnfg();
 void saveDraftCnfg();
 void saveUtasCnfg();
-
+char* concatStr(char path[],char folder[]);
 boolean isDirExist(char path[]);
 
 #endif

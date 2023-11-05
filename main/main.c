@@ -140,7 +140,7 @@ int main() {
             else{
                 show_profile(&akun, wordFromIndex(command, 13));
             }
-        }else if (wordCheck(command,0,3,utas))
+        }else if (wordCheck(command,0,3,utas)) //utas
         {
             int i= 5;
             int id = 0;
@@ -151,12 +151,12 @@ int main() {
                 i++;
             }
             createUtas(id,&kList,akunLogin,&idUtas);
-        }else if (wordCheck(command,0,11,sambung_utas))
+        }else if (wordCheck(command,0,11,sambung_utas)) //sambung utas
         {
             int idUtas=0;
             int index = 0;
             int i= 13;
-            while (command.TabWord[i]!=" ")
+            while (command.TabWord[i]!=' ')
             {
                 idUtas *=10;
                 idUtas += CharToInt(command.TabWord[i]);
@@ -172,12 +172,12 @@ int main() {
             sambungUtas(idUtas,index,&kList,akunLogin);
             
             
-        }else if(wordCheck(command,0,9,hapus_utas))
+        }else if(wordCheck(command,0,9,hapus_utas)) //hapus utas
         {
             int idUtas=0;
             int index = 0;
             int i= 11;
-            while (command.TabWord[i]!=" ")
+            while (command.TabWord[i]!=' ')
             {
                 idUtas *=10;
                 idUtas += CharToInt(command.TabWord[i]);
@@ -191,7 +191,7 @@ int main() {
                 i++;
             }
             hapusUtas(idUtas,index,&kList,akunLogin);
-        }else if(wordCheck(command,0,9,cetak_utas))
+        }else if(wordCheck(command,0,9,cetak_utas)) //cetak utas
         {
             int idUtas = 0;
             int i = 11;
