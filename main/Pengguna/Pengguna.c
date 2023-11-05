@@ -349,7 +349,6 @@ void ReadUser_FILE(char filename[], AccountList *list, Graf *Teman, prioqueuefre
                 }
                 if(j == 2){
                     temp.Jumlahteman = CharToInt(currentWord.TabWord[j*2]);
-                    printf("%d\n", temp.Jumlahteman);
                 }
             }
             Enqueueprio(Q, temp);
@@ -483,13 +482,13 @@ void ganti_jenis_akun(AccountList *list, Account user){
     if(WordEqualAccount(*list->accounts[GetAccountIdx(list, user)].jenisAkun, publik)){
         currentWord = emptyWord;
         STARTSENTENCE();
-        printf("Saat ini, akun Anda adalah akun Publik. Ingin mengubah ke akun Privat? (Y/N): ");
+        printf("Saat ini, akun Anda adalah akun Publik. Ingin mengubah ke akun Privat? (YA/TIDAK): ");
         STARTSENTENCE();
         Word attemptJenis = currentWord;
         while(!(WordEqual(toLowerCase(attemptJenis), yes) || WordEqual(toLowerCase(attemptJenis), no))){
             STARTSENTENCE();
             printf("Input tidak valid!\n");
-            printf("Saat ini, akun Anda adalah akun Publik. Ingin mengubah ke akun Privat? (Y/N): ");
+            printf("Saat ini, akun Anda adalah akun Publik. Ingin mengubah ke akun Privat? (YA/TIDAK): ");
             STARTSENTENCE();
             attemptJenis = currentWord;
             printWord(attemptJenis);
@@ -506,13 +505,13 @@ void ganti_jenis_akun(AccountList *list, Account user){
     else{
         currentWord = emptyWord;
         STARTSENTENCE();
-        printf("Saat ini, akun Anda adalah akun Privat. Ingin mengubah ke akun Publik? (Y/N): ");
+        printf("Saat ini, akun Anda adalah akun Privat. Ingin mengubah ke akun Publik? (YA/TIDAK): ");
         STARTSENTENCE();
         Word attemptJenis = currentWord;
         while(!(WordEqual(toLowerCase(attemptJenis), yes) || WordEqual(toLowerCase(attemptJenis), no))){
             STARTSENTENCE();
             printf("Input tidak valid!\n");
-            printf("Saat ini, akun Anda adalah akun Privat. Ingin mengubah ke akun Publik? (Y/N): ");
+            printf("Saat ini, akun Anda adalah akun Privat. Ingin mengubah ke akun Publik? (YA/TIDAK): ");
             STARTSENTENCE();
             attemptJenis = currentWord;
         }
@@ -637,7 +636,6 @@ void ReadDraf_FILE(char filename[], AccountList *list, Stack *S){
     int N;
     STARTWORD_FILE(filename);
     N = WordToInt(currentWord);
-    printf("%d", N);
     int i;
     for(i = 0; i < N; i++)
     {
@@ -659,9 +657,7 @@ void ReadDraf_FILE(char filename[], AccountList *list, Stack *S){
             }
             i++; 
         }
-        printf("ID:%d\n", idAkun);
         jumlah = CharToInt(currentWord.TabWord[currentWord.Length-1]);
-        printf("%d\n", jumlah);
         for(j = 0; j < jumlah; j++)
         {
             drafkicau DrafKicau;
@@ -694,7 +690,6 @@ void ReadDraf_FILE(char filename[], AccountList *list, Stack *S){
             }
             hh.Length = 2;
             int HH = WordToInt(hh);
-            // printf("%d\n", HH);
             Word m;
             for(k = 14; k < 16; k++){
                 m.TabWord[k-14] = currentWord.TabWord[k];

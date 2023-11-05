@@ -50,6 +50,8 @@ void signin(AccountList *list, Account *akunLogin);
 
 void fillAccount(AccountList *listakun);
 
+boolean isEmptyAccountList(AccountList *list);
+
 void CreateAccountEmpty(Account *account);
 
 void CreateAccountList(AccountList *list);
