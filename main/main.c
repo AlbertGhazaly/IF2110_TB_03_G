@@ -20,6 +20,9 @@ int main() {
     ReadUser_FILE("../cfg/pengguna.config", &akun, &teman, &Q);
     ReadDraf_FILE("../cfg/draf.config", &akun, &draf);
     Account akunLogin;
+    KicauList kList;
+    int idUtas = 0;
+
 
     boolean isLogin = false;
     printf("           ____  __  __  ____  ____  ____  ____ /\\ \n");
@@ -48,7 +51,10 @@ int main() {
         Word tambah_teman = {"TAMBAH_TEMAN", 12};
         Word daftar_permintaan_teman = {"DAFTAR_PERMINTAAN_PERTEMANAN", 28};
         Word setujui_pertemanan = {"SETUJUI_PERTEMANAN", 18};
-
+        Word utas = {"UTAS",4};
+        Word sambung_utas = {"SAMBUNG_UTAS",12};
+        Word hapus_utas = {"HAPUS_UTAS",10};
+        Word cetak_utas = {"CETAK_UTAS",10};
         if (WordEqual(command, tutup_program)){
             runProgram = false;
         }
@@ -134,6 +140,69 @@ int main() {
             else{
                 show_profile(&akun, wordFromIndex(command, 13));
             }
+        }else if (wordCheck(command,0,3,utas))
+        {
+            int i= 5;
+            int id = 0;
+            while (i<command.Length)
+            {
+                id *=10;
+                id += CharToInt(command.TabWord[i]);
+                i++;
+            }
+            createUtas(id,&kList,akunLogin,&idUtas);
+        }else if (wordCheck(command,0,11,sambung_utas))
+        {
+            int idUtas=0;
+            int index = 0;
+            int i= 13;
+            while (command.TabWord[i]!=" ")
+            {
+                idUtas *=10;
+                idUtas += CharToInt(command.TabWord[i]);
+                i++;
+            }
+            i++;
+            while (command.TabWord[i]!=MARKACC)
+            {
+                index *=10;
+                index += CharToInt(command.TabWord[i]);
+                i++;
+            }
+            sambungUtas(idUtas,index,&kList,akunLogin);
+            
+            
+        }else if(wordCheck(command,0,9,hapus_utas))
+        {
+            int idUtas=0;
+            int index = 0;
+            int i= 11;
+            while (command.TabWord[i]!=" ")
+            {
+                idUtas *=10;
+                idUtas += CharToInt(command.TabWord[i]);
+                i++;
+            }
+            i++;
+            while (command.TabWord[i]!=MARKACC)
+            {
+                index *=10;
+                index += CharToInt(command.TabWord[i]);
+                i++;
+            }
+            hapusUtas(idUtas,index,&kList,akunLogin);
+        }else if(wordCheck(command,0,9,cetak_utas))
+        {
+            int idUtas = 0;
+            int i = 11;
+            while (command.TabWord[i]!=MARKACC)
+            {
+                idUtas *=10;
+                idUtas += CharToInt(command.TabWord[i]);
+                i++;
+            }
+            cetakUtas(idUtas,kList,akunLogin,akun,teman);
+            
         }
         else{
             printf("Perintah tidak valid!\n");

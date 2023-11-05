@@ -198,7 +198,7 @@ void cetakUtas(int idUtas, KicauList kList,Account account, AccountList listAcco
             printf("| ");TulisDATETIME(local);printf("\n");
             printf("| %s\n",kicauan->text);
             kSambungAdd kSam;
-            kSam = kicauan->utasKicau;
+            kSam = kicauan->utasKicau->content;
             i = 0;
             while(kSam!=NULL){
                 printf("   | INDEX = %d\n",i+1 );

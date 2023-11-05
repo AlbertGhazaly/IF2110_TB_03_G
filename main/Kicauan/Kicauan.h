@@ -3,7 +3,6 @@
 
 #include "../../modules/adt.h"
 
-
 #define MAXChar 280
 
 typedef struct kicau {
