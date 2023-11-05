@@ -34,6 +34,7 @@ void CreateKicau (Kicau *k, char author[])
 
     k->author = stringToWord(author, 8);
     k->datetime = time(NULL);
+    k->utasKicau = NULL;
 }
 
 void BaseDisplay (Kicau k)

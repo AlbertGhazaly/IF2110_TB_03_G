@@ -13,8 +13,9 @@ typedef struct kicau {
     char text[MAXChar];
     Word author;
     time_t datetime;
-} Kicau;
-
+    Utas* utasKicau;
+ } Kicau;
+ 
 typedef struct {
     Kicau kicauan[1000];
     int count;
