@@ -6,6 +6,11 @@ void createMatrix(int nRows, int nCols, Matrix *m){
     COL_EFF(*m) = nCols;
 }
 
+void createMatrixchar(int nRows,int nCols, MatrixChar *mc){
+    ROW_EFFChar(*mc) = nRows;
+    COL_EFFChar(*mc) = nCols;
+}
+
 boolean isMatrixIdxValid(int i, int j){
     return (i >= 0) && (i < ROW_CAP) && (j >= 0) && (j < COL_CAP);
 }
@@ -27,6 +32,12 @@ void copyMatrix(Matrix mIn, Matrix *mOut){
     ROW_EFF(*mOut) = ROW_EFF(mIn);
     COL_EFF(*mOut) = COL_EFF(mIn);
     *mOut = mIn;
+}
+
+void copyMatrixChar(MatrixChar mcIn, MatrixChar *mcOut){
+    ROW_EFFChar(*mcOut) = ROW_EFFChar(mcIn);
+    COL_EFFChar(*mcOut) = COL_EFFChar(mcIn);
+    *mcOut = mcIn;
 }
 
 void readMatrix(Matrix *m, int nRow, int nCol){
@@ -55,6 +66,23 @@ void displayMatrix(Matrix m){
     }
     printf("\n");
 }
+
+void displayMatrixChar(MatrixChar mc){
+    int i, j;
+    for (i = 0; i < ROW_EFFChar(mc); i++){
+        for (j = 0; j < COL_EFFChar(mc); j++){
+            printf("%c", ELMTChar(mc, i, j));
+            if (j != COL_EFFChar(mc) - 1){
+                printf(" ");
+            }
+        }
+        if (i != COL_EFFChar(mc) - 1){
+            printf("\n");
+        }
+    }
+    printf("\n");
+}
+
 
 Matrix addMatrix(Matrix m1, Matrix m2){
     Matrix m3;

@@ -15,6 +15,7 @@
 #include "./wordmachine/charmachine.c"
 #include "./time/datetime.h"
 #include "./time/datetime.c"
+#include "./time/time.h"
 #include "./time/time.c"
 #include "./stack/stack.h"
 #include "./stack/stack.c"
@@ -25,9 +26,11 @@
 #include "./matrix/matrix.h"
 #include "./listlinier/listlinier.h"
 #include "./listlinier/listlinier.c"
-/*
-#include "./bintree/bintree.h"
-#include "./bintree/bintree.c"
-*/
+#include "./graf/graf.h"
+#include "./graf/graf.c"
+#include "./pcolor/pcolor.h"
+#include "./pcolor/pcolor.c"
+#include "./prioqueuefren/prioqueuefren.h"
+#include "./prioqueuefren/prioqueuefren.c"
 
 #endif

@@ -24,6 +24,7 @@ void START()
 }
 
 void STARTFILE(char filename[]) {
+/*Mesin siap dioperasikan. Pita pada file disiapkan untuk dibaca mesin kata.*/
        pita = fopen(filename, "r");
        ADV();
 }
@@ -44,4 +45,10 @@ void ADV()
        // {
        //        fclose(pita);
        // }
+}
+
+void END()
+/*Mesin dinonaktifkan dan Pita yang dibaca di dealokasi.*/
+{
+       fclose(pita);
 }
