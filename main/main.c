@@ -16,9 +16,30 @@ int main() {
     prioqueuefren Q;
     MakeEmptyprio(&Q,100);
     Stack draf;
-    CreateEmpty(&draf);
+    CreateEmptyStack(&draf);
     ReadUser_FILE("../cfg/pengguna.config", &akun, &teman, &Q);
     ReadDraf_FILE("../cfg/draf.config", &akun, &draf);
+    Stack drafStack[20]; // Buat 20 stack untuk 20 pengguna
+    // int userID = 0;                  // ID pengguna saat ini
+    // CreateEmpty(&drafStack[userID]); // Inisialisasi stack untuk pengguna saat ini
+    int i;
+    for(i = 0; i < 20; i++)
+    {
+        CreateEmptyStack(&drafStack[i]);
+    }
+
+    while (!IsEmptyStack(draf))
+    {
+        drafkicau temp;
+        Pop(&draf, &temp);
+        for(i = 0; i < 20; i++){
+            if (temp.IDuser == i)
+            {
+                Push(&drafStack[i],temp);
+            }
+        }
+    }
+
     Account akunLogin;
 
     boolean isLogin = false;
@@ -48,6 +69,7 @@ int main() {
         Word tambah_teman = {"TAMBAH_TEMAN", 12};
         Word daftar_permintaan_teman = {"DAFTAR_PERMINTAAN_PERTEMANAN", 28};
         Word setujui_pertemanan = {"SETUJUI_PERTEMANAN", 18};
+        Word buat_draf = {"BUAT_DRAF", 9};
 
         if (WordEqual(command, tutup_program)){
             runProgram = false;
@@ -133,6 +155,27 @@ int main() {
             }
             else{
                 show_profile(&akun, wordFromIndex(command, 13));
+            }
+        }
+        else if(WordEqual(command, buat_draf))
+        {
+            int idUser;
+            i = 0;
+            boolean found = false;
+            while(i < akun.count && found == false)
+            {
+                if(WordEqual( *akun.accounts[i].username, *akunLogin.username))
+                {
+                    idUser = i;
+                    found = true;
+                }
+                i++; 
+            }
+            if(isLogin){
+                buatdraf(drafStack, idUser, &akun);
+            }
+            else{
+                printf("Anda belum masuk! Masuk terlebih dahulu untuk menikmati layanan BurBir.\n");
             }
         }
         else{
