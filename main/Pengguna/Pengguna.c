@@ -339,7 +339,6 @@ void ReadUser_FILE(char filename[], AccountList *list, Graf *Teman, prioqueuefre
         for(i = 0; i < countQ-1; i++){
             ADVSENTENCE();
             teman temp;
-            printf("b");
             for(j = 0; j < 3; j++){
                 if(j == 0){
                     temp.IDpengirim = CharToInt(currentWord.TabWord[j*2]);
@@ -707,6 +706,95 @@ void ReadDraf_FILE(char filename[], AccountList *list, Stack *S){
             DrafKicau.IDuser = idAkun;
             DrafKicau.waktu = waktudraf;
             Push(S, DrafKicau);
+        }
+    }
+}
+
+void buatdraf(Stack drafStack[], int userID, AccountList * list) {
+    drafkicau DrafUser;
+    printf("Masukkan draf:\n");
+
+    // Akuisisi dan simpan draf dalam stack
+    STARTWORD();
+    while (!EndWord)
+    {
+        CopyWordTo(&DrafUser.Draf, currentWord);
+        ADVWORD();
+    }
+    while (!EndWord)
+    {
+        time_t rawtime;
+        struct tm *timeinfo;
+
+        time(&rawtime);             // Get the current time
+        timeinfo = localtime(&rawtime);  // Convert to local time
+
+        // Access individual components
+        int SS, M, HH, DD, MM, YY;
+        getlocaltime(&SS,&M, &HH, &DD, &MM, &YY);
+        DATETIME waktudraf;
+        CreateDATETIME(&waktudraf, DD, MM, YY, HH, M, SS);
+        DrafUser.waktu = waktudraf;
+        Push(&drafStack[userID], DrafUser);
+        ADVWORD();
+    }
+
+    printf("Apakah anda ingin menghapus, menyimpan, atau menerbitkan draf ini?\n");
+
+    while (1)
+    {
+        STARTWORD();
+        if (WordEqual(currentWord, stringToWord("HAPUS", 5)))
+        {
+            // Pengguna ingin menghapus draf
+            if (!IsEmptyStack(drafStack[userID]))
+            {
+                Pop(&drafStack[userID], &DrafUser);
+                printf("Draf telah berhasil dihapus!\n");
+            }
+            else
+            {
+                printf("Tidak ada draf yang bisa dihapus.\n");
+            }
+            break;
+        }
+        else if (WordEqual(currentWord, stringToWord("SIMPAN", 6)))
+        {
+            // Pengguna ingin menyimpan draf
+            printf("Draf telah berhasil disimpan!\n");
+            break;
+        }
+        else if (WordEqual(currentWord, stringToWord("TERBIT", 6)))
+        {
+            // Pengguna ingin menerbitkan draf
+            DATETIME waktuterbit;
+            int SS, M, HH, DD, MM, YY;
+            getlocaltime(&SS,&M, &HH, &DD, &MM, &YY);
+            CreateDATETIME(&waktuterbit, DD, MM, YY, HH, M, SS);
+            DrafUser.waktu = waktuterbit;
+            Push(&drafStack[userID], DrafUser);
+            ADVWORD();
+
+            printf("Selamat! Draf kicauan telah diterbitkan!\n\n");
+            // Tambahkan logikanya untuk menerbitkan draf
+            printf("Detil kicauan:\n");
+            printf("| ID = \n");
+            printf("| ");
+            printWord(*list->accounts[userID].username);
+            printf("\n");
+            printf("| ");
+            TulisDATETIME(waktuterbit);
+            printf("\n");
+            printf("| ");
+            printWord(DrafUser.Draf);
+            printf("\n");
+            printf("| ");
+            printf("Disukai: 0\n");
+            break;
+        }
+        else
+        {
+            printf("Perintah tidak valid. Silakan masukkan 'HAPUS', 'SIMPAN', 'TERBIT', atau 'KEMBALI'.\n");
         }
     }
 }
