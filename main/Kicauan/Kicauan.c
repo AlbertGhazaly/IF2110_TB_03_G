@@ -1,5 +1,10 @@
+#include <stdio.h>
 #include "Kicauan.h"
-
+#include "time.h"
+#include "../../modules/wordmachine/charmachine.h"
+#include "../../modules/wordmachine/wordmachine.h"
+#include "../../modules/time/datetime.h"
+#include "../../modules/time/time.h"
 
 void CreateKicau (Kicau *k, char author[])
 {
@@ -29,6 +34,7 @@ void CreateKicau (Kicau *k, char author[])
 
     k->author = stringToWord(author, 8);
     k->datetime = time(NULL);
+    k->utasKicau = NULL;
 }
 
 void BaseDisplay (Kicau k)

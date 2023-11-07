@@ -17,5 +17,7 @@
 #include "SimpanMuat/SimpanMuat.c"
 #include "Teman/Teman.h"
 #include "Teman/Teman.c"
+#include "Utas/utas.h"
+#include "Utas/utas.c"
 
 #endif
