@@ -16,9 +16,30 @@ int main() {
     prioqueuefren Q;
     MakeEmptyprio(&Q,100);
     Stack draf;
-    CreateEmpty(&draf);
+    CreateEmptyStack(&draf);
     ReadUser_FILE("../cfg/pengguna.config", &akun, &teman, &Q);
     ReadDraf_FILE("../cfg/draf.config", &akun, &draf);
+    Stack drafStack[20]; // Buat 20 stack untuk 20 pengguna
+    // int userID = 0;                  // ID pengguna saat ini
+    // CreateEmpty(&drafStack[userID]); // Inisialisasi stack untuk pengguna saat ini
+    int i;
+    for(i = 0; i < 20; i++)
+    {
+        CreateEmptyStack(&drafStack[i]);
+    }
+
+    while (!IsEmptyStack(draf))
+    {
+        drafkicau temp;
+        Pop(&draf, &temp);
+        for(i = 0; i < 20; i++){
+            if (temp.IDuser == i)
+            {
+                Push(&drafStack[i],temp);
+            }
+        }
+    }
+
     Account akunLogin;
     KicauList kList;
     int idUtas = 0;
@@ -54,7 +75,9 @@ int main() {
         Word utas = {"UTAS",4};
         Word sambung_utas = {"SAMBUNG_UTAS",12};
         Word hapus_utas = {"HAPUS_UTAS",10};
-        Word cetak_utas = {"CETAK_UTAS",10};
+        Word cetak_utas = {"CETAK_UTAS",10};        
+        Word buat_draf = {"BUAT_DRAF", 9};
+
         if (WordEqual(command, tutup_program)){
             runProgram = false;
         }
@@ -140,7 +163,8 @@ int main() {
             else{
                 show_profile(&akun, wordFromIndex(command, 13));
             }
-        }else if (wordCheck(command,0,3,utas)) //utas
+        }
+        else if (wordCheck(command,0,3,utas)) //utas
         {
             int i= 5;
             int id = 0;
@@ -170,7 +194,6 @@ int main() {
                 i++;
             }
             sambungUtas(idUtas,index,&kList,akunLogin);
-            
             
         }else if(wordCheck(command,0,9,hapus_utas)) //hapus utas
         {
@@ -203,6 +226,27 @@ int main() {
             }
             cetakUtas(idUtas,kList,akunLogin,akun,teman);
             
+        }
+        else if(WordEqual(command, buat_draf))
+        {
+            int idUser;
+            i = 0;
+            boolean found = false;
+            while(i < akun.count && found == false)
+            {
+                if(WordEqual( *akun.accounts[i].username, *akunLogin.username))
+                {
+                    idUser = i;
+                    found = true;
+                }
+                i++; 
+            }
+            if(isLogin){
+                buatdraf(drafStack, idUser, &akun);
+            }
+            else{
+                printf("Anda belum masuk! Masuk terlebih dahulu untuk menikmati layanan BurBir.\n");
+            }
         }
         else{
             printf("Perintah tidak valid!\n");

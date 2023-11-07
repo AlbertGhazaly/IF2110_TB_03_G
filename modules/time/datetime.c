@@ -246,4 +246,18 @@ long int DATETIMEDurasi(DATETIME DAw, DATETIME DAkh)
     return (DayAkh - DayAw) * 86400 + TIMEToDetik(Time(DAkh)) - TIMEToDetik(Time(DAw));
 }
 
+void getlocaltime(int *SS, int *M, int *HH, int *DD, int *MM, int *YY){
+    time_t rawtime;
+    struct tm *timeinfo;
 
+    time(&rawtime);             // Get the current time
+    timeinfo = localtime(&rawtime);  // Convert to local time
+
+    // Access individual components
+    *SS = timeinfo->tm_sec;   // Seconds (0-59)
+    *M = timeinfo->tm_min;   // Minutes (0-59)
+    *HH = timeinfo->tm_hour;    // Hours (0-23)
+    *DD = timeinfo->tm_mday;      // Day of the month (1-31)
+    *MM = timeinfo->tm_mon + 1; // Month (0-11, add 1 for January-December)
+    *YY = timeinfo->tm_year + 1900; // Year (since 1900)
+}
