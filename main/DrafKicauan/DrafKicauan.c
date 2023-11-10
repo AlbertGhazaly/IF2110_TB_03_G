@@ -23,104 +23,104 @@ Stack *createSTackDrafPerUser(Stack S)
   return drafStack; // Return a pointer to the array of Stack
 }
 
-void buatdraf(Stack *draf, int userID, AccountList *list)
-{
-  Stack *drafStack = createSTackDrafPerUser(*draf);
-  drafkicau DrafUser;
-  printf("Masukkan draf:\n");
+// void buatdraf(Stack *draf, int userID, AccountList *list)
+// {
+//   Stack *drafStack = createSTackDrafPerUser(*draf);
+//   drafkicau DrafUser;
+//   printf("Masukkan draf:\n");
 
-  // Akuisisi dan simpan draf dalam stack
-  STARTWORD();
-  while (!EndWord)
-  {
-    CopyWordTo(&DrafUser.Draf, currentWord);
-    ADVWORD();
-  }
+//   // Akuisisi dan simpan draf dalam stack
+//   STARTWORD();
+//   while (!EndWord)
+//   {
+//     CopyWordTo(&DrafUser.Draf, currentWord);
+//     ADVWORD();
+//   }
 
-  // TIME
-  time_t rawtime;
-  struct tm *timeinfo;
-  time(&rawtime);                 // Get the current time
-  timeinfo = localtime(&rawtime); // Convert to local time
-  // Access individual components
-  int SS, M, HH, DD, MM, YY;
-  getlocaltime(&SS, &M, &HH, &DD, &MM, &YY);
-  DATETIME waktudraf;
-  CreateDATETIME(&waktudraf, DD, MM, YY, HH, M, SS);
-  // TIME
+//   // TIME
+//   time_t rawtime;
+//   struct tm *timeinfo;
+//   time(&rawtime);                 // Get the current time
+//   timeinfo = localtime(&rawtime); // Convert to local time
+//   // Access individual components
+//   int SS, M, HH, DD, MM, YY;
+//   getlocaltime(&SS, &M, &HH, &DD, &MM, &YY);
+//   DATETIME waktudraf;
+//   CreateDATETIME(&waktudraf, DD, MM, YY, HH, M, SS);
+//   // TIME
 
-  DrafUser.waktu = waktudraf;
-  DrafUser.IDuser = userID;
-  Push(&drafStack[userID], DrafUser);
+//   DrafUser.waktu = waktudraf;
+//   DrafUser.IDuser = userID;
+//   Push(&drafStack[userID], DrafUser);
 
-  printf("Apakah anda ingin menghapus, menyimpan, atau menerbitkan draf ini?\n");
+//   printf("Apakah anda ingin menghapus, menyimpan, atau menerbitkan draf ini?\n");
 
-  while (1)
-  {
-    STARTWORD();
-    if (WordEqual(currentWord, stringToWord("HAPUS", 5)))
-    {
-      // Pengguna ingin menghapus draf
-      if (!IsEmptyStack(drafStack[userID]))
-      {
-        Pop(&drafStack[userID], &DrafUser);
-        printf("Draf telah berhasil dihapus!\n");
-      }
-      else
-      {
-        printf("Fungsi BUAT_DRAF gagal memasukkan ke stack drafStack[userID]\n");
-      }
-      break;
-    }
-    else if (WordEqual(currentWord, stringToWord("SIMPAN", 6)))
-    {
-      // Pengguna ingin menyimpan draf
-      printf("Draf telah berhasil disimpan!\n");
-      break;
-    }
-    else if (WordEqual(currentWord, stringToWord("TERBIT", 6)))
-    {
-      // Pengguna ingin menerbitkan draf
-      DATETIME waktuterbit;
-      int SS, M, HH, DD, MM, YY;
-      getlocaltime(&SS, &M, &HH, &DD, &MM, &YY);
-      CreateDATETIME(&waktuterbit, DD, MM, YY, HH, M, SS);
-      DrafUser.waktu = waktuterbit;
-      DrafUser.IDuser = userID;
-      Push(&drafStack[userID], DrafUser);
+//   while (1)
+//   {
+//     STARTWORD();
+//     if (WordEqual(currentWord, stringToWord("HAPUS", 5)))
+//     {
+//       // Pengguna ingin menghapus draf
+//       if (!IsEmptyStack(drafStack[userID]))
+//       {
+//         Pop(&drafStack[userID], &DrafUser);
+//         printf("Draf telah berhasil dihapus!\n");
+//       }
+//       else
+//       {
+//         printf("Fungsi BUAT_DRAF gagal memasukkan ke stack drafStack[userID]\n");
+//       }
+//       break;
+//     }
+//     else if (WordEqual(currentWord, stringToWord("SIMPAN", 6)))
+//     {
+//       // Pengguna ingin menyimpan draf
+//       printf("Draf telah berhasil disimpan!\n");
+//       break;
+//     }
+//     else if (WordEqual(currentWord, stringToWord("TERBIT", 6)))
+//     {
+//       // Pengguna ingin menerbitkan draf
+//       DATETIME waktuterbit;
+//       int SS, M, HH, DD, MM, YY;
+//       getlocaltime(&SS, &M, &HH, &DD, &MM, &YY);
+//       CreateDATETIME(&waktuterbit, DD, MM, YY, HH, M, SS);
+//       DrafUser.waktu = waktuterbit;
+//       DrafUser.IDuser = userID;
+//       Push(&drafStack[userID], DrafUser);
 
-      printf("Selamat! Draf kicauan telah diterbitkan!\n\n");
-      // Tambahkan logikanya untuk menerbitkan draf
-      printf("Detil kicauan:\n");
-      printf("| ID = \n");
-      printf("| ");
-      printWord(*list->accounts[userID].username);
-      printf("\n");
-      printf("| ");
-      TulisDATETIME(waktuterbit);
-      printf("\n");
-      printf("| ");
-      printWord(DrafUser.Draf);
-      printf("\n");
-      printf("| ");
-      printf("Disukai: 0\n");
-      break;
-    }
-    else
-    {
-      printf("Perintah tidak valid. Silakan masukkan 'HAPUS', 'SIMPAN', 'TERBIT', atau 'KEMBALI'.\n");
-    }
-  }
-  // push semua isi dari stackPerUser ke AllUserStack (yakni Stack draf)
-  for (int i = 0; i < 20; i++)
-  {
-    while (!IsEmptyStack(drafStack[i]))
-    {
-      Pop(&drafStack[i], &DrafUser);
-      Push(draf, DrafUser);
-    }
-  }
-}
+//       printf("Selamat! Draf kicauan telah diterbitkan!\n\n");
+//       // Tambahkan logikanya untuk menerbitkan draf
+//       printf("Detil kicauan:\n");
+//       printf("| ID = \n");
+//       printf("| ");
+//       printWord(*list->accounts[userID].username);
+//       printf("\n");
+//       printf("| ");
+//       TulisDATETIME(waktuterbit);
+//       printf("\n");
+//       printf("| ");
+//       printWord(DrafUser.Draf);
+//       printf("\n");
+//       printf("| ");
+//       printf("Disukai: 0\n");
+//       break;
+//     }
+//     else
+//     {
+//       printf("Perintah tidak valid. Silakan masukkan 'HAPUS', 'SIMPAN', 'TERBIT', atau 'KEMBALI'.\n");
+//     }
+//   }
+//   // push semua isi dari stackPerUser ke AllUserStack (yakni Stack draf)
+//   for (int i = 0; i < 20; i++)
+//   {
+//     while (!IsEmptyStack(drafStack[i]))
+//     {
+//       Pop(&drafStack[i], &DrafUser);
+//       Push(draf, DrafUser);
+//     }
+//   }
+// }
 
 void lihatdraf(Stack *draf, int userID, AccountList *list)
 {

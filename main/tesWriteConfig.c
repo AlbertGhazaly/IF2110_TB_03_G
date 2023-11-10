@@ -2,18 +2,33 @@
 #include "includeADT.h"
 
 int main() {
-    FILE *configFile = fopen("../cfg/pengguna.config", "w");
-
-    if (configFile == NULL) {
-        perror("Unable to open config file.\n");
-        return 1;
+    char fold[] = "../cf";
+    if (!isDirExist(fold)){
+        int check = mkdir(fold,0777);
+        printf("creating folder!\n");
     }
-
-    START();
+    FILE *configFile = fopen("../cf/penugguna.config", "w");
+    STARTWORD_FILE("../cfg/pengguna.config");
     while (currentChar != MARK) {
-        fprintf(configFile, "%c", currentChar);
-        ADV();
+        if (EndWord){
+            for (int i=0;i<currentWord.Length;i++){
+                fprintf(configFile, "%c", currentWord.TabWord[i]);
+            }
+        }
+        fprintf(configFile,"\n");
+        ADVSENTENCENL();
+        
     }
+    // if (configFile == NULL) {
+    //     perror("Unable to open config file.\n");
+    //     return 1;
+    // }
+
+    // START();
+    // while (currentChar != MARK) {
+    //     fprintf(configFile, "%c", currentChar);
+    //     ADV();
+    // }
 
     fclose(configFile);
 

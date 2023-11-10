@@ -23,7 +23,6 @@ void muat(char floderName[]){
             else if (i==4){ //Utas config
 
             }
-
         }
     }
 }
@@ -49,7 +48,7 @@ void simpan(char folderName[]){
 
         }
         else if (i==4){ //Utas config
-
+            
         }
   
     }
