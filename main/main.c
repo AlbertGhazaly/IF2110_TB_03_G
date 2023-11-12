@@ -94,6 +94,12 @@ void sambungUtas(int idUtas,int index,  KicauList* kList,Account account){
             }else{
                 printf("Masukkan kicauan:\n");
                 STARTSENTENCE();
+                while (currentWord.Length > MAXChar)
+                {
+                     printf("Kicauan terlalu panjang ! \n");
+                     printf("Masukkan kicauan: \n");
+                     STARTSENTENCE();
+                }
                 kSam = kicauan->utasKicau->content;
                 kSambungAdd newKSam = createKicauanSambung(currentWord,account);
                 if (index==1){
@@ -191,6 +197,13 @@ void createUtas(int id, KicauList* kList, Account account, int *jumlahUtas){
                 printf("Utas berhasil dibuat!\n");
                 printf("Masukkan kicauan: \n");
                 STARTSENTENCE();
+                while (currentWord.Length > MAXChar)
+                {
+                     printf("Kicauan terlalu panjang ! \n");
+                     printf("Masukkan kicauan: \n");
+                     STARTSENTENCE();
+                }
+                
                 kSambungAdd kSam = createKicauanSambung(currentWord,account);
                 kicau->utasKicau->content = kSam;
                 *jumlahUtas++;
