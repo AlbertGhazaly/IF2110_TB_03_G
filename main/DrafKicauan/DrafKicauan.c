@@ -12,24 +12,20 @@ void buatdraf(Stack drafStack[], int userID, AccountList *list)
     CopyWordTo(&DrafUser.Draf, currentWord);
     ADVWORD();
   }
-  while (!EndWord)
-  {
-    time_t rawtime;
-    struct tm *timeinfo;
+  time_t rawtime;
+  struct tm *timeinfo;
 
-    time(&rawtime);                 // Get the current time
-    timeinfo = localtime(&rawtime); // Convert to local time
+  time(&rawtime);                 // Get the current time
+  timeinfo = localtime(&rawtime); // Convert to local time
 
-    // Access individual components
-    int SS, M, HH, DD, MM, YY;
-    getlocaltime(&SS, &M, &HH, &DD, &MM, &YY);
-    DATETIME waktudraf;
-    CreateDATETIME(&waktudraf, DD, MM, YY, HH, M, SS);
-    DrafUser.waktu = waktudraf;
-    DrafUser.IDuser = userID;
-    Push(&drafStack[userID], DrafUser);
-    ADVWORD();
-  }
+  // Access individual components
+  int SS, M, HH, DD, MM, YY;
+  getlocaltime(&SS, &M, &HH, &DD, &MM, &YY);
+  DATETIME waktudraf;
+  CreateDATETIME(&waktudraf, DD, MM, YY, HH, M, SS);
+  DrafUser.waktu = waktudraf;
+  DrafUser.IDuser = userID;
+  Push(&drafStack[userID], DrafUser);
 
   printf("Apakah anda ingin menghapus, menyimpan, atau menerbitkan draf ini?\n");
 
