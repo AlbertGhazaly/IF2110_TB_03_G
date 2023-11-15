@@ -2,7 +2,6 @@
 #define Kicauan_H
 
 #include "../../modules/adt.h"
-#include "../Pengguna/Pengguna.h"
 
 #define MAXChar 280
 
@@ -35,8 +34,6 @@ typedef struct {
     Kicau kicauan[1000];
     int count;
 } KicauList;
-
-
 
 void CreateKicau (Kicau *k, char author[]);
 

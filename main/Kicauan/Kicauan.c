@@ -1,13 +1,10 @@
 #include <stdio.h>
-#include <time.h>
 #include "Kicauan.h"
 #include "time.h"
 #include "../../modules/wordmachine/charmachine.h"
 #include "../../modules/wordmachine/wordmachine.h"
 #include "../../modules/time/datetime.h"
 #include "../../modules/time/time.h"
-
-Word publikkicau = {"Publik", 6};
 
 void CreateKicau (Kicau *k, char author[])
 {
