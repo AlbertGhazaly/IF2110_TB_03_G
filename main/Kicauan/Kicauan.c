@@ -6,6 +6,9 @@
 #include "../../modules/time/datetime.h"
 #include "../../modules/time/time.h"
 
+// extern Account akunLogin;
+
+Word publik = {"publik", 6};
 void CreateKicau (Kicau *k, char author[])
 {
     //increment ID
@@ -122,7 +125,7 @@ void SukaKicau (Account akunLogin, int id, KicauList *list, Kicau *k, AccountLis
         //Jika dua akun tidak berteman
         if (!ELMTGRAF(teman, id_user, id_penulis))
         {
-            if(WordEqual(*listakun->accounts[id_penulis].jenisAkun, publikkicau))
+            if(WordEqual(*listakun->accounts[id_penulis].jenisAkun, publik))
             {
                 list->kicauan[k->id].like++;
                 printf("Selamat! kicauan telah disukai!\nDetil kicauan:");

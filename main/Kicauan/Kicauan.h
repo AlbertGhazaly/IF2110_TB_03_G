@@ -2,6 +2,7 @@
 #define Kicauan_H
 
 #include "../../modules/adt.h"
+#include "Pengguna/Pengguna.h"
 
 #define MAXChar 280
 
