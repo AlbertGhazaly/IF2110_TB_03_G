@@ -1,57 +1,30 @@
-#ifndef Kicauan_H
-#define Kicauan_H
+#ifndef KICAUAN_H
+#define KICAUAN_H
 
 #include "../../modules/adt.h"
-#include "Pengguna/Pengguna.h"
-
+#include <time.h>
 #define MAXChar 280
-
-typedef struct kicausambung *kSambungAdd;
-typedef struct kicausambung {
-    int index;
-    char text[MAXChar];
-    time_t datetime;
-    Word author;
-    kSambungAdd next;
-
-} KicauSambung;
 
 typedef struct {
-    int IDUtas;
-    kSambungAdd content;
-} Utas;
-#define MAXChar 280
-
-typedef struct kicau {
     int id;
     int like;
     char text[MAXChar];
     Word author;
-    time_t datetime;
-    Utas* utasKicau;
- } Kicau;
- 
+    DATETIME datetime;
+} Kicau;
+
 typedef struct {
-    Kicau kicauan[1000];
-    int count;
-} KicauList;
+    Kicau* kicau;
+    int Cap;
+    int nEff;
+} ListKicau;
 
-void CreateKicau (Kicau *k, char author[]);
-
+int CreateIDKicau(ListKicau *list);
+void AddToKicauan(ListKicau *list, Kicau k);
+void CreateKicau(ListKicau *list, Kicau *k);
 void BaseDisplay (Kicau k);
-
-void DisplayKicau (Kicau k);
-
-void CreateKicauList(KicauList *list);
-
-void AddKicauToList (Kicau k, KicauList *list);
-
-void Kicauan (KicauList *list);
-
-void SukaKicau (Account akunLogin, int id, KicauList *list, Kicau *k, AccountList* listakun, Graf teman);
-
-boolean isIdInKicauan (int id, KicauList *list);
-
-void UbahKicau (Account akunLogin, int id, KicauList *list);
+void Kicauan(ListKicau list);
+void SukaKicau (int id, ListKicau *listkicau, Kicau *k, AccountList* listakun, Graf teman);
+void UbahKicau (int id, ListKicau *list);
 
 #endif

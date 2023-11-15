@@ -5,25 +5,75 @@
 #include <stdlib.h>
 #include <string.h>
 
-// extern Word currentSentence;
-
-void Createbalasan(Balasan *balasan, Account akunLogin) {
+void CreateBalasan(Balasan *balasan, Account akunLogin) {
     static int nextID = 0; 
     balasan->id = ++nextID;
-    // balasan->text = currentSentence;
+
+    time_t now = time(NULL);
+    struct tm *tm_struct = localtime(&now);
+    DATETIME local;
+    CreateDATETIME(&local, tm_struct->tm_mday, tm_struct->tm_mon + 1, tm_struct->tm_year + 1900, tm_struct->tm_hour, tm_struct->tm_min, tm_struct->tm_sec);
+
+    //baca text balasan
+    int el = 0;
+    printf("Masukkan balasan:\n");
+    START();
+
+    while (el < MAXChar)
+    {
+        if (currentChar == ';')
+        {
+            break;
+        }
+        balasan->text[el] = currentChar;
+        el++;
+        ADV();
+    }
+
+    balasan->text[el] = '\0';
     balasan->author = stringToWord(&akunLogin.username->TabWord, akunLogin.username->Length);
-    balasan->datetime = getLocalTime();
+    balasan->datetime = local;
     CreateTree(&(balasan->kumpulanBalasan));
+    printf("Selamat! Balasan telah diterbitkan!\n Detil balasan:\n");
+    BaseDisplay(*balasan);
+}
+
+void BaseDisplay (Balasan b)
+{
+    printf("\n| ID = %d\n", b.id);
+
+    //print author (without length seperti di ADT)
+    printf("| ");
+    int i;
+    for (i = 0; i < b.author.Length; i++) 
+    {
+        printf("%c", b.author.TabWord[i]);
+    }
+    printf("\n");
+
+    //print time upload kicauan
+    printf("| ");
+    TulisDATETIME(b.datetime);
+    printf("\n");
+
+    //print text
+    int j = 0;
+    printf("| ");
+    while (b.text[j] != '\0')
+    {
+        printf("%c", b.text[j]);
+        j++;
+    }
 }
 
 void MembalasKicauan(Tree *balasanKicauan, Balasan *balasan, int balasanId) {
-    addressTree tweetNode = getAddress(Root(*balasanKicauan), balasanId);
-    if (tweetNode) {
+    addressTree kicauNode = getAddress(Root(*balasanKicauan), balasanId);
+    if (kicauNode) {
         addressTree newbalasanNode = Alokasi(balasan->id);
         newbalasanNode->data = (int)balasan;
-        AddChild(&tweetNode, newbalasanNode);
+        AddChild(&kicauNode, newbalasanNode);
     } else {
-        printf("Tweet with ID %d not found.\n", balasanId);
+        printf("Wah, tidak terdapat kicauan yang ingin Anda balas!\n");
     }
 }
 
@@ -34,16 +84,16 @@ void MembalasBalasan(Tree *balasanKicauan, Balasan *balasan, int parentId) {
         newbalasanNode->data = (int)balasan;
         AddChild(&parentNode, newbalasanNode);
     } else {
-        printf("balasan with ID %d not found.\n", parentId);
+        printf("Wah, tidak terdapat balasan yang ingin Anda balas!\n");
     }
 }
 
 void DisplayBalasan(Tree balasanKicauan, int balasanId) {
-    addressTree tweetNode = getAddress(Root(balasanKicauan), balasanId);
-    if (tweetNode) {
-        printTree(tweetNode, 0);
+    addressTree kicauNode = getAddress(Root(balasanKicauan), balasanId);
+    if (kicauNode) {
+        printTree(kicauNode, 0);
     } else {
-        printf("Tweet with ID %d has no replies.\n", balasanId);
+        printf("Belum terdapat balasan apapun pada kicauan tersebut. Yuk balas kicauan tersebut!\n", balasanId);
     }
 }
 
@@ -52,23 +102,8 @@ void DeleteBalasan(Tree *balasanKicauan, int balasanId) {
     if (balasanNode) {
         CascadeDelete(balasanKicauan, balasanId);
     } else {
-        printf("balasan with ID %d not found.\n", balasanId);
+        printf("Wah, tidak terdapat balasan yang ingin Anda hapus!\n");
     }
-}
-
-void PrintBalasan(Balasan balasan) {
-    struct tm *tm_struct = localtime(&balasan.datetime);
-    DATETIME local;
-    CreateDATETIME(&local, tm_struct->tm_mday, tm_struct->tm_mon + 1, tm_struct->tm_year + 1900, tm_struct->tm_hour, tm_struct->tm_min, tm_struct->tm_sec);
-
-    printf("| ID = %d\n", balasan.id);
-    printf("| ");
-    printWord(balasan.author);
-    printf("\n| ");
-    TulisDATETIME(local);
-    printf("\n| ");
-    // printWord(balasan.text);
-    printf("\n");
 }
 
 void CascadeDelete(Tree *balasanKicauan, int parentId) {
