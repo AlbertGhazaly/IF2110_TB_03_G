@@ -242,6 +242,4 @@ void loadTweetCnfg(char filename[],KicauList* kList){
         k.datetime = date;
         AddKicauToList(k,kList);
     }
-
-
 }
