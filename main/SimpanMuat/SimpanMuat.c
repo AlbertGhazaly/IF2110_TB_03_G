@@ -76,6 +76,7 @@ char* concatStr(char path[],char folder[]){
     path[i] = '\0';
     return path;
 }
+// Load
 void ReadUser_FILE(char filename[], AccountList *list, Graf *Teman, prioqueuefren *Q){
     int N;
     STARTWORD_FILE(filename);
@@ -204,7 +205,7 @@ void ReadUser_FILE(char filename[], AccountList *list, Graf *Teman, prioqueuefre
 }
 void loadTweetCnfg(char filename[],KicauList* kList){
     int n;
-    STARTFILE(filename);
+    STARTWORD_FILE(filename);
     n = WordToInt(currentWord);
     int j;
     for (int i=0;i<n;i++){
@@ -241,5 +242,143 @@ void loadTweetCnfg(char filename[],KicauList* kList){
         copyWordToString(k.text,tex);
         k.datetime = date;
         AddKicauToList(k,kList);
+    }
+}
+
+// void loadDraf(char filename[], Stack* draf, AccountList akunList){
+//     int n;
+//     STARTFILE(filename);
+//     n = WordToInt(currentWord);
+//     for (int i=0;i<n;i++){
+//         ADVSENTENCE();
+//         int ten = 1;
+//         int jumlah = 0;
+//         int j;
+//         for (j=currentWord.Length-1;currentWord.TabWord[j]!=BLANK;j--){
+//             jumlah += (currentWord.TabWord[i]-48)*ten;
+//             ten *=10;
+//         }
+//         char name[j]; //creator name
+//         for (int k=0;k<j;k++){
+//             name[k] = currentWord.TabWord[k];
+//         }
+//         boolean isFound = false;
+//         for (int k=0;k<akunList.count && !isFound;k++){
+//             if (name==akunList.accounts.)
+//         }
+//         for (int k=0;k<jumlah;k++){
+//             ADVSENTENCE();
+
+            
+
+//         }
+//     }
+// }
+
+void loadUtas(char filename[],KicauList* kList, int* jumlahUtas, AccountList akunList){
+    STARTWORD_FILE(filename);
+    int n = WordToInt(currentWord);
+    for (int i=0;i<n;i++){
+        ADVSENTENCE();
+        int id = WordToInt(currentWord);
+        int l;
+        Word user;
+        for (l = 0;l<kList->count && id!=kList->kicauan[l].id;l++){
+            
+        }
+       
+        CopyWordTo(&user,kList->kicauan[l].author);
+        int k;
+        for (k=0;k<akunList.count && !WordEqual(user,akunList.accounts[k].username[0]);k++){
+
+        }
+        Account akun = akunList.accounts[k];
+        ADVSENTENCE();
+        int jumlah = WordToInt(currentWord);
+        for (int j=0;j<jumlah;j++){
+            ADVSENTENCE();
+            kSambungAdd ksam = createKicauanSambung(currentWord,akun);
+            ADVSENTENCE();
+            ADVSENTENCE();
+            time_t date;
+            struct tm tm = {0};
+            strptime(currentWord.TabWord,"%d/%m/%Y %H:%M:%S",&tm);
+            date = mktime(&tm);
+            ksam->datetime = date;
+
+            kSambungAdd kPrev;
+            if (kList->kicauan[l].utasKicau==NULL){
+                Utas u;
+                u.IDUtas = *jumlahUtas+1;
+                *jumlahUtas += 1;
+                kList->kicauan[l].utasKicau = &u;
+                kList->kicauan[l].utasKicau->content = ksam;
+            }else{
+                kPrev = kList->kicauan[l].utasKicau->content;
+                while (kPrev->next!=NULL)
+                {
+                    kPrev = kPrev->next;
+                }
+                kPrev->next = ksam;
+            }
+        }
+    }
+}
+///////////////////////////////////////////////////////////////////////////////////////////
+void saveUtas(char filename[],KicauList* kList, int jumlahUtas, AccountList akunList){
+    FILE *configFile = fopen(filename, "w");
+    fprintf(configFile,"%d\n",jumlahUtas);
+    for (int i=0;i<kList->count;i++){
+        if (kList->kicauan[i].utasKicau!=NULL){
+            fprintf(configFile,"%d\n",kList->kicauan[i].utasKicau->IDUtas);
+            kSambungAdd k = kList->kicauan[i].utasKicau->content;
+            int j = 1;
+            while (k->next!=NULL)
+            {
+                j++;
+                k = k->next;
+            }
+            fprintf(configFile,"%d",j);
+            k = kList->kicauan[i].utasKicau->content;
+            for (int n=0;n<j;n++){
+                fprintf(configFile,"\ns\n",k->text);
+                fprintf(configFile,"%s\n",k->author.TabWord);
+                struct tm *tm_struct = localtime(&k->datetime);
+                DATETIME local;
+                CreateDATETIME(&local, tm_struct->tm_mday, tm_struct->tm_mon + 1, tm_struct->tm_year + 1900, tm_struct->tm_hour, tm_struct->tm_min, tm_struct->tm_sec);
+                int DD = Day(local);
+                int MM = Month(local);
+                int YY = Year(local);
+                int hh = Hour(Time(local));
+                int mm = Minute(Time(local));
+                int ss = Second(Time(local));
+                fprintf(configFile,"%02d/%02d/%d %02d:%02d:%02d", DD, MM, YY, hh, mm, ss);
+            }
+            
+        }
+    }   
+}
+
+void saveTweet(char filename[],KicauList kList){
+    FILE *configFile = fopen(filename, "w");
+    fprintf(configFile,"%d",kList.count);
+    for (int i=0;i<kList.count;i++){
+        fprintf(configFile,"\n%d\n",kList.kicauan[i].id);
+        fprintf(configFile,"%s\n",kList.kicauan[i].text);
+        fprintf(configFile,"%d\n",kList.kicauan[i].like);
+        char * author;
+        copyWordToString(author,kList.kicauan[i].author);
+        fprintf(configFile,"%s\n",author);
+        struct tm *tm_struct = localtime(kList.kicauan[i].datetime);
+        DATETIME local;
+        CreateDATETIME(&local, tm_struct->tm_mday, tm_struct->tm_mon + 1, tm_struct->tm_year + 1900, tm_struct->tm_hour, tm_struct->tm_min, tm_struct->tm_sec);
+        int DD = Day(local);
+        int MM = Month(local);
+        int YY = Year(local);
+        int hh = Hour(Time(local));
+        int mm = Minute(Time(local));
+        int ss = Second(Time(local));
+        fprintf(configFile,"%02d/%02d/%d %02d:%02d:%02d", DD, MM, YY, hh, mm, ss);
+
     }
 }
