@@ -36,7 +36,8 @@ void cetakUtas(int idUtas, KicauList kList, Account account, AccountList *listAc
         }
         else
         {
-            printf("| ID = %d\n", kicauan->id);
+            printf("| ID = %d\n",kicauan->id);
+
             printf("| %s\n", kicauan->author.TabWord);
             struct tm *tm_struct = localtime(&kicauan->datetime);
             DATETIME local;
@@ -159,20 +160,20 @@ void sambungUtas(int idUtas, int index, KicauList *kList, Account account)
     }
 }
 
-void hapusUtas(int idUtas, int index, KicauList *kList, Account account)
-{void cetakUtas(int idUtas, KicauList kList, Account account, AccountList *listAccount, Graf teman)
+void hapusUtas(int idUtas, int index, KicauList *kList, Account account,AccountList *listAccount, Graf teman)
 {
+
     boolean isFound = false;
     Kicau *kicauan;
     Word privat = {"Privat", 6};
-    for (int i = 0; (i < kList.count) && (!isFound); i++)
+    for (int i = 0; (i < kList->count) && (!isFound); i++)
     {
-        if (kList.kicauan[i].utasKicau != NULL)
+        if (kList->kicauan[i].utasKicau != NULL)
         {
-            if (kList.kicauan[i].utasKicau->IDUtas == idUtas)
+            if (kList->kicauan[i].utasKicau->IDUtas == idUtas)
             {
                 isFound = true;
-                *kicauan = kList.kicauan[i];
+                *kicauan = kList->kicauan[i];
             }
         }
     }
@@ -183,18 +184,16 @@ void hapusUtas(int idUtas, int index, KicauList *kList, Account account)
     else
     {
         int i;
-        for (i = 0; !WordEqual(account.username[0], listAccount->accounts[i].username[0]); i++)
-            ;
+        for (i = 0; !WordEqual(account.username[0], listAccount->accounts[i].username[0]); i++);
         int idUser = i;
-        for (i = 0; !WordEqual(kicauan->author, listAccount->accounts[i].username[0]); i++)
-            ;
+        for (i = 0; !WordEqual(kicauan->author, listAccount->accounts[i].username[0]); i++);
         int idTeman = i;
 
-        if (WordEqual(listAccount->accounts[idTeman].jenisAkun[0], privat) && ELMTGRAF(teman, idUser, idTeman) == 0)
-        {Found = true;
+        if (WordEqual(listAccount->accounts[idTeman].jenisAkun[0], privat) && (ELMTGRAF(teman, idUser, idTeman) == 0)){
+                isFound = true;
                 *kicauan = kList->kicauan[i];
-            }
         }
+        
     }
     if (!isFound)
     {
@@ -281,7 +280,6 @@ void createUtas(int id, KicauList *kList, Account account, int *jumlahUtas)
                 printf("Utas berhasil dibuat!\n");
                 printf("Masukkan kicauan: \n");
                 STARTSENTENCE();
-<<<<<<< HEAD
                 while (currentWord.Length > MAXChar)
                 {
                      printf("Kicauan terlalu panjang ! \n");
@@ -290,9 +288,6 @@ void createUtas(int id, KicauList *kList, Account account, int *jumlahUtas)
                 }
                 
                 kSambungAdd kSam = createKicauanSambung(currentWord,account);
-=======
-                kSambungAdd kSam = createKicauanSambung(currentWord, account);
->>>>>>> main
                 kicau->utasKicau->content = kSam;
                 *jumlahUtas++;
                 kicau->utasKicau->IDUtas = *jumlahUtas;
@@ -345,8 +340,8 @@ int main()
     MakeEmptyprio(&Q, 100);
     Stack draf;
     CreateEmptyStack(&draf);
-    ReadUser_FILE("../cfg/pengguna.config", &akun, &teman, &Q);
-    ReadDraf_FILE("../cfg/draf.config", &akun, &draf);
+    // ReadUser_FILE("../cfg/pengguna.config", &akun, &teman, &Q);
+    // ReadDraf_FILE("../cfg/draf.config", &akun, &draf);
     Stack drafStack[20]; // Buat 20 stack untuk 20 pengguna
     // int userID = 0;                  // ID pengguna saat ini
     // CreateEmpty(&drafStack[userID]); // Inisialisasi stack untuk pengguna saat ini
@@ -572,7 +567,7 @@ int main()
                 index += CharToInt(command.TabWord[i]);
                 i++;
             }
-            hapusUtas(idUtas, index, &kList, akunLogin);
+            hapusUtas(idUtas, index, &kList, akunLogin,&akun, teman);
         }
         else if (wordCheck(command, 0, 9, cetak_utas)) // cetak utas
         {
