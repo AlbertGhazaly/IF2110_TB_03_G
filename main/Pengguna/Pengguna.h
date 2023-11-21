@@ -101,6 +101,4 @@ void ReadDraf_FILE(char filename[], AccountList *list, Stack *S);
     F.S. Stack terisi dengan drafkicauan dari Draf.Config
     */
 
-void buatdraf(Stack drafStack[], int userID, AccountList * list);
-
 #endif

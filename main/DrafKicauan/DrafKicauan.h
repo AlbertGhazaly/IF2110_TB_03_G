@@ -6,8 +6,9 @@
 
 Stack* createSTackDrafPerUser(Stack S);
 
-void buatdraf(Stack *draf, int userID, AccountList *list);
+void buatdraf(Stack drafStack[], int userID, AccountList *list);
 
-void lihatdraf(Stack *draf, int userID, AccountList *list);
+void lihatdraf(Stack drafStack[], int userID, AccountList *list);
+
 
 #endif
