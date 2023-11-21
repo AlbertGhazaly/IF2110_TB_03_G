@@ -3,15 +3,12 @@
 void buatdraf(Stack drafStack[], int userID, AccountList *list)
 {
   drafkicau DrafUser;
+  STARTSENTENCE();
   printf("Masukkan draf:\n");
 
   // Akuisisi dan simpan draf dalam stack
-  STARTWORD();
-  while (!EndWord)
-  {
-    CopyWordTo(&DrafUser.Draf, currentWord);
-    ADVWORD();
-  }
+  STARTSENTENCE();
+  CopyWordTo(&DrafUser.Draf, currentWord);
   time_t rawtime;
   struct tm *timeinfo;
 
@@ -28,6 +25,7 @@ void buatdraf(Stack drafStack[], int userID, AccountList *list)
   Push(&drafStack[userID], DrafUser);
 
   printf("Apakah anda ingin menghapus, menyimpan, atau menerbitkan draf ini?\n");
+  ADVSENTENCE();
 
   while (1)
   {

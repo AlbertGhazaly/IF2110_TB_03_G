@@ -489,6 +489,10 @@ int main()
         else if (WordEqual(command, curr_user))
         {
             DisplayAccounts(&akun);
+        }   
+        else if (WordEqual(command, daftar_teman))
+        {
+            daftarteman(isLogin, akunLogin, &akun, teman);
         }
         else if (WordEqual(command, hapus_teman))
         {
