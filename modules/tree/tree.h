@@ -11,7 +11,7 @@ typedef struct tNode {
     int data;
     addressTree firstChild;
     addressTree nextSibling;
-} Node;
+} NodeTree;
 
 typedef struct {
     addressTree root;

@@ -1,19 +1,18 @@
 #include <stdio.h>
 #include "Kicauan.h"
-#include "../../modules/wordmachine/charmachine.h"
-#include "../../modules/wordmachine/wordmachine.h"
-#include "../../modules/time/datetime.h"
-#include "../../modules/time/time.h"
 
 int main () 
 {
     Account User;
-    CreateAccount(&User, {}, "user");
+    AccountList listakun;
+    CreateAccountList(&listakun);
+
+    signup(&listakun);
+    printf("selesai"); //ini buat ngetes doang
 
     ListKicau L;
-    CreateListKicau(&L);
+    CreateListKicau(&L); //bikin empty list dinamis 
     Kicau k;
-    CreateKicau(&k, author);
-    AddKicauToList(k, &L);
-    Kicauan(L);
+    CreateKicau(User, &L, &k); //ini bikin kicauan + input text dari user
+    Kicauan(User, L); //ini ngeprint kicauan
 }
