@@ -706,17 +706,19 @@ void ReadDraf_FILE(char filename[], AccountList *list, Stack *S){
         int j;
         CopyWordTo(&user, currentWord);
         user.Length = user.Length - 2;
+        printWord(user);
         int idAkun;
-        int i = 0;
+        int cok = 0;
         boolean found = false;
-        while(i < list->count && found == false)
+        while(cok < list->count && found == false)
         {
-            if(WordEqual(*list->accounts[i].username, user))
+            if(WordEqual(*list->accounts[cok].username, user))
             {
-                idAkun = i;
+                idAkun = cok;
+                printf(" %d\n", idAkun);
                 found = true;
             }
-            i++; 
+            cok++; 
         }
         jumlah = CharToInt(currentWord.TabWord[currentWord.Length-1]);
         for(j = 0; j < jumlah; j++)
@@ -725,7 +727,19 @@ void ReadDraf_FILE(char filename[], AccountList *list, Stack *S){
             DATETIME waktudraf;
             ADVSENTENCE();
             Word draf = currentWord;
-            ADVSENTENCE();
+            if (j == jumlah-1 && i == N-1){
+                currentWord = emptyWord;
+                ADV();
+                int m;
+                for(m = 0; m < 19; m++){
+                    currentWord.TabWord[m] = currentChar;
+                    currentWord.Length++;
+                    ADV();
+                }
+            }
+            else{
+                ADVSENTENCE();
+            }
             int k;
             Word dd;
             for(k = 0; k < 2; k++){
@@ -765,9 +779,64 @@ void ReadDraf_FILE(char filename[], AccountList *list, Stack *S){
             int SS = WordToInt(ss);
             CreateDATETIME(&waktudraf, DD, MM, YY, HH, M, SS);
             DrafKicau.Draf = draf;
+            printWord(draf);
+            printf("\n");
             DrafKicau.IDuser = idAkun;
+            printf("%d", idAkun);
+            printf("\n");
             DrafKicau.waktu = waktudraf;
+            TulisDATETIME(waktudraf);
+            printf("\n");
             Push(S, DrafKicau);
         }
     }
+}
+void w2s(char (destination[MAXChar+1]),Word input){
+    int i;
+    for (i=0;i<input.Length;i++){
+        (destination[i]) = input.TabWord[i];
+    }
+    (destination[i]) = '\0';
+}
+void SaveDraf_FILE(char filename[], AccountList *list, Stack S[]){
+/*Menyimpan file Draf dari program kedalam Draf.config
+    I.S. Stack terdefinisi dan AccountList sudah diakuisisi dari user.config
+    F.S. Stack terisi dengan drafkicauan dari Draf.Config
+    */
+    FILE *file = fopen(filename, "w");
+
+    if (file == NULL){
+        fprintf(stderr, "Error opening file.\n");
+    }
+    int i;
+    int countdraf = 0;
+    for(i = 0; i < 20; i++){
+        if(!IsEmptyStack(S[i])){
+            countdraf++;
+        }
+    }
+    fprintf(file, "%d\n", countdraf);
+    int count = 0;
+    for(i = 0; i < 20; i++){
+        if(!IsEmptyStack(S[i])){
+            count++;
+            fprintf(file, "%s %d\n", list->accounts[i].username, NbElmtStack(S[i]));
+            int j;
+            int N = NbElmtStack(S[i]);
+            for(j = 0; j < N; j++){
+                drafkicau temp;
+                Pop(&S[i], &temp);
+                char str[281];
+                w2s(str,temp.Draf);
+                fprintf(file, "%s\n", str);
+                if (count == countdraf && j == N-1){
+                    fprintf(file, "%02d/%02d/%d %02d:%02d:%02d", temp.waktu.DD, temp.waktu.MM, temp.waktu.YYYY, temp.waktu.T.HH, temp.waktu.T.MM, temp.waktu.T.SS);
+                }
+                else{
+                    fprintf(file, "%02d/%02d/%d %02d:%02d:%02d\n", temp.waktu.DD, temp.waktu.MM, temp.waktu.YYYY, temp.waktu.T.HH, temp.waktu.T.MM, temp.waktu.T.SS);
+                }
+            }
+        }
+    }
+    fclose(file);
 }

@@ -122,4 +122,10 @@ void ReadDraf_FILE(char filename[], AccountList *list, Stack *S);
     F.S. Stack terisi dengan drafkicauan dari Draf.Config
     */
 
+void SaveDraf_FILE(char filename[], AccountList *list, Stack S[]);
+/*Menyimpan file Draf dari program kedalam Draf.config
+    I.S. Stack terdefinisi dan AccountList sudah diakuisisi dari user.config
+    F.S. Stack terisi dengan drafkicauan dari Draf.Config
+    */
+
 #endif
