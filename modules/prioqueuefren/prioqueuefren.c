@@ -1,4 +1,3 @@
-#include <stdio.h>
 #include "prioqueuefren.h"
 
 boolean IsEmptyPrio (prioqueuefren Q)
@@ -113,16 +112,16 @@ void Dequeueprio (prioqueuefren * Q, teman * t)
     }   
 }
 
-void Enqueueuserprio(prioqueuefren Q, int IDuser, prioqueuefren * Quser, prioqueuefren *Qsisa)
+void Enqueueuserprio(prioqueuefren *Q, int IDuser, prioqueuefren *Quser, prioqueuefren *Qsisa)
 /*Menyimpan informasi permintaan teman yang dimiliki oleh suatu user atau pengguna
     Memisahkan Queue permintaan teman selain milik user dan yang dimiliki oleh user*/
 {
     teman temp;
     MakeEmptyprio(Quser, 20);
     MakeEmptyprio(Qsisa, 100);
-    while(!IsEmptyPrio(Q))
+    while(!IsEmptyPrio(*Q))
     {
-        Dequeueprio(&Q, &temp);
+        Dequeueprio(Q, &temp);
         if(temp.IDpenerima == IDuser)
         {
             Enqueueprio(Quser,temp);
