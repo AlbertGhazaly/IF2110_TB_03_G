@@ -519,7 +519,6 @@ void ReadDraf_FILE(char filename[], AccountList *list, Stack *S){
         int j;
         CopyWordTo(&user, currentWord);
         user.Length = user.Length - 2;
-        printWord(user);
         int idAkun;
         int cok = 0;
         boolean found = false;
@@ -528,7 +527,6 @@ void ReadDraf_FILE(char filename[], AccountList *list, Stack *S){
             if(WordEqual(*list->accounts[cok].username, user))
             {
                 idAkun = cok;
-                printf(" %d\n", idAkun);
                 found = true;
             }
             cok++; 
@@ -592,14 +590,8 @@ void ReadDraf_FILE(char filename[], AccountList *list, Stack *S){
             int SS = WordToInt(ss);
             CreateDATETIME(&waktudraf, DD, MM, YY, HH, M, SS);
             DrafKicau.Draf = draf;
-            printWord(draf);
-            printf("\n");
             DrafKicau.IDuser = idAkun;
-            printf("%d", idAkun);
-            printf("\n");
             DrafKicau.waktu = waktudraf;
-            TulisDATETIME(waktudraf);
-            printf("\n");
             Push(S, DrafKicau);
         }
     }

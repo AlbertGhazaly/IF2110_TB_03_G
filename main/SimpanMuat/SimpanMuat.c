@@ -336,88 +336,88 @@ void ReadUser_FILE(char filename[], AccountList *list, Graf *Teman, prioqueuefre
 //         }
 //     }
 // }
-void ReadDraf_FILE(char filename[], AccountList *list, Stack *S){
-/*Membaca file Draf dari Draf.config kedalam program
-    I.S. Stack terdefinisi dan AccountList sudah diakuisisi dari user.config
-    F.S. Stack terisi dengan drafkicauan dari Draf.Config
-    */
-    int N;
-    STARTWORD_FILE(filename);
-    N = WordToInt(currentWord);
-    int i;
-    for(i = 0; i < N; i++)
-    {
-        ADVSENTENCE();
-        Word user;
-        int jumlah;
-        int j;
-        CopyWordTo(&user, currentWord);
-        user.Length = user.Length - 2;
-        int idAkun;
-        int i = 0;
-        boolean found = false;
-        while(i < list->count && found == false)
-        {
-            if(WordEqual(*list->accounts[i].username, user))
-            {
-                idAkun = i;
-                found = true;
-            }
-            i++; 
-        }
-        jumlah = CharToInt(currentWord.TabWord[currentWord.Length-1]);
-        for(j = 0; j < jumlah; j++)
-        {
-            drafkicau DrafKicau;
-            DATETIME waktudraf;
-            ADVSENTENCE();
-            Word draf = currentWord;
-            ADVSENTENCE();
-            int k;
-            Word dd;
-            for(k = 0; k < 2; k++){
-                dd.TabWord[k] = currentWord.TabWord[k];
-            }
-            dd.Length = 2;
-            int DD = WordToInt(dd);
-            Word mm;
-            for(k = 3; k < 5; k++){
-                mm.TabWord[k-3] = currentWord.TabWord[k];
-            }
-            mm.Length = 2;
-            int MM = WordToInt(mm);
-            Word yy;
-            for(k = 6; k < 10; k++){
-                yy.TabWord[k-6] = currentWord.TabWord[k];
-            }
-            yy.Length = 4;
-            int YY = WordToInt(yy);
-            Word hh;
-            for(k = 11; k < 13; k++){
-                hh.TabWord[k-11] = currentWord.TabWord[k];
-            }
-            hh.Length = 2;
-            int HH = WordToInt(hh);
-            Word m;
-            for(k = 14; k < 16; k++){
-                m.TabWord[k-14] = currentWord.TabWord[k];
-            }
-            m.Length = 2;
-            int M = WordToInt(m);
-            Word ss;
-            for(k = 17; k < 19; k++){
-                ss.TabWord[k-17] = currentWord.TabWord[k];
-            }
-            ss.Length = 2;
-            int SS = WordToInt(ss);
-            CreateDATETIME(&waktudraf, DD, MM, YY, HH, M, SS);
-            DrafKicau.Draf = draf;
-            DrafKicau.IDuser = idAkun;
-            DrafKicau.waktu = waktudraf;
-            Push(S, DrafKicau);
-        }
-    }
-}
+// void ReadDraf_FILE(char filename[], AccountList *list, Stack *S){
+// /*Membaca file Draf dari Draf.config kedalam program
+//     I.S. Stack terdefinisi dan AccountList sudah diakuisisi dari user.config
+//     F.S. Stack terisi dengan drafkicauan dari Draf.Config
+//     */
+//     int N;
+//     STARTWORD_FILE(filename);
+//     N = WordToInt(currentWord);
+//     int i;
+//     for(i = 0; i < N; i++)
+//     {
+//         ADVSENTENCE();
+//         Word user;
+//         int jumlah;
+//         int j;
+//         CopyWordTo(&user, currentWord);
+//         user.Length = user.Length - 2;
+//         int idAkun;
+//         int i = 0;
+//         boolean found = false;
+//         while(i < list->count && found == false)
+//         {
+//             if(WordEqual(*list->accounts[i].username, user))
+//             {
+//                 idAkun = i;
+//                 found = true;
+//             }
+//             i++; 
+//         }
+//         jumlah = CharToInt(currentWord.TabWord[currentWord.Length-1]);
+//         for(j = 0; j < jumlah; j++)
+//         {
+//             drafkicau DrafKicau;
+//             DATETIME waktudraf;
+//             ADVSENTENCE();
+//             Word draf = currentWord;
+//             ADVSENTENCE();
+//             int k;
+//             Word dd;
+//             for(k = 0; k < 2; k++){
+//                 dd.TabWord[k] = currentWord.TabWord[k];
+//             }
+//             dd.Length = 2;
+//             int DD = WordToInt(dd);
+//             Word mm;
+//             for(k = 3; k < 5; k++){
+//                 mm.TabWord[k-3] = currentWord.TabWord[k];
+//             }
+//             mm.Length = 2;
+//             int MM = WordToInt(mm);
+//             Word yy;
+//             for(k = 6; k < 10; k++){
+//                 yy.TabWord[k-6] = currentWord.TabWord[k];
+//             }
+//             yy.Length = 4;
+//             int YY = WordToInt(yy);
+//             Word hh;
+//             for(k = 11; k < 13; k++){
+//                 hh.TabWord[k-11] = currentWord.TabWord[k];
+//             }
+//             hh.Length = 2;
+//             int HH = WordToInt(hh);
+//             Word m;
+//             for(k = 14; k < 16; k++){
+//                 m.TabWord[k-14] = currentWord.TabWord[k];
+//             }
+//             m.Length = 2;
+//             int M = WordToInt(m);
+//             Word ss;
+//             for(k = 17; k < 19; k++){
+//                 ss.TabWord[k-17] = currentWord.TabWord[k];
+//             }
+//             ss.Length = 2;
+//             int SS = WordToInt(ss);
+//             CreateDATETIME(&waktudraf, DD, MM, YY, HH, M, SS);
+//             DrafKicau.Draf = draf;
+//             DrafKicau.IDuser = idAkun;
+//             DrafKicau.waktu = waktudraf;
+//             Push(S, DrafKicau);
+//         }
+//     }
+// }
 // ///////////////////////////////////////////////////////////////////////////////////////////
 // void saveUtas(char filename[],KicauList* kList, int jumlahUtas, AccountList akunList){
 //     FILE *configFile = fopen(filename, "w");
