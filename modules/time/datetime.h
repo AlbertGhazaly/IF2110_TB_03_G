@@ -7,6 +7,7 @@
 
 #include "../boolean.h"
 #include "time.h"
+#include <sys/types.h>
 
 /* *** Definisi TYPE DATETIME <DD/MM/YY HH:MM:SS> *** */
 typedef struct
