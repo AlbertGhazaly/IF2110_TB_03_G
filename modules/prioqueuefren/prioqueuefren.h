@@ -76,7 +76,7 @@ void Dequeueprio (prioqueuefren * Q, teman * t);
         Q mungkin kosong */
 
 /* Operasi Tambahan */
-void Enqueueuserprio(prioqueuefren Q, int IDuser,prioqueuefren * Quser, prioqueuefren *Qsisa);
+void Enqueueuserprio(prioqueuefren*Q, int IDuser,prioqueuefren * Quser, prioqueuefren *Qsisa);
 /*Menyimpan informasi permintaan teman yang dimiliki oleh suatu user atau pengguna*/
 
 void concatenationprio(prioqueuefren Quser, prioqueuefren Qsisa, prioqueuefren *Q);
