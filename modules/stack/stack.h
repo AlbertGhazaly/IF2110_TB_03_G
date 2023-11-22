@@ -63,4 +63,8 @@ void Pop(Stack * S, drafkicau * X);
 /* I.S. S  tidak mungkin kosong */
 /* F.S. X adalah nilai elemen TOP yang lama, TOP berkurang 1 */
 
+/* ************ Counter ************ */
+int NbElmtStack(Stack S);
+/* Mengirimkan banyaknya elemen stack. Mengirimkan 0 jika S kosong */
+
 #endif

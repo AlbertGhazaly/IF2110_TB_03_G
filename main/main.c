@@ -406,6 +406,7 @@ int main()
         if (WordEqual(command, tutup_program))
         {
             SaveUser_FILE("../cfg/pengguna.config", &akun, teman, Q);
+            SaveDraf_FILE("../cfg/draf.config", &akun, drafStack);
             runProgram = false;
         }
         else if (WordEqual(command, daftar))

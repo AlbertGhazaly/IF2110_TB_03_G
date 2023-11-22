@@ -23,3 +23,7 @@ void Pop(Stack *S, drafkicau * X){
     *X = InfoTop(*S);
     Top(*S)--;
 }
+
+int NbElmtStack(Stack S){
+    return Top(S) + 1;
+}
