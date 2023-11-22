@@ -16,7 +16,7 @@ typedef struct kicau {
  } Balasan;
 
 void CreateBalasan(Balasan *balasan, Account author);
-void BaseDisplay (Balasan b);
+void BaseDisplayBalasan (Balasan b);
 void MembalasKicauan(Tree *balasanKicauan, Balasan *balasan, int balasanId);
 void MembalasBalasan(Tree *balasanKicauan, Balasan *balasan, int parentId);
 void DisplayBalasan(Tree balasanKicauan, int balasanId);

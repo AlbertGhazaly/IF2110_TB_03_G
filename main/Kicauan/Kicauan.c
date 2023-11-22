@@ -4,8 +4,15 @@
 #include <stdio.h>
 #include <string.h>
 
-extern Account akunLogin;
-extern Word publik = {"publik", 6};
+Word publik = {"publik" , 6};
+
+ListKicau CreateListKicau(ListKicau *list)
+{
+    list->nEff = 0;
+    list->Cap = 100;
+    list->kicau = (Kicau*) malloc(list->Cap * sizeof(Kicau));
+    return *list;
+}
 
 int CreateIDKicau(ListKicau *list) {
     if (list->nEff == 0) 
@@ -23,7 +30,7 @@ void AddToKicauan(ListKicau *list, Kicau k) {
     list->nEff++;
 }
 
-void CreateKicau(ListKicau *list, Kicau *k) {
+void CreateKicau(Account akunLogin, ListKicau *list, Kicau *k) {
     time_t now = time(NULL);
     struct tm *tm_struct = localtime(&now);
     DATETIME local;
@@ -47,10 +54,11 @@ void CreateKicau(ListKicau *list, Kicau *k) {
     k->text[el] = '\0';
 
 
-    k->id = GenerateID(list); 
+    k->id = CreateIDKicau(list); 
     k->like = 0;
-    k->author = *akunLogin.username;
+    CopyWordTo(akunLogin.username, k->author);
     k->datetime = local;
+    k->utasKicau = NULL;
     printf("Selamat! Kicauan telah diterbitkan!\n Detil kicauan:\n");
     BaseDisplay(*k);
     AddToKicauan(list, *k);
@@ -87,16 +95,16 @@ void BaseDisplay (Kicau k)
     printf("\n| Disukai: %d\n\n", k.like);
 }
 
-void Kicauan(ListKicau list) {
+void Kicauan(Account akunLogin, ListKicau list) {
     //Print Kicauan (list kicau)
     for (int i = list.nEff - 1; i >= 0; i--) {
-        if (isEqualWordWord(list.kicau[i].author.TabWord, akunLogin.username)) {
+        if (isEqualWord(list.kicau[i].author.TabWord, akunLogin.username)) {
             BaseDisplay(list.kicau[i]);
         }
     }
 }
 
-void SukaKicau (int id, ListKicau *listkicau, Kicau *k, AccountList* listakun, Graf teman)
+void SukaKicau (Account akunLogin, int id, ListKicau *listkicau, Kicau *k, AccountList* listakun, Graf teman)
 {
     //Account ID user saat ini
     int id_user = GetAccountIdx(listakun, akunLogin);
@@ -132,7 +140,26 @@ void SukaKicau (int id, ListKicau *listkicau, Kicau *k, AccountList* listakun, G
     }
 }
 
-void UbahKicau (int id, ListKicau *list)
+boolean isIdInKicauan (int id, ListKicau *list)
+{
+    if (id > list->nEff)
+    {
+        return false;
+    }
+    else
+    {
+        for (int i = 0; i < list->nEff; i++)
+        {
+            if (list->kicau[id].id == 0)
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+}
+
+void UbahKicau (Account akunLogin, int id, ListKicau *list) 
 {
     if (!isIdInKicauan(id, list))
     {

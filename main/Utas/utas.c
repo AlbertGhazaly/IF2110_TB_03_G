@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-void createUtas(int id, KicauList* kList, Account account, int *jumlahUtas){
+void createUtas(int id, ListKicau* kList, Account account, int *jumlahUtas){
     Word ya = {"YA",2};
     Word tidak = {"TIDAK",5};
     boolean isFound = false;

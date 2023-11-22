@@ -7,13 +7,13 @@
 
 int main () 
 {
-    KicauList L;
+    Account User;
+    CreateAccount(&User, {}, "user");
+
+    ListKicau L;
+    CreateListKicau(&L);
     Kicau k;
-
-    CreateKicauList(&L);
-
-    char author[] = "John Doe";
     CreateKicau(&k, author);
     AddKicauToList(k, &L);
-    Kicauan(&L);
+    Kicauan(L);
 }

@@ -35,10 +35,10 @@ void CreateBalasan(Balasan *balasan, Account akunLogin) {
     balasan->datetime = local;
     CreateTree(&(balasan->kumpulanBalasan));
     printf("Selamat! Balasan telah diterbitkan!\n Detil balasan:\n");
-    BaseDisplay(*balasan);
+    BaseDisplayBalasan(*balasan);
 }
 
-void BaseDisplay (Balasan b)
+void BaseDisplayBalasan (Balasan b)
 {
     printf("\n| ID = %d\n", b.id);
 
