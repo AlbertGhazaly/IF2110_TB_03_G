@@ -625,7 +625,7 @@ void SaveDraf_FILE(char filename[], AccountList *list, Stack S[]){
     for(i = 0; i < 20; i++){
         if(!IsEmptyStack(S[i])){
             count++;
-            fprintf(file, "%s %d\n", list->accounts[i].username, NbElmtStack(S[i]));
+            fprintf(file, "%s %d\n", list->accounts[i].username->TabWord, NbElmtStack(S[i]));
             int j;
             int N = NbElmtStack(S[i]);
             for(j = 0; j < N; j++){
