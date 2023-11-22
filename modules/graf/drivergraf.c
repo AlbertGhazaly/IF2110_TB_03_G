@@ -1,41 +1,33 @@
-#include <stdio.h>
 #include "graf.h"
+#include <stdio.h>
 
 int main() {
-    Graf g;
-    ListGraf l;
+    // Menguji konstruktor
+    Graf myGraf;
+    createEmptyGraf(&myGraf);
 
-    // Membuat graf kosong
-    createEmptyGraf(&g);
+    // Membuat listgraf
+    ListGraf myList;
+    CreateListGraf(&myList);
 
-    // Menampilkan graf kosong
-    printf("Graf Awal (kosong):\n");
-    displayGraf(g, ROW_GRAF);
+    // Inisialisasi Graf dalam driver
+    ELMTGRAF(myGraf, 0, 1) = 1;
+    ELMTGRAF(myGraf, 1, 2) = 1;
+    ELMTGRAF(myGraf, 2, 3) = 1;
 
-    // Membuat list graf kosong
-    CreateListGraf(&l);
+    // Menampilkan Graf
+    printf("Graf:\n");
+    displayGraf(myGraf, 4);
 
-    // Menampilkan list graf kosong
-    printf("\nListGraf Awal (kosong):\n");
-    for (int i = 0; i < CAPACITYGRAF; i++) {
-        printf("%d ", ELMTLISTGRAF(l, i));
-    }
-    printf("\n");
+    // Mengisi list dengan 1 jika ada hubungan
+    IdxlistGraf rowIndex = 1;
+    getOne(myGraf, rowIndex, &myList);
 
-    // Menambahkan satu edge pada graf
-    ELMTGRAF(g, 0, 1) = 1;
-
-    // Menampilkan graf setelah penambahan edge
-    printf("\nGraf setelah penambahan edge:\n");
-    displayGraf(g, ROW_GRAF);
-
-    // Mendapatkan node yang terhubung dengan node 0
-    getOne(g, 0, &l);
-
-    // Menampilkan list graf setelah mendapatkan node terhubung
-    printf("\nListGraf setelah mendapatkan node terhubung dengan node 0:\n");
-    for (int i = 0; i < CAPACITYGRAF; i++) {
-        printf("%d ", ELMTLISTGRAF(l, i));
+    // Display list dari graf
+    printf("\nList untuk Row %d:\n", rowIndex);
+    int i;
+    for (i = 0; i < listEffGraf(myList); i++) {
+        printf("%d ", ELMTLISTGRAF(myList, i));
     }
     printf("\n");
 
