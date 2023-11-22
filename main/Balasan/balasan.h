@@ -1,9 +1,9 @@
 #ifndef BALASAN_H
 #define BALASAN_H
 
-#include "../boolean.h"
 #include "../../modules/adt.h"
 #include "../../modules/tree/tree.h"
+#include "../Pengguna/Pengguna.h"
 #include <time.h>
 
 #define MAXChar 280

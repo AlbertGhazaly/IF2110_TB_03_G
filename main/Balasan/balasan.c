@@ -1,5 +1,5 @@
 #include "balasan.h"
-#include "Pengguna/Pengguna.h"
+#include "../Pengguna/Pengguna.h"
 #include <time.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -31,7 +31,7 @@ void CreateBalasan(Balasan *balasan, Account akunLogin) {
     }
 
     balasan->text[el] = '\0';
-    balasan->author = stringToWord(&akunLogin.username->TabWord, akunLogin.username->Length);
+    balasan->author = stringToWord(akunLogin.username->TabWord, akunLogin.username->Length);
     balasan->datetime = local;
     CreateTree(&(balasan->kumpulanBalasan));
     printf("Selamat! Balasan telah diterbitkan!\n Detil balasan:\n");

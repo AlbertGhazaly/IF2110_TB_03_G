@@ -1,10 +1,9 @@
 #include "Kicauan.h"
 #include "../../modules/adt.h"
-#include "Pengguna/Pengguna.h"
 #include <stdio.h>
 #include <string.h>
 
-Word publik = {"publik" , 6};
+Word public = {"publik", 6};
 
 ListKicau CreateListKicau(ListKicau *list)
 {
@@ -98,7 +97,7 @@ void BaseDisplay (Kicau k)
 void Kicauan(Account akunLogin, ListKicau list) {
     //Print Kicauan (list kicau)
     for (int i = list.nEff - 1; i >= 0; i--) {
-        if (isEqualWord(list.kicau[i].author.TabWord, akunLogin.username)) {
+        if (WordEqual(list.kicau[i].author, *akunLogin.username)) {
             BaseDisplay(list.kicau[i]);
         }
     }
@@ -127,7 +126,7 @@ void SukaKicau (Account akunLogin, int id, ListKicau *listkicau, Kicau *k, Accou
     else
     {
         //Jika dua akun berteman
-        if(WordEqual(*listakun->accounts[id_penulis].jenisAkun, publik) || ELMTGRAF(teman, id_user, id_penulis))
+        if(WordEqual(*listakun->accounts[id_penulis].jenisAkun, public) || ELMTGRAF(teman, id_user, id_penulis))
         {
             listkicau->kicau[k->id].like++;
             printf("Selamat! kicauan telah disukai!\nDetil kicauan:");
@@ -188,7 +187,7 @@ void UbahKicau (Account akunLogin, int id, ListKicau *list)
             }
             list->kicau[id].text[el] = '\0';
             printf("Kicauan telah diubah!\nDetil kicauan:");
-            DisplayKicau(list->kicau[id]);
+            BaseDisplay(list->kicau[id]);
         }
     }
 }

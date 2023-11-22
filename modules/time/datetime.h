@@ -91,5 +91,6 @@ DATETIME DATETIMEPrevNDetik(DATETIME D, int N);
 long int DATETIMEDurasi(DATETIME DAw, DATETIME DAkh);
 /* Mengirim DAkh-DAw dlm Detik, dengan kalkulasi */
 /* Prekondisi: DAkh > DAw */
+void getlocaltime(int *SS, int *M, int *HH, int *DD, int *MM, int *YY);
 
 #endif

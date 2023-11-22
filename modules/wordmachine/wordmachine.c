@@ -67,6 +67,16 @@ void ADVSENTENCE() {
         CopyWordSpace();
     }
 }
+void ADVSENTENCENL(){
+    IgnoreBlanks();
+    IgnoreNewLine();
+    if (currentChar == MARKBaris || currentChar == MARK) {
+        currentWord.Length = 0;
+        EndWord = true;
+    } else {
+        CopyWordSpace();
+    } 
+}
 
 void CopyWord() { 
     /* Mengakuisisi kata, menyimpan dalam currentWord
