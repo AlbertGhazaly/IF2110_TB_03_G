@@ -543,7 +543,45 @@ void SaveUser_FILE(char filename[], AccountList *list, Graf Teman, prioqueuefren
     }
     fclose(file);
 }
+void SaveDraf_FILE(char filename[], AccountList *list, Stack S[]){
+/*Menyimpan file Draf dari program kedalam Draf.config
+    I.S. Stack terdefinisi dan AccountList sudah diakuisisi dari user.config
+    F.S. Stack terisi dengan drafkicauan dari Draf.Config
+    */
+    FILE *file = fopen(filename, "w");
 
-// void saveDraf(char filename[], AccountList *list, Stack *S){
-    
-// }
+    if (file == NULL){
+        fprintf(stderr, "Error opening file.\n");
+    }
+    int i;
+    int countdraf = 0;
+    for(i = 0; i < 20; i++){
+        if(!IsEmptyStack(S[i])){
+            countdraf++;
+        }
+    }
+    fprintf(file, "%d\n", countdraf);
+    int count = 0;
+    for(i = 0; i < 20; i++){
+        if(!IsEmptyStack(S[i])){
+            count++;
+            fprintf(file, "%s %d\n", list->accounts[i].username->TabWord, NbElmtStack(S[i]));
+            int j;
+            int N = NbElmtStack(S[i]);
+            for(j = 0; j < N; j++){
+                drafkicau temp;
+                Pop(&S[i], &temp);
+                char str[281];
+                wordToString(str,temp.Draf);
+                fprintf(file, "%s\n", str);
+                if (count == countdraf && j == N-1){
+                    fprintf(file, "%02d/%02d/%d %02d:%02d:%02d", temp.waktu.DD, temp.waktu.MM, temp.waktu.YYYY, temp.waktu.T.HH, temp.waktu.T.MM, temp.waktu.T.SS);
+                }
+                else{
+                    fprintf(file, "%02d/%02d/%d %02d:%02d:%02d\n", temp.waktu.DD, temp.waktu.MM, temp.waktu.YYYY, temp.waktu.T.HH, temp.waktu.T.MM, temp.waktu.T.SS);
+                }
+            }
+        }
+    }
+    fclose(file);
+}
