@@ -5,6 +5,7 @@
 #include <math.h>
 #include <stdlib.h>
 #include <time.h>
+#include <string.h>
 #include "./liststatik/liststatik.h"
 #include "./liststatik/liststatik.c"
 #include "./listdin/listdin.h"
