@@ -366,6 +366,7 @@ int main()
 
     Account akunLogin;
     ListKicau kList;
+    Kicau k;
     int idUtas = 0;
 
     boolean isLogin = false;
@@ -396,6 +397,10 @@ int main()
         Word tambah_teman = {"TAMBAH_TEMAN", 12};
         Word daftar_permintaan_teman = {"DAFTAR_PERMINTAAN_PERTEMANAN", 28};
         Word setujui_pertemanan = {"SETUJUI_PERTEMANAN", 18};
+        Word kicau = {"KICAU", 5};
+        Word suka_kicau = {"SUKA_KICAU", 10};
+        Word kicauan = {"KICAUAN", 7};
+        Word ubah_kicauan = {"UBAH_KICAUAN", 12};
         Word utas = {"UTAS", 4};
         Word sambung_utas = {"SAMBUNG_UTAS", 12};
         Word hapus_utas = {"HAPUS_UTAS", 10};
@@ -626,6 +631,57 @@ int main()
             if (isLogin)
             {
                 lihatdraf(drafStack, idUser, &akun);
+            }
+            else
+            {
+                printf("Anda belum masuk! Masuk terlebih dahulu untuk menikmati layanan BurBir.\n");
+            }
+        }
+        else if (WordEqual(command, kicau))
+        {
+            if (isLogin)
+            {
+                CreateKicau(akunLogin, &kList, &k);
+                Kicauan(akunLogin, kList);
+            }
+            else
+            {
+                printf("Anda belum masuk! Masuk terlebih dahulu untuk menikmati layanan BurBir.\n");
+            }
+        }
+        else if (WordEqual(command, suka_kicau))
+        {
+            if (isLogin)
+            {
+                int id;
+                printf("Masukkan ID kicauan yang ingin disukai: ");
+                scanf("%d", &id);
+                SukaKicau(akunLogin, id, &kList, &k, &akun, teman);
+            }
+            else
+            {
+                printf("Anda belum masuk! Masuk terlebih dahulu untuk menikmati layanan BurBir.\n");
+            }
+        }
+        else if (WordEqual(command, kicauan))
+        {
+            if (isLogin)
+            {
+                Kicauan(akunLogin, kList);
+            }
+            else
+            {
+                printf("Anda belum masuk! Masuk terlebih dahulu untuk menikmati layanan BurBir.\n");
+            }
+        }
+        else if (WordEqual(command, ubah_kicauan))
+        {
+            if (isLogin)
+            {
+                int id;
+                printf("Masukkan ID kicauan yang ingin diubah: ");
+                scanf("%d", &id);
+                UbahKicau(akunLogin, id, &kList);
             }
             else
             {
