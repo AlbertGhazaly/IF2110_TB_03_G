@@ -37,18 +37,37 @@ typedef struct {
 } AccountList;
 
 void inUser(Account *account, Word username);
+// I.S. username terdefinisi
 
 void outUser(Account *account);
+// I.S. account terdefinisi
+// F.S. username terdefinisi
+//      username merupakan username dari account
 
 boolean isOnline(Account *account);
+// I.S. account terdefinisi
+// F.S. mengembalikan true jika account sedang online
+//      mengembalikan false jika account sedang offline
 
 void CreateAccount(Account *account, Word username, Word password);
+// I.S. username dan password terdefinisi
+// F.S. account terisi
+//      account merupakan akun yang terdaftar
 
 void signup(AccountList *listakun);
+// I.S. listakun terdefinisi
+// F.S. listakun terisi
+//      listakun merupakan list akun yang terdaftar
 
 void signin(AccountList *list, Account *akunLogin);
+// I.S. list terdefinisi
+// F.S. akunLogin terisi
+//      akunLogin merupakan akun yang sedang login
 
 void fillAccount(AccountList *listakun);
+// I.S. listakun terdefinisi
+// F.S. listakun terisi
+//      listakun merupakan list akun yang terdaftar
 
 boolean isEmptyAccountList(AccountList *list);
 
@@ -73,6 +92,8 @@ boolean cekPassword(AccountList *list, Word username, Word password);
 int GetAccountIdx(AccountList *list, Account account);
 
 void ReadUser_FILE(char filename[], AccountList *list, Graf *teman, prioqueuefren * Q);
+
+void SaveUser_FILE(char filename[], AccountList *list, Graf Teman, prioqueuefren Q);
 
 void PrintPrioQueue (prioqueuefren Q, AccountList * listakun);
 /* Mencetak isi queue Q ke layar */

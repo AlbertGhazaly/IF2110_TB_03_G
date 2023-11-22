@@ -340,8 +340,8 @@ int main()
     MakeEmptyprio(&Q, 100);
     Stack draf;
     CreateEmptyStack(&draf);
-    // ReadUser_FILE("../cfg/pengguna.config", &akun, &teman, &Q);
-    // ReadDraf_FILE("../cfg/draf.config", &akun, &draf);
+    ReadUser_FILE("../cfg/pengguna.config", &akun, &teman, &Q);
+    ReadDraf_FILE("../cfg/draf.config", &akun, &draf);
     Stack drafStack[20]; // Buat 20 stack untuk 20 pengguna
     // int userID = 0;                  // ID pengguna saat ini
     // CreateEmpty(&drafStack[userID]); // Inisialisasi stack untuk pengguna saat ini
@@ -405,6 +405,7 @@ int main()
 
         if (WordEqual(command, tutup_program))
         {
+            SaveUser_FILE("../cfg/pengguna.config", &akun, teman, Q);
             runProgram = false;
         }
         else if (WordEqual(command, daftar))

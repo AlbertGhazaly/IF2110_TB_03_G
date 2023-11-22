@@ -44,7 +44,9 @@ boolean isEmptylistGraf(ListGraf l);
 /*listEffGraf == 0*/
 
 void getOne(Graf g, IdxGraf rowID, ListGraf *l);
+/*Mengisi list dengan 1 jika ada hubungan*/
 
 void displayGraf(Graf g, int count);
+/*Menampilkan graf*/
 
 #endif
