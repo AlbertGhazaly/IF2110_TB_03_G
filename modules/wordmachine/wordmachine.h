@@ -7,7 +7,7 @@
 #include "../boolean.h"
 #include "charmachine.h"
 
-#define NMax 280
+#define NMax 50
 #define BLANK ' '
 #define MARKBaris '\n'
 #define MARKFile '\0'
