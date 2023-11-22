@@ -17,6 +17,7 @@
         "stdio.h": "c",
         "includeadt.h": "c",
         "math.h": "c",
-        "types.h": "c"
+        "types.h": "c",
+        "balasan.h": "c"
     }
 }

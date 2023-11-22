@@ -5,6 +5,6 @@
 
 boolean lanjut(Word input);
 
-void copyWordToString(char (destination[MAXChar]),Word input);
+void copyWordToString(char*destination,Word input);
 
 #endif

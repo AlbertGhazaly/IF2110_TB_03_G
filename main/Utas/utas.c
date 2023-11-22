@@ -18,9 +18,10 @@ boolean lanjut(Word input){
         lanjut(currentWord);
     }
 }
-void copyWordToString(char (destination[MAXChar]),Word input){
+void copyWordToString(char* destination,Word input){
+    destination = "";
     int i;
-    for (i=0;input.TabWord[i]!='\0';i++){
+    for (i=0;i<input.Length;i++){
         (destination[i]) = input.TabWord[i];
     }
     (destination[i]) = '\0';
