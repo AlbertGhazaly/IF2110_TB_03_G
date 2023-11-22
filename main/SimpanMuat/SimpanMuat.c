@@ -1,7 +1,13 @@
-// #include "SimpanMuat.h"
-// #include <sys/stat.h>
-// #include <time.h>
-
+#include "SimpanMuat.h"
+#include <sys/stat.h>
+#include <time.h>
+void wordToString(char destination[MAXChar],Word input){
+    int i;
+    for (i=0;i<input.Length;i++){
+        (destination[i]) = input.TabWord[i];
+    }
+    destination[i] = '\0';
+}
 // void muat(char folderName[],AccountList *list, Graf *Teman, prioqueuefren *Q){
 //     char path[] = "../cfg/";
 //     char *folder = concatStr(path,folderName);
@@ -76,132 +82,133 @@
 //     return path;
 // }
 // // Load
-// void ReadUser_FILE(char filename[], AccountList *list, Graf *Teman, prioqueuefren *Q){
-//     int N;
-//     STARTWORD_FILE(filename);
-//     //Akuisisi Nilai N
-//     N = WordToInt(currentWord);
-//     ADVSENTENCE();
-//     int i,j;
-//     for (i = 0; i < N; i++)
-//     {
-//         Word username, password, bio, noHP, weton, jenisakun;
-//         Matrix profil;
-//         Account akun;
-//         CreateAccountEmpty(&akun);
-//         int j = 0;
-//         int batas = 11;
-//         while (j < batas)
-//         {
-//             if (currentChar == '\n' && j == 0)
-//             {
-//                 CopyWordTo(Username(akun), currentWord);
-//                 j++;
-//             }
-//             else if (currentChar == '\n' && j == 1)
-//             {
-//                 CopyWordTo(Password(akun), currentWord);
-//                 j++;
-//             }
-//             else if (currentChar == '\n' && j == 2)
-//             {
-//                 if (WordEqual(*Password(akun),currentWord))
-//                 {
-//                     CopyWordTo(Bio(akun), emptyWord);
-//                 }
-//                 else
-//                 {
-//                     CopyWordTo(Bio(akun), currentWord);
-//                 }
-//                 j++;
-//             }
-//             else if (currentChar == '\n' && j == 3)
-//             {
-//                 if (WordEqual(*Bio(akun), currentWord) || WordEqual(*Password(akun),currentWord))
-//                 {
-//                     CopyWordTo(NoHP(akun), emptyWord);
-//                 }
-//                 else
-//                 {
-//                     CopyWordTo(NoHP(akun), currentWord);
-//                 }
-//                 j++;
-//             }
-//             else if (currentChar == '\n' && j == 4)
-//             {
-//                 if (WordEqual(*Bio(akun), currentWord) || WordEqual(*Password(akun),currentWord) || WordEqual(*NoHP(akun), currentWord))
-//                 {
-//                     CopyWordTo(Weton(akun), emptyWord);
-//                 }
-//                 else{
-//                     CopyWordTo(Weton(akun), currentWord);
-//                 }
-//                 j++;
-//             }
-//             else if (currentChar == '\n' && j == 5)
-//             {
-//                 CopyWordTo(JenisAkun(akun), currentWord);
-//                 j++;
-//             }
-//             else if (currentChar == '\n' && j > 5 && j < 11)
-//             {
-//                 //Foto Profil pengguna.config disini
-//                 createMatrixchar(5, 10, &akun.fotoprofil);
-//                 int k;
-//                 for(k = 0; k < 10; k++){
-//                     ELMTChar(akun.fotoprofil,j-6,k) = currentWord.TabWord[k*2];
-//                 }
-//                 j++;
-//             }
-//             ADVSENTENCE();
-//         }
-//         AddAccountToList(list, akun);
-//     }
-//     for(i = 0; i < N; i++)
-//     {
-//         for(j = 0; j < N; j++)
-//         {
-//             ELMTGRAF(*Teman,i,j) = CharToInt(currentWord.TabWord[j*2]);
-//         }
-//         ADVSENTENCE();
-//     }
-//     int countQ = WordToInt(currentWord);
-//     if(countQ != 0)
-//     {
-//         for(i = 0; i < countQ-1; i++){
-//             ADVSENTENCE();
-//             teman temp;
-//             for(j = 0; j < 3; j++){
-//                 if(j == 0){
-//                     temp.IDpengirim = CharToInt(currentWord.TabWord[j*2]);
-//                 }
-//                 if(j == 1){
-//                     temp.IDpenerima = CharToInt(currentWord.TabWord[j*2]);
-//                 }
-//                 if(j == 2){
-//                     temp.Jumlahteman = CharToInt(currentWord.TabWord[j*2]);
-//                 }
-//             }
-//             Enqueueprio(Q, temp);
-//         }
-//         i = 0;
-//         teman temp;
-//         while (i < 5){
-//             ADV();
-//             if(i == 0){
-//                 temp.IDpengirim = CharToInt(currentChar);
-//             }
-//             else if(i == 2){
-//                 temp.IDpenerima = CharToInt(currentChar);
-//             }
-//             else if (i == 4){
-//                 temp.Jumlahteman = CharToInt(currentChar);
-//             }
-//             i++;
-//         }
-//         Enqueueprio(Q, temp);
-//     }
-// }
+void ReadUser_FILE(char filename[], AccountList *list, Graf *Teman, prioqueuefren *Q){
+    int N;
+    STARTWORD_FILE(filename);
+    //Akuisisi Nilai N
+    N = WordToInt(currentWord);
+    ADVSENTENCE();
+    int i,j;
+    for (i = 0; i < N; i++)
+    {
+        Word username, password, bio, noHP, weton, jenisakun;
+        Matrix profil;
+        Account akun;
+        CreateAccountEmpty(&akun);
+        int j = 0;
+        int batas = 11;
+        while (j < batas)
+        {
+            if (currentChar == '\n' && j == 0)
+            {
+                CopyWordTo(Username(akun), currentWord);
+                j++;
+            }
+            else if (currentChar == '\n' && j == 1)
+            {
+                CopyWordTo(Password(akun), currentWord);
+                j++;
+            }
+            else if (currentChar == '\n' && j == 2)
+            {
+                if (WordEqual(*Password(akun),currentWord))
+                {
+                    CopyWordTo(Bio(akun), emptyWord);
+                }
+                else
+                {
+                    CopyWordTo(Bio(akun), currentWord);
+                }
+                j++;
+            }
+            else if (currentChar == '\n' && j == 3)
+            {
+                if (WordEqual(*Bio(akun), currentWord) || WordEqual(*Password(akun),currentWord))
+                {
+                    CopyWordTo(NoHP(akun), emptyWord);
+                }
+                else
+                {
+                    CopyWordTo(NoHP(akun), currentWord);
+                }
+                j++;
+            }
+            else if (currentChar == '\n' && j == 4)
+            {
+                if (WordEqual(*Bio(akun), currentWord) || WordEqual(*Password(akun),currentWord) || WordEqual(*NoHP(akun), currentWord))
+                {
+                    CopyWordTo(Weton(akun), emptyWord);
+                }
+                else{
+                    CopyWordTo(Weton(akun), currentWord);
+                }
+                j++;
+            }
+            else if (currentChar == '\n' && j == 5)
+            {
+                CopyWordTo(JenisAkun(akun), currentWord);
+                j++;
+            }
+            else if (currentChar == '\n' && j > 5 && j < 11)
+            {
+                //Foto Profil pengguna.config disini
+                createMatrixchar(5, 10, &akun.fotoprofil);
+                int k;
+                for(k = 0; k < 10; k++){
+                    ELMTChar(akun.fotoprofil,j-6,k) = currentWord.TabWord[k*2];
+                }
+                j++;
+            }
+            currentWord = emptyWord;
+            ADVSENTENCE();
+        }
+        AddAccountToList(list, akun);
+    }
+    for(i = 0; i < N; i++)
+    {
+        for(j = 0; j < N; j++)
+        {
+            ELMTGRAF(*Teman,i,j) = CharToInt(currentWord.TabWord[j*2]);
+        }
+        ADVSENTENCE();
+    }
+    int countQ = WordToInt(currentWord);
+    if(countQ != 0)
+    {
+        for(i = 0; i < countQ-1; i++){
+            ADVSENTENCE();
+            teman temp;
+            for(j = 0; j < 3; j++){
+                if(j == 0){
+                    temp.IDpengirim = CharToInt(currentWord.TabWord[j*2]);
+                }
+                if(j == 1){
+                    temp.IDpenerima = CharToInt(currentWord.TabWord[j*2]);
+                }
+                if(j == 2){
+                    temp.Jumlahteman = CharToInt(currentWord.TabWord[j*2]);
+                }
+            }
+            Enqueueprio(Q, temp);
+        }
+        i = 0;
+        teman temp;
+        while (i < 5){
+            ADV();
+            if(i == 0){
+                temp.IDpengirim = CharToInt(currentChar);
+            }
+            else if(i == 2){
+                temp.IDpenerima = CharToInt(currentChar);
+            }
+            else if (i == 4){
+                temp.Jumlahteman = CharToInt(currentChar);
+            }
+            i++;
+        }
+        Enqueueprio(Q, temp);
+    }
+}
 // void loadTweetCnfg(char filename[],KicauList* kList){
 //     int n;
 //     STARTWORD_FILE(filename);
@@ -239,7 +246,7 @@
 //         CreateKicau(&k,author.TabWord);
 //         k.id = id;
 //         k.like = like;
-//         copyWordToString(k.text,tex);
+//         wordToString(k.text,tex);
 //         k.datetime = date;
 //         AddKicauToList(k,kList);
 //     }
@@ -270,10 +277,45 @@
 //             kSambungAdd ksam = createKicauanSambung(currentWord,akun);
 //             ADVSENTENCE();
 //             ADVSENTENCE();
-//             time_t date;
-//             struct tm tm = {0};
-//             strptime(currentWord.TabWord,"%d/%m/%Y %H:%M:%S",&tm);
-//             date = mktime(&tm);
+//             int k;
+//             Word dd;
+//             for(k = 0; k < 2; k++){
+//                 dd.TabWord[k] = currentWord.TabWord[k];
+//             }
+//             dd.Length = 2;
+//             int DD = WordToInt(dd);
+//             Word mm;
+//             for(k = 3; k < 5; k++){
+//                 mm.TabWord[k-3] = currentWord.TabWord[k];
+//             }
+//             mm.Length = 2;
+//             int MM = WordToInt(mm);
+//             Word yy;
+//             for(k = 6; k < 10; k++){
+//                 yy.TabWord[k-6] = currentWord.TabWord[k];
+//             }
+//             yy.Length = 4;
+//             int YY = WordToInt(yy);
+//             Word hh;
+//             for(k = 11; k < 13; k++){
+//                 hh.TabWord[k-11] = currentWord.TabWord[k];
+//             }
+//             hh.Length = 2;
+//             int HH = WordToInt(hh);
+//             Word m;
+//             for(k = 14; k < 16; k++){
+//                 m.TabWord[k-14] = currentWord.TabWord[k];
+//             }
+//             m.Length = 2;
+//             int M = WordToInt(m);
+//             Word ss;
+//             for(k = 17; k < 19; k++){
+//                 ss.TabWord[k-17] = currentWord.TabWord[k];
+//             }
+//             ss.Length = 2;
+//             int SS = WordToInt(ss);
+//             DATETIME date;
+//             CreateDATETIME(&date, DD, MM, YY, HH, M, SS);
 //             ksam->datetime = date;
 
 //             kSambungAdd kPrev;
@@ -376,7 +418,6 @@ void ReadDraf_FILE(char filename[], AccountList *list, Stack *S){
         }
     }
 }
-
 // ///////////////////////////////////////////////////////////////////////////////////////////
 // void saveUtas(char filename[],KicauList* kList, int jumlahUtas, AccountList akunList){
 //     FILE *configFile = fopen(filename, "w");
@@ -420,7 +461,7 @@ void ReadDraf_FILE(char filename[], AccountList *list, Stack *S){
 //         fprintf(configFile,"%s\n",kList.kicauan[i].text);
 //         fprintf(configFile,"%d\n",kList.kicauan[i].like);
 //         char * author;
-//         copyWordToString(author,kList.kicauan[i].author);
+//         wordToString(author,kList.kicauan[i].author);
 //         fprintf(configFile,"%s\n",author);
 //         struct tm *tm_struct = localtime(kList.kicauan[i].datetime);
 //         DATETIME local;
@@ -445,13 +486,20 @@ void SaveUser_FILE(char filename[], AccountList *list, Graf Teman, prioqueuefren
     fprintf(file, "%d\n", list->count);
     int i;
     for (i = 0; i < list->count; i++)
-    {
-        fprintf(file, "%s\n", list->accounts[i].username->TabWord);
-        fprintf(file, "%s\n", list->accounts[i].password->TabWord);
-        fprintf(file, "%s\n", list->accounts[i].bio->TabWord);
-        fprintf(file, "%s\n", list->accounts[i].noHP->TabWord);
-        fprintf(file, "%s\n", list->accounts[i].weton->TabWord);
-        fprintf(file, "%s\n", list->accounts[i].jenisAkun->TabWord);
+    {   
+        char str[MAXChar];
+        wordToString(str,list->accounts[i].username[0]);
+        fprintf(file, "%s\n", str);
+        wordToString(str,list->accounts[i].password[0]);
+        fprintf(file, "%s\n",str);
+        wordToString(str,list->accounts[i].bio[0]);
+        fprintf(file, "%s\n", str);
+        wordToString(str,list->accounts[i].noHP[0]);
+        fprintf(file, "%s\n", str);
+        wordToString(str,list->accounts[i].weton[0]);
+        fprintf(file, "%s\n", str);
+        wordToString(str,list->accounts[i].jenisAkun[0]);
+        fprintf(file, "%s\n", str);
         int j;
         for(j = 0; j < 5; j++){
             int k;

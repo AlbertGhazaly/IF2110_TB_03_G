@@ -15,7 +15,7 @@ void IgnoreBlanks() {
 }
 
 void IgnoreNewLine() {
-    if (currentChar == '\n')
+    if (currentChar == '\n' || currentChar=='\r')
     {
         ADV();
     }
@@ -61,7 +61,7 @@ void ADVSENTENCE() {
     Proses : Akuisisi kata menggunakan procedure SalinWord */
     IgnoreBlanks();
     IgnoreNewLine();
-    if (currentChar == MARKBaris || currentChar == MARK) {
+    if (currentChar == MARKBaris || currentChar == MARK || currentChar=='\r') {
         EndWord = true;
     } else {
         CopyWordSpace();
@@ -147,7 +147,7 @@ void STARTWORD_FILE(char filename[])
     STARTFILE(filename);
     IgnoreBlanks();
     IgnoreNewLine();
-    if (currentChar == MARK || currentChar == MARKBaris){
+    if (currentChar == MARK || currentChar == MARKBaris || currentChar=='\r'){
         EndWord = true;
     }
     else{
