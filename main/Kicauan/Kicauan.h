@@ -2,7 +2,7 @@
 #define KICAUAN_H
 
 #include "../../modules/adt.h"
-#define MAXChar 280
+#define MAXChar 281
 
 typedef struct kicausambung *kSambungAdd;
 typedef struct kicausambung {
@@ -40,8 +40,8 @@ void AddToKicauan(ListKicau *list, Kicau k);
 void CreateKicau(Account akunLogin, ListKicau *list, Kicau *k);
 void BaseDisplay (Kicau k);
 void Kicauan(Account akunLogin, ListKicau list);
-void SukaKicau (Account akunLogin, int id, ListKicau *listkicau, Kicau *k, AccountList* listakun, Graf teman);
+void SukaKicau (Account akunLogin, Word id, ListKicau *listkicau, Kicau *k, AccountList* listakun, Graf teman);
 boolean isIdInKicauan (int id, ListKicau *list);
-void UbahKicau (Account akunLogin, int id, ListKicau *list);
+void UbahKicau (Account akunLogin, Word id, ListKicau *list);
 
 #endif

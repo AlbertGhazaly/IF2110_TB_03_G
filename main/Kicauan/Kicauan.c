@@ -1,7 +1,7 @@
 #include "../../modules/adt.h"
 #include "../includeADT.h"
 
-Word public = {"publik", 6};
+Word public = {"Publik", 6};
 
 int GetAccountIndex(AccountList *list, Account account){
     int i = 0;
@@ -35,8 +35,10 @@ int CreateIDKicau(ListKicau *list) {
 }
 
 void AddToKicauan(ListKicau *list, Kicau k) {
+
     list->kicau[list->nEff] = k;
     list->nEff++;
+    
 }
 
 void CreateKicau(Account akunLogin, ListKicau *list, Kicau *k) {
@@ -49,15 +51,19 @@ void CreateKicau(Account akunLogin, ListKicau *list, Kicau *k) {
     int el = 0;
     printf("Masukkan kicauan:\n");
     START();
-
-    while (el < MAXChar)
+    while (currentChar=='\n' || currentChar=='\r')
     {
-        if (currentChar == ';')
+        ADV();
+    }
+    
+    while (currentChar!=';')
+    {
+        if (el<MAXChar)
         {
-            break;
+            k->text[el] = currentChar;
+            el++;
         }
-        k->text[el] = currentChar;
-        el++;
+        
         ADV();
     }
     k->text[el] = '\0';
@@ -65,7 +71,7 @@ void CreateKicau(Account akunLogin, ListKicau *list, Kicau *k) {
 
     k->id = CreateIDKicau(list); 
     k->like = 0;
-    CopyWordTo(akunLogin.username, k->author);
+    CopyWordTo(&k->author,akunLogin.username[0]);
     k->datetime = local;
     k->utasKicau = NULL;
     printf("Selamat! Kicauan telah diterbitkan!\n Detil kicauan:\n");
@@ -99,7 +105,6 @@ void BaseDisplay (Kicau k)
         printf("%c", k.text[j]);
         j++;
     }
-
     //print likes
     printf("\n| Disukai: %d\n\n", k.like);
 }
@@ -113,38 +118,43 @@ void Kicauan(Account akunLogin, ListKicau list) {
     }
 }
 
-void SukaKicau (Account akunLogin, int id, ListKicau *listkicau, Kicau *k, AccountList* listakun, Graf teman)
+void SukaKicau (Account akunLogin, Word id, ListKicau *listkicau, Kicau *k, AccountList* listakun, Graf teman)
 {
     //Account ID user saat ini
     int id_user = GetAccountIndex(listakun, akunLogin);
+    int id_int = WordToInt(id)-1;
 
     //Account ID username penulis kicauan yang ingin di-like
     int i = 0;
     boolean found = false;
-    while (!found && i < listkicau->nEff) {
-        if (WordEqualAccount(*listakun->accounts[i].username, listkicau->kicau[k->id].author)) {
+    while (!found && i <= listkicau->nEff) {
+        if (WordEqualAccount(*listakun->accounts[i].username, listkicau->kicau[k->id-1].author)) {
             found = true;
         }
         i++;
     }
     int id_penulis = i-1;
-
-    if (id > listkicau->nEff)
+    if (id_int > listkicau->nEff)
     {
-        printf("Tidak ditemukan kicauan dengan ID = %d;", id);
+        printf("Tidak ditemukan kicauan dengan ID = %d;", id_int);
     }
     else
     {
-        //Jika dua akun berteman
-        if(WordEqual(*listakun->accounts[id_penulis].jenisAkun, public) || ELMTGRAF(teman, id_user, id_penulis))
+        if (WordEqual(akunLogin.username[0],listakun->accounts[id_penulis].username[0]))
         {
-            listkicau->kicau[k->id].like++;
-            printf("Selamat! kicauan telah disukai!\nDetil kicauan:");
-            BaseDisplay(listkicau->kicau[id]);
+            printf("Tidak bisa menyukai kicauan sendiri!\n");
         }
-        else
-        {
-            printf("Wah, kicauan tersebut dibuat oleh akun privat! Ikuti akun itu dulu ya");
+        else{
+            //Jika dua akun berteman
+            if(WordEqual(listakun->accounts[id_penulis].jenisAkun[0], public) || ELMTGRAF(teman, id_user, id_penulis))
+            {
+                listkicau->kicau[id_int].like += 1;
+                printf("Selamat! kicauan telah disukai!\nDetil kicauan:");
+                BaseDisplay(listkicau->kicau[id_int]);
+            }
+            else{
+                printf("Wah, kicauan tersebut dibuat oleh akun privat! Ikuti akun itu dulu ya\n");
+            }
         }
     }
 }
@@ -168,36 +178,39 @@ boolean isIdInKicauan (int id, ListKicau *list)
     }
 }
 
-void UbahKicau (Account akunLogin, int id, ListKicau *list) 
-{
-    if (!isIdInKicauan(id, list))
+void UbahKicau (Account akunLogin, Word id, ListKicau *list) 
+{   int id_int = WordToInt(id);
+    if (!isIdInKicauan(id_int-1, list))
     {
-        printf("Tidak ditemukan kicauan dengan ID = %d!", id);
+        printf("Tidak ditemukan kicauan dengan ID = %d!", id_int);
     }
     else
     {
-        if (!WordEqual(list->kicau[id].author, *akunLogin.username))
+        if (!WordEqual(list->kicau[id_int-1].author, *akunLogin.username))
         {
-            printf("Kicauan dengan ID = %d bukan milikmu!", id);
+            printf("Kicauan dengan ID = %d bukan milikmu!\n", id_int);
         }
         else
         {
             printf("Masukkan kicauan baru:\n");
             START();
-            int el = 0;
-            while (el < MAXChar)
+             while (currentChar=='\n' || currentChar=='\r')
             {
-                if (currentChar == ';')
-                {
-                    break;
-                }
-                list->kicau[id].text[el] = currentChar;
-                el++;
                 ADV();
             }
-            list->kicau[id].text[el] = '\0';
+            int el = 0;
+            while (currentChar != ';')
+            {
+                if (el<MAXChar)
+                {
+                    list->kicau[id_int-1].text[el] = currentChar;
+                    el++;
+                }
+                ADV();
+            }
+            list->kicau[id_int-1].text[el] = '\0';
             printf("Kicauan telah diubah!\nDetil kicauan:");
-            BaseDisplay(list->kicau[id]);
+            BaseDisplay(list->kicau[id_int-1]);
         }
     }
 }

@@ -331,6 +331,7 @@ int main()
 
     Account akunLogin;
     ListKicau kList;
+    CreateListKicau(&kList);
     Kicau k;
     int idUtas = 0;
 
@@ -602,21 +603,17 @@ int main()
             if (isLogin)
             {
                 CreateKicau(akunLogin, &kList, &k);
-                Kicauan(akunLogin, kList);
             }
             else
             {
                 printf("Anda belum masuk! Masuk terlebih dahulu untuk menikmati layanan BurBir.\n");
             }
         }
-        else if (WordEqual(command, suka_kicau))
+        else if (wordCheck(command, 0, 9, suka_kicau) && command.Length > 10)
         {
             if (isLogin)
             {
-                int id;
-                printf("Masukkan ID kicauan yang ingin disukai: ");
-                scanf("%d", &id);
-                SukaKicau(akunLogin, id, &kList, &k, &akun, teman);
+                SukaKicau(akunLogin, wordFromIndex(command, 11), &kList, &k, &akun, teman);
             }
             else
             {
@@ -634,23 +631,16 @@ int main()
                 printf("Anda belum masuk! Masuk terlebih dahulu untuk menikmati layanan BurBir.\n");
             }
         }
-        else if (WordEqual(command, ubah_kicauan))
+        else if (wordCheck(command, 0, 11, ubah_kicauan) && command.Length > 12)
         {
             if (isLogin)
             {
-                int id;
-                printf("Masukkan ID kicauan yang ingin diubah: ");
-                scanf("%d", &id);
-                UbahKicau(akunLogin, id, &kList);
+                UbahKicau(akunLogin, wordFromIndex(command, 13), &kList);
             }
             else
             {
                 printf("Anda belum masuk! Masuk terlebih dahulu untuk menikmati layanan BurBir.\n");
             }
-        }
-        else
-        {
-            printf("Perintah tidak valid!\n");
         }
     }
     ADVCOMMAND();
