@@ -6,6 +6,8 @@
 #define stackt_H
 
 #include "../boolean.h"
+#include "../time/datetime.h"
+#include "../wordmachine/wordmachine.h"
 
 #define Nil -1
 #define MaxEl 100
