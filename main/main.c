@@ -1,18 +1,18 @@
 #include "includeADT.h"
 
-void cetakUtas(int idUtas, KicauList kList, Account account, AccountList *listAccount, Graf teman)
+void cetakUtas(int idUtas, ListKicau kList, Account account, AccountList *listAccount, Graf teman)
 {
     boolean isFound = false;
     Kicau *kicauan;
     Word privat = {"Privat", 6};
-    for (int i = 0; (i < kList.count) && (!isFound); i++)
+    for (int i = 0; (i < kList.nEff) && (!isFound); i++)
     {
-        if (kList.kicauan[i].utasKicau != NULL)
+        if (kList.kicau[i].utasKicau != NULL)
         {
-            if (kList.kicauan[i].utasKicau->IDUtas == idUtas)
+            if (kList.kicau[i].utasKicau->IDUtas == idUtas)
             {
                 isFound = true;
-                *kicauan = kList.kicauan[i];
+                *kicauan = kList.kicau[i];
             }
         }
     }
@@ -36,14 +36,10 @@ void cetakUtas(int idUtas, KicauList kList, Account account, AccountList *listAc
         }
         else
         {
-            printf("| ID = %d\n",kicauan->id);
-
+            printf("| ID = %d\n", kicauan->id);
             printf("| %s\n", kicauan->author.TabWord);
-            struct tm *tm_struct = localtime(&kicauan->datetime);
-            DATETIME local;
-            CreateDATETIME(&local, tm_struct->tm_mday, tm_struct->tm_mon + 1, tm_struct->tm_year + 1900, tm_struct->tm_hour, tm_struct->tm_min, tm_struct->tm_sec);
             printf("| ");
-            TulisDATETIME(local);
+            TulisDATETIME(kicauan->datetime);
             printf("\n");
             printf("| %s\n", kicauan->text);
             kSambungAdd kSam;
@@ -53,10 +49,8 @@ void cetakUtas(int idUtas, KicauList kList, Account account, AccountList *listAc
             {
                 printf("   | INDEX = %d\n", i + 1);
                 printf("   | %s\n", kSam->author.TabWord);
-                tm_struct = localtime(&kSam->datetime);
-                CreateDATETIME(&local, tm_struct->tm_mday, tm_struct->tm_mon + 1, tm_struct->tm_year + 1900, tm_struct->tm_hour, tm_struct->tm_min, tm_struct->tm_sec);
                 printf("   | ");
-                TulisDATETIME(local);
+                TulisDATETIME(kSam->datetime);
                 printf("\n");
                 printf("   | %s\n", kSam->text);
                 kSam = kSam->next;
@@ -74,23 +68,27 @@ kSambungAdd createKicauanSambung(Word tex, Account account)
         kicauSam->next = NULL;
         copyWordToString((kicauSam->text), tex);
         CopyWordTo(&kicauSam->author, account.username[0]);
-        kicauSam->datetime = time(NULL);
+        time_t now = time(NULL);
+        struct tm *tm_struct = localtime(&now);
+        DATETIME local;
+        CreateDATETIME(&local, tm_struct->tm_mday, tm_struct->tm_mon + 1, tm_struct->tm_year + 1900, tm_struct->tm_hour, tm_struct->tm_min, tm_struct->tm_sec);
+        kicauSam->datetime = local;
     }
     return kicauSam;
 }
 
-void sambungUtas(int idUtas, int index, KicauList *kList, Account account)
+void sambungUtas(int idUtas, int index, ListKicau *kList, Account account)
 {
     boolean isFound = false;
     Kicau *kicauan;
-    for (int i = 0; (i < kList->count) && (!isFound); i++)
+    for (int i = 0; (i < kList->nEff) && (!isFound); i++)
     {
-        if (kList->kicauan[i].utasKicau != NULL)
+        if (kList->kicau[i].utasKicau != NULL)
         {
-            if (kList->kicauan[i].utasKicau->IDUtas == idUtas)
+            if (kList->kicau[i].utasKicau->IDUtas == idUtas)
             {
                 isFound = true;
-                *kicauan = kList->kicauan[i];
+                *kicauan = kList->kicau[i];
             }
         }
     }
@@ -126,12 +124,6 @@ void sambungUtas(int idUtas, int index, KicauList *kList, Account account)
             {
                 printf("Masukkan kicauan:\n");
                 STARTSENTENCE();
-                while (currentWord.Length > MAXChar)
-                {
-                     printf("Kicauan terlalu panjang ! \n");
-                     printf("Masukkan kicauan: \n");
-                     STARTSENTENCE();
-                }
                 kSam = kicauan->utasKicau->content;
                 kSambungAdd newKSam = createKicauanSambung(currentWord, account);
                 if (index == 1)
@@ -160,40 +152,20 @@ void sambungUtas(int idUtas, int index, KicauList *kList, Account account)
     }
 }
 
-void hapusUtas(int idUtas, int index, KicauList *kList, Account account,AccountList *listAccount, Graf teman)
+void hapusUtas(int idUtas, int index, ListKicau *kList, Account account)
 {
-
     boolean isFound = false;
     Kicau *kicauan;
-    Word privat = {"Privat", 6};
-    for (int i = 0; (i < kList->count) && (!isFound); i++)
+    for (int i = 0; (i < kList->nEff) && (!isFound); i++)
     {
-        if (kList->kicauan[i].utasKicau != NULL)
+        if (kList->kicau[i].utasKicau != NULL)
         {
-            if (kList->kicauan[i].utasKicau->IDUtas == idUtas)
+            if (kList->kicau[i].utasKicau->IDUtas == idUtas)
             {
                 isFound = true;
-                *kicauan = kList->kicauan[i];
+                *kicauan = kList->kicau[i];
             }
         }
-    }
-    if (!isFound)
-    {
-        printf("Utas tidak ditemukan!\n");
-    }
-    else
-    {
-        int i;
-        for (i = 0; !WordEqual(account.username[0], listAccount->accounts[i].username[0]); i++);
-        int idUser = i;
-        for (i = 0; !WordEqual(kicauan->author, listAccount->accounts[i].username[0]); i++);
-        int idTeman = i;
-
-        if (WordEqual(listAccount->accounts[idTeman].jenisAkun[0], privat) && (ELMTGRAF(teman, idUser, idTeman) == 0)){
-                isFound = true;
-                *kicauan = kList->kicauan[i];
-        }
-        
     }
     if (!isFound)
     {
@@ -244,15 +216,15 @@ void hapusUtas(int idUtas, int index, KicauList *kList, Account account,AccountL
     }
 }
 
-void createUtas(int id, KicauList *kList, Account account, int *jumlahUtas)
+void createUtas(int id, ListKicau *kList, Account account, int *jumlahUtas)
 {
     Word ya = {"YA", 2};
     Word tidak = {"TIDAK", 5};
     boolean isFound = false;
     int i;
-    for (i = 0; (i < kList->count) && (!isFound); i++)
+    for (i = 0; (i < kList->nEff) && (!isFound); i++)
     {
-        if (kList->kicauan[i].id == id)
+        if (kList->kicau[i].id == id)
         {
             isFound = true;
         }
@@ -263,7 +235,7 @@ void createUtas(int id, KicauList *kList, Account account, int *jumlahUtas)
     }
     else
     {
-        Kicau *kicau = &kList->kicauan[i];
+        Kicau *kicau = &kList->kicau[i];
         if (WordEqual(kicau->author, account.username[0]))
         {
             printf("Utas ini bukan milik anda!\n");
@@ -280,14 +252,7 @@ void createUtas(int id, KicauList *kList, Account account, int *jumlahUtas)
                 printf("Utas berhasil dibuat!\n");
                 printf("Masukkan kicauan: \n");
                 STARTSENTENCE();
-                while (currentWord.Length > MAXChar)
-                {
-                     printf("Kicauan terlalu panjang ! \n");
-                     printf("Masukkan kicauan: \n");
-                     STARTSENTENCE();
-                }
-                
-                kSambungAdd kSam = createKicauanSambung(currentWord,account);
+                kSambungAdd kSam = createKicauanSambung(currentWord, account);
                 kicau->utasKicau->content = kSam;
                 *jumlahUtas++;
                 kicau->utasKicau->IDUtas = *jumlahUtas;
@@ -365,7 +330,9 @@ int main()
     }
 
     Account akunLogin;
-    KicauList kList;
+    ListKicau kList;
+    CreateListKicau(&kList);
+    Kicau k;
     int idUtas = 0;
 
     boolean isLogin = false;
@@ -397,6 +364,10 @@ int main()
         Word daftar_permintaan_teman = {"DAFTAR_PERMINTAAN_PERTEMANAN", 28};
         Word setujui_pertemanan = {"SETUJUI_PERTEMANAN", 18};
         Word utas = {"UTAS", 4};
+        Word kicau = {"KICAU", 5};
+        Word suka_kicau = {"SUKA_KICAU", 10};
+        Word kicauan = {"KICAUAN", 7};
+        Word ubah_kicauan = {"UBAH_KICAUAN", 12};
         Word sambung_utas = {"SAMBUNG_UTAS", 12};
         Word hapus_utas = {"HAPUS_UTAS", 10};
         Word cetak_utas = {"CETAK_UTAS", 10};
@@ -491,10 +462,6 @@ int main()
         else if (WordEqual(command, curr_user))
         {
             DisplayAccounts(&akun);
-        }   
-        else if (WordEqual(command, daftar_teman))
-        {
-            daftarteman(isLogin, akunLogin, &akun, teman);
         }
         else if (WordEqual(command, hapus_teman))
         {
@@ -573,7 +540,7 @@ int main()
                 index += CharToInt(command.TabWord[i]);
                 i++;
             }
-            hapusUtas(idUtas, index, &kList, akunLogin,&akun, teman);
+            hapusUtas(idUtas, index, &kList, akunLogin);
         }
         else if (wordCheck(command, 0, 9, cetak_utas)) // cetak utas
         {
@@ -633,9 +600,49 @@ int main()
                 printf("Anda belum masuk! Masuk terlebih dahulu untuk menikmati layanan BurBir.\n");
             }
         }
-        else
+         else if (WordEqual(command, kicau))
         {
-            printf("Perintah tidak valid!\n");
+            if (isLogin)
+            {
+                CreateKicau(akunLogin, &kList, &k);
+            }
+            else
+            {
+                printf("Anda belum masuk! Masuk terlebih dahulu untuk menikmati layanan BurBir.\n");
+            }
+        }
+        else if (wordCheck(command, 0, 9, suka_kicau) && command.Length > 10)
+        {
+            if (isLogin)
+            {
+                SukaKicau(akunLogin, wordFromIndex(command, 11), &kList, &k, &akun, teman);
+            }
+            else
+            {
+                printf("Anda belum masuk! Masuk terlebih dahulu untuk menikmati layanan BurBir.\n");
+            }
+        }
+        else if (WordEqual(command, kicauan))
+        {
+            if (isLogin)
+            {
+                Kicauan(akunLogin, kList);
+            }
+            else
+            {
+                printf("Anda belum masuk! Masuk terlebih dahulu untuk menikmati layanan BurBir.\n");
+            }
+        }
+        else if (wordCheck(command, 0, 11, ubah_kicauan) && command.Length > 12)
+        {
+            if (isLogin)
+            {
+                UbahKicau(akunLogin, wordFromIndex(command, 13), &kList);
+            }
+            else
+            {
+                printf("Anda belum masuk! Masuk terlebih dahulu untuk menikmati layanan BurBir.\n");
+            }
         }
     }
     ADVCOMMAND();

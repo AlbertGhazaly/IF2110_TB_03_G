@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include "prioqueuefren.h"
 
 boolean IsEmptyPrio (prioqueuefren Q)
