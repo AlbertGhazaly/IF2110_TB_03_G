@@ -1,4 +1,4 @@
-#include "includeADT.h"
+#include "./includeADT.h"
 
 void cetakUtas(int idUtas, ListKicau kList, Account account, AccountList *listAccount, Graf teman)
 {
@@ -289,6 +289,107 @@ void createUtas(int id, ListKicau *kList, Account account, int *jumlahUtas)
     }
 }
 
+void ReadKicau_FILE(char filename[], ListKicau * kList){
+    STARTWORD_FILE(filename);
+    int n = WordToInt(currentWord);
+    int i;
+    for(i = 0; i < n ; i++){
+        Kicau temp; 
+        ADVSENTENCE();
+        int id = WordToInt(currentWord);
+        temp.id = id;
+        ADVSENTENCE();
+        w2s(temp.text ,currentWord);
+        ADVSENTENCE();
+        temp.like = WordToInt(currentWord);
+        ADVSENTENCE();
+        temp.author = emptyWord;
+        CopyWordTo(&temp.author, currentWord);
+        if (i != n-1){
+            ADVSENTENCE();
+        }
+        else{
+            currentWord = emptyWord;
+            ADV();
+            int m;
+            for(m = 0; m < 19; m++){
+                currentWord.TabWord[m] = currentChar;
+                currentWord.Length++;
+                ADV();
+            }
+        }
+        DATETIME waktukicau;
+        int k;
+        Word dd;
+        for(k = 0; k < 2; k++){
+            dd.TabWord[k] = currentWord.TabWord[k];
+        }
+        dd.Length = 2;
+        int DD = WordToInt(dd);
+        Word mm;
+        for(k = 3; k < 5; k++){
+            mm.TabWord[k-3] = currentWord.TabWord[k];
+        }
+        mm.Length = 2;
+        int MM = WordToInt(mm);
+        Word yy;
+        for(k = 6; k < 10; k++){
+            yy.TabWord[k-6] = currentWord.TabWord[k];
+        }
+        yy.Length = 4;
+        int YY = WordToInt(yy);
+        Word hh;
+        for(k = 11; k < 13; k++){
+            hh.TabWord[k-11] = currentWord.TabWord[k];
+        }
+        hh.Length = 2;
+        int HH = WordToInt(hh);
+        Word m;
+        for(k = 14; k < 16; k++){
+            m.TabWord[k-14] = currentWord.TabWord[k];
+        }
+        m.Length = 2;
+        int M = WordToInt(m);
+        Word ss;
+        for(k = 17; k < 19; k++){
+            ss.TabWord[k-17] = currentWord.TabWord[k];
+        }
+        ss.Length = 2;
+        int SS = WordToInt(ss);
+        CreateDATETIME(&waktukicau, DD, MM, YY, HH, M, SS);
+        temp.datetime = waktukicau;
+        AddToKicauan(kList, temp);
+    }
+}
+
+void saveKicau_FILE(char filename[], ListKicau kList){
+    FILE *file = fopen(filename, "w");
+    if (file == NULL){
+        fprintf(stderr, "Error opening file.\n");
+    }
+    int N = kList.nEff;
+    fprintf(file, "%d\n", N);
+    int i;
+    for(i = 0; i < N; i++){
+        fprintf(file, "%d\n", kList.kicau[i].id);
+        fprintf(file, "%s\n", kList.kicau[i].text);
+        fprintf(file, "%d\n", kList.kicau[i].like);
+        int j;
+        for(j = 0; j < kList.kicau[i].author.Length; j++){
+            fprintf(file, "%c", kList.kicau[i].author.TabWord[j]);
+        }
+        fprintf(file, "\n");
+        if (i == N-1){
+            fprintf(file, "%02d/%02d/%d %02d:%02d:%02d", kList.kicau[i].datetime.DD, kList.kicau[i].datetime.MM, kList.kicau[i].datetime.YYYY, kList.kicau[i].datetime.T.HH, kList.kicau[i].datetime.T.MM, kList.kicau[i].datetime.T.SS);
+        }
+        else{
+            fprintf(file, "%02d/%02d/%d %02d:%02d:%02d\n", kList.kicau[i].datetime.DD, kList.kicau[i].datetime.MM, kList.kicau[i].datetime.YYYY, kList.kicau[i].datetime.T.HH, kList.kicau[i].datetime.T.MM, kList.kicau[i].datetime.T.SS);
+        }
+    }
+    fclose(file);
+}
+
+
 int main()
 {
 
@@ -307,6 +408,7 @@ int main()
     CreateEmptyStack(&draf);
     ReadUser_FILE("../cfg/pengguna.config", &akun, &teman, &Q);
     ReadDraf_FILE("../cfg/draf.config", &akun, &draf);
+
     Stack drafStack[20]; // Buat 20 stack untuk 20 pengguna
     // int userID = 0;                  // ID pengguna saat ini
     // CreateEmpty(&drafStack[userID]); // Inisialisasi stack untuk pengguna saat ini
@@ -333,6 +435,7 @@ int main()
     ListKicau kList;
     CreateListKicau(&kList);
     Kicau k;
+    ReadKicau_FILE("../cfg/kicauan.config", &kList);
     int idUtas = 0;
 
     boolean isLogin = false;
@@ -378,6 +481,7 @@ int main()
         {
             SaveUser_FILE("../cfg/pengguna.config", &akun, teman, Q);
             SaveDraf_FILE("../cfg/draf.config", &akun, drafStack);
+            saveKicau_FILE("../cfg/kicauan.config", kList);
             runProgram = false;
         }
         else if (WordEqual(command, daftar))
