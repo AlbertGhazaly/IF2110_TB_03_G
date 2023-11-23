@@ -2,10 +2,7 @@
 #include <time.h>
 #include <stdlib.h>
 #include <stdio.h>
-
-
-
-
+               
 boolean lanjut(Word input){
     Word ya = {"YA",2};
     Word tidak = {"TIDAK",5};
@@ -14,12 +11,13 @@ boolean lanjut(Word input){
     }else if (WordEqual(input, tidak)){
         return false;
     }else{
+        printf("Masukan Tidak Valid !\n");
+        printf("Apakah Anda ingin melanjutkan utas ini? (YA/TIDAK) ");
         STARTWORD();
         lanjut(currentWord);
     }
 }
 void copyWordToString(char* destination,Word input){
-    destination = "";
     int i;
     for (i=0;i<input.Length;i++){
         (destination[i]) = input.TabWord[i];
@@ -30,7 +28,7 @@ void copyWordToString(char* destination,Word input){
 void cetakUtas(int idUtas, ListKicau kList, Account account, AccountList *listAccount, Graf teman)
 {
     boolean isFound = false;
-    Kicau *kicauan;
+    Kicau kicauan;
     Word privat = {"Privat", 6};
     for (int i = 0; (i < kList.nEff) && (!isFound); i++)
     {
@@ -39,7 +37,7 @@ void cetakUtas(int idUtas, ListKicau kList, Account account, AccountList *listAc
             if (kList.kicau[i].utasKicau->IDUtas == idUtas)
             {
                 isFound = true;
-                *kicauan = kList.kicau[i];
+                kicauan = kList.kicau[i];
             }
         }
     }
@@ -52,10 +50,10 @@ void cetakUtas(int idUtas, ListKicau kList, Account account, AccountList *listAc
         int i;
         for (i = 0; !WordEqual(account.username[0], listAccount->accounts[i].username[0]); i++)
             ;
-        int idUser = i;
-        for (i = 0; !WordEqual(kicauan->author, listAccount->accounts[i].username[0]); i++)
+        int idUser = i-1;
+        for (i = 0; !WordEqual(kicauan.author, listAccount->accounts[i].username[0]); i++)
             ;
-        int idTeman = i;
+        int idTeman = i-1;
 
         if (WordEqual(listAccount->accounts[idTeman].jenisAkun[0], privat) && ELMTGRAF(teman, idUser, idTeman) == 0)
         {
@@ -63,14 +61,14 @@ void cetakUtas(int idUtas, ListKicau kList, Account account, AccountList *listAc
         }
         else
         {
-            printf("| ID = %d\n", kicauan->id);
-            printf("| %s\n", kicauan->author.TabWord);
+            printf("| ID = %d\n", kicauan.id);
+            printf("| %s\n", kicauan.author.TabWord);
             printf("| ");
-            TulisDATETIME(kicauan->datetime);
+            TulisDATETIME(kicauan.datetime);
             printf("\n");
-            printf("| %s\n", kicauan->text);
+            printf("| %s\n", kicauan.text);
             kSambungAdd kSam;
-            kSam = kicauan->utasKicau->content;
+            kSam = kicauan.utasKicau->content;
             i = 0;
             while (kSam != NULL)
             {
@@ -79,7 +77,7 @@ void cetakUtas(int idUtas, ListKicau kList, Account account, AccountList *listAc
                 printf("   | ");
                 TulisDATETIME(kSam->datetime);
                 printf("\n");
-                printf("   | %s\n", kSam->text);
+                printf("   | %s\n\n", kSam->text);
                 kSam = kSam->next;
                 i++;
             }
@@ -115,7 +113,7 @@ void sambungUtas(int idUtas, int index, ListKicau *kList, Account account)
             if (kList->kicau[i].utasKicau->IDUtas == idUtas)
             {
                 isFound = true;
-                *kicauan = kList->kicau[i];
+                kicauan = &kList->kicau[i];
             }
         }
     }
@@ -149,6 +147,7 @@ void sambungUtas(int idUtas, int index, ListKicau *kList, Account account)
             }
             else
             {
+                STARTSENTENCE();
                 printf("Masukkan kicauan:\n");
                 STARTSENTENCE();
                 kSam = kicauan->utasKicau->content;
@@ -174,6 +173,7 @@ void sambungUtas(int idUtas, int index, ListKicau *kList, Account account)
                         kSam->next = newKSam;
                     }
                 }
+                printf("Utas berhasil disambung !\n");
             }
         }
     }
@@ -190,7 +190,7 @@ void hapusUtas(int idUtas, int index, ListKicau *kList, Account account)
             if (kList->kicau[i].utasKicau->IDUtas == idUtas)
             {
                 isFound = true;
-                *kicauan = kList->kicau[i];
+                kicauan = &kList->kicau[i];
             }
         }
     }
@@ -236,6 +236,7 @@ void hapusUtas(int idUtas, int index, ListKicau *kList, Account account)
                         delKSam = kSam->next;
                         kSam->next = delKSam->next;
                         free(delKSam);
+                        printf("Kicauan sambungan berhasil dihapus!\n"); 
                     }
                 }
             }
@@ -256,6 +257,7 @@ void createUtas(int id, ListKicau *kList, Account account, int *jumlahUtas)
             isFound = true;
         }
     }
+    i -= 1;
     if (!isFound)
     {
         printf("Kicauan tidak ditemukan\n");
@@ -263,7 +265,7 @@ void createUtas(int id, ListKicau *kList, Account account, int *jumlahUtas)
     else
     {
         Kicau *kicau = &kList->kicau[i];
-        if (WordEqual(kicau->author, account.username[0]))
+        if (!WordEqual(kicau->author, account.username[0]))
         {
             printf("Utas ini bukan milik anda!\n");
         }
@@ -276,16 +278,20 @@ void createUtas(int id, ListKicau *kList, Account account, int *jumlahUtas)
             else
             {
                 boolean isStop = false;
+                STARTSENTENCE();
                 printf("Utas berhasil dibuat!\n");
                 printf("Masukkan kicauan: \n");
                 STARTSENTENCE();
                 kSambungAdd kSam = createKicauanSambung(currentWord, account);
-                kicau->utasKicau->content = kSam;
-                *jumlahUtas++;
-                kicau->utasKicau->IDUtas = *jumlahUtas;
+                Utas* uts;
+                uts = (Utas*)malloc(sizeof(Utas));
+                uts->content = kSam;
+                *jumlahUtas += 1;
+                uts->IDUtas = *jumlahUtas;
+                kicau->utasKicau = uts;
                 printf("Apakah Anda ingin melanjutkan utas ini? (YA/TIDAK) ");
                 STARTWORD();
-                if (!lanjut)
+                if (!lanjut(currentWord))
                 {
                     isStop = true;
                 }
@@ -295,13 +301,14 @@ void createUtas(int id, ListKicau *kList, Account account, int *jumlahUtas)
                 }
                 while (!isStop)
                 {
+                    STARTSENTENCE();
                     printf("Masukkan kicauan:\n");
                     STARTSENTENCE();
                     kSam->next = createKicauanSambung(currentWord, account);
                     kSam = kSam->next;
                     printf("Apakah Anda ingin melanjutkan utas ini? (YA/TIDAK) ");
                     STARTWORD();
-                    if (!lanjut)
+                    if (!lanjut(currentWord))
                     {
                         isStop = true;
                     }

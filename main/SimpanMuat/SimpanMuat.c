@@ -279,6 +279,7 @@ void ReadKicau_FILE(char filename[], ListKicau * kList){
         int SS = WordToInt(ss);
         CreateDATETIME(&waktukicau, DD, MM, YY, HH, M, SS);
         temp.datetime = waktukicau;
+        temp.utasKicau = NULL;
         AddToKicauan(kList, temp);
     }
 }

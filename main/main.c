@@ -228,7 +228,7 @@ int main()
                 i++;
             }
             i++;
-            while (command.TabWord[i] != MARKACC)
+            while (i<command.Length)
             {
                 index *= 10;
                 index += CharToInt(command.TabWord[i]);
@@ -248,7 +248,7 @@ int main()
                 i++;
             }
             i++;
-            while (command.TabWord[i] != MARKACC)
+            while (i<command.Length)
             {
                 index *= 10;
                 index += CharToInt(command.TabWord[i]);
@@ -260,7 +260,7 @@ int main()
         {
             int idUtas = 0;
             int i = 11;
-            while (command.TabWord[i] != MARKACC)
+            while (i<command.Length)
             {
                 idUtas *= 10;
                 idUtas += CharToInt(command.TabWord[i]);
