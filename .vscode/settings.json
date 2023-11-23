@@ -18,6 +18,10 @@
         "includeadt.h": "c",
         "math.h": "c",
         "types.h": "c",
-        "balasan.h": "c"
+        "balasan.h": "c",
+        "drafkicauan.h": "c",
+        "utas.h": "c",
+        "simpanmuat.h": "c",
+        "teman.h": "c"
     }
 }

@@ -2,7 +2,7 @@
 #define Pengguna_H
 
 #include "../../modules/adt.h"
-
+#define MAXChar 281
 #define MAX_USERNAME_LENGTH 20
 #define MAX_PASSWORD_LENGTH 20
 #define MAX_BIO_LENGTH 135
