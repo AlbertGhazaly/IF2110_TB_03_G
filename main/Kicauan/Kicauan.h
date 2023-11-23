@@ -43,5 +43,7 @@ void Kicauan(Account akunLogin, ListKicau list);
 void SukaKicau (Account akunLogin, Word id, ListKicau *listkicau, Kicau *k, AccountList* listakun, Graf teman);
 boolean isIdInKicauan (int id, ListKicau *list);
 void UbahKicau (Account akunLogin, Word id, ListKicau *list);
+void ReadKicau_FILE(char filename[], ListKicau *kList);
+
 
 #endif

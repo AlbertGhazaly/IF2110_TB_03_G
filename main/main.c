@@ -1,4 +1,4 @@
-#include "includeADT.h"
+#include "./includeADT.h"
 
 int main()
 {
@@ -18,6 +18,7 @@ int main()
     CreateEmptyStack(&draf);
     ReadUser_FILE("../cfg/pengguna.config", &akun, &teman, &Q);
     ReadDraf_FILE("../cfg/draf.config", &akun, &draf);
+
     Stack drafStack[20]; // Buat 20 stack untuk 20 pengguna
     // int userID = 0;                  // ID pengguna saat ini
     // CreateEmpty(&drafStack[userID]); // Inisialisasi stack untuk pengguna saat ini
@@ -44,6 +45,7 @@ int main()
     ListKicau kList;
     CreateListKicau(&kList);
     Kicau k;
+    ReadKicau_FILE("../cfg/kicauan.config", &kList);
     int idUtas = 0;
 
     boolean isLogin = false;
@@ -89,6 +91,7 @@ int main()
         {
             SaveUser_FILE("../cfg/pengguna.config", &akun, teman, Q);
             SaveDraf_FILE("../cfg/draf.config", &akun, drafStack);
+            saveKicau_FILE("../cfg/kicauan.config", kList);
             runProgram = false;
         }
         else if (WordEqual(command, daftar))

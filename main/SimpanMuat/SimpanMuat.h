@@ -9,11 +9,11 @@ boolean isDirExist(char path[]);
 void loadUtas(char filename[],ListKicau* kList, int* jumlahUtas, AccountList akunList);
 void loadTweetCnfg(char filename[],ListKicau* kList);
 void ReadUser_FILE(char filename[], AccountList *list, Graf *Teman, prioqueuefren *Q);
-/* void ReadDraf_FILE(char filename[], AccountList *list, Stack *S); */
-/*Membaca file Draf dari Draf.config kedalam program
-    I.S. Stack terdefinisi dan AccountList sudah diakuisisi dari user.config
-    F.S. Stack terisi dengan drafkicauan dari Draf.Config
-    */
+// /* void ReadDraf_FILE(char filename[], AccountList *list, Stack *S); */
+// /*Membaca file Draf dari Draf.config kedalam program
+//     I.S. Stack terdefinisi dan AccountList sudah diakuisisi dari user.config
+//     F.S. Stack terisi dengan drafkicauan dari Draf.Config
+//     */
 
 
 void SaveUser_FILE(char filename[], AccountList *list, Graf Teman, prioqueuefren Q);
