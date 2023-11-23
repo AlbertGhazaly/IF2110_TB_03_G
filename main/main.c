@@ -1,395 +1,5 @@
 #include "./includeADT.h"
 
-void cetakUtas(int idUtas, ListKicau kList, Account account, AccountList *listAccount, Graf teman)
-{
-    boolean isFound = false;
-    Kicau *kicauan;
-    Word privat = {"Privat", 6};
-    for (int i = 0; (i < kList.nEff) && (!isFound); i++)
-    {
-        if (kList.kicau[i].utasKicau != NULL)
-        {
-            if (kList.kicau[i].utasKicau->IDUtas == idUtas)
-            {
-                isFound = true;
-                *kicauan = kList.kicau[i];
-            }
-        }
-    }
-    if (!isFound)
-    {
-        printf("Utas tidak ditemukan!\n");
-    }
-    else
-    {
-        int i;
-        for (i = 0; !WordEqual(account.username[0], listAccount->accounts[i].username[0]); i++)
-            ;
-        int idUser = i;
-        for (i = 0; !WordEqual(kicauan->author, listAccount->accounts[i].username[0]); i++)
-            ;
-        int idTeman = i;
-
-        if (WordEqual(listAccount->accounts[idTeman].jenisAkun[0], privat) && ELMTGRAF(teman, idUser, idTeman) == 0)
-        {
-            printf("Akun yang membuat utas ini adalah akun privat!\n Ikuti dahulu akun ini untuk melihat utasnya!\n");
-        }
-        else
-        {
-            printf("| ID = %d\n", kicauan->id);
-            printf("| %s\n", kicauan->author.TabWord);
-            printf("| ");
-            TulisDATETIME(kicauan->datetime);
-            printf("\n");
-            printf("| %s\n", kicauan->text);
-            kSambungAdd kSam;
-            kSam = kicauan->utasKicau->content;
-            i = 0;
-            while (kSam != NULL)
-            {
-                printf("   | INDEX = %d\n", i + 1);
-                printf("   | %s\n", kSam->author.TabWord);
-                printf("   | ");
-                TulisDATETIME(kSam->datetime);
-                printf("\n");
-                printf("   | %s\n", kSam->text);
-                kSam = kSam->next;
-                i++;
-            }
-        }
-    }
-}
-
-kSambungAdd createKicauanSambung(Word tex, Account account)
-{
-    kSambungAdd kicauSam = (kSambungAdd)malloc(sizeof(KicauSambung));
-    if (kicauSam != NULL)
-    {
-        kicauSam->next = NULL;
-        copyWordToString((kicauSam->text), tex);
-        CopyWordTo(&kicauSam->author, account.username[0]);
-        time_t now = time(NULL);
-        struct tm *tm_struct = localtime(&now);
-        DATETIME local;
-        CreateDATETIME(&local, tm_struct->tm_mday, tm_struct->tm_mon + 1, tm_struct->tm_year + 1900, tm_struct->tm_hour, tm_struct->tm_min, tm_struct->tm_sec);
-        kicauSam->datetime = local;
-    }
-    return kicauSam;
-}
-
-void sambungUtas(int idUtas, int index, ListKicau *kList, Account account)
-{
-    boolean isFound = false;
-    Kicau *kicauan;
-    for (int i = 0; (i < kList->nEff) && (!isFound); i++)
-    {
-        if (kList->kicau[i].utasKicau != NULL)
-        {
-            if (kList->kicau[i].utasKicau->IDUtas == idUtas)
-            {
-                isFound = true;
-                *kicauan = kList->kicau[i];
-            }
-        }
-    }
-    if (!isFound)
-    {
-        printf("Utas tidak ditemukan!\n");
-    }
-    else
-    {
-        if (!WordEqual(kicauan->author, account.username[0]))
-        {
-            printf("Anda tidak bisa menyambung utas ini!\n");
-        }
-        else
-        {
-            int i = 1;
-            kSambungAdd kSam = kicauan->utasKicau->content;
-            while (kSam->next != NULL)
-            {
-                i++;
-                kSam = kSam->next;
-            }
-
-            if (index < 1)
-            {
-                printf("Index terlalu rendah!\n");
-            }
-            else if (index > i + 1)
-            {
-                printf("Index terlalu tinggi!\n");
-            }
-            else
-            {
-                printf("Masukkan kicauan:\n");
-                STARTSENTENCE();
-                kSam = kicauan->utasKicau->content;
-                kSambungAdd newKSam = createKicauanSambung(currentWord, account);
-                if (index == 1)
-                {
-                    newKSam->next = kSam;
-                    kicauan->utasKicau->content = newKSam;
-                }
-                else
-                {
-                    for (int j = 2; j < index; j++)
-                    {
-                        kSam = kSam->next;
-                    }
-                    if ((kSam->next) == NULL)
-                    {
-                        kSam->next = newKSam;
-                    }
-                    else
-                    {
-                        newKSam->next = kSam->next;
-                        kSam->next = newKSam;
-                    }
-                }
-            }
-        }
-    }
-}
-
-void hapusUtas(int idUtas, int index, ListKicau *kList, Account account)
-{
-    boolean isFound = false;
-    Kicau *kicauan;
-    for (int i = 0; (i < kList->nEff) && (!isFound); i++)
-    {
-        if (kList->kicau[i].utasKicau != NULL)
-        {
-            if (kList->kicau[i].utasKicau->IDUtas == idUtas)
-            {
-                isFound = true;
-                *kicauan = kList->kicau[i];
-            }
-        }
-    }
-    if (!isFound)
-    {
-        printf("Utas tidak ditemukan!\n");
-    }
-    else
-    {
-        if (!WordEqual(kicauan->author, account.username[0]))
-        {
-            printf("Anda tidak bisa menghapus kicauan dalam utas ini!\n");
-        }
-        else
-        {
-            if (index == 0)
-            {
-                printf("Anda tidak bisa menghapus kicauan utama!\n");
-            }
-            else
-            {
-                kSambungAdd kSam = kicauan->utasKicau->content;
-                kSambungAdd delKSam;
-                if (index == 1)
-                {
-                    delKSam = kSam;
-                    kSam = kSam->next;
-                    kicauan->utasKicau->content = kSam;
-                    free(delKSam);
-                }
-                else
-                {
-                    for (int i = 2; i < index && kSam != NULL; i++)
-                    {
-                        kSam = kSam->next;
-                    }
-                    if (kSam == NULL)
-                    {
-                        printf("Kicauan sambungan dengan index %d tidak ditemukan pada utas!\n", index);
-                    }
-                    else
-                    {
-                        delKSam = kSam->next;
-                        kSam->next = delKSam->next;
-                        free(delKSam);
-                    }
-                }
-            }
-        }
-    }
-}
-
-void createUtas(int id, ListKicau *kList, Account account, int *jumlahUtas)
-{
-    Word ya = {"YA", 2};
-    Word tidak = {"TIDAK", 5};
-    boolean isFound = false;
-    int i;
-    for (i = 0; (i < kList->nEff) && (!isFound); i++)
-    {
-        if (kList->kicau[i].id == id)
-        {
-            isFound = true;
-        }
-    }
-    if (!isFound)
-    {
-        printf("Kicauan tidak ditemukan\n");
-    }
-    else
-    {
-        Kicau *kicau = &kList->kicau[i];
-        if (WordEqual(kicau->author, account.username[0]))
-        {
-            printf("Utas ini bukan milik anda!\n");
-        }
-        else
-        {
-            if (kicau->utasKicau != NULL)
-            {
-                printf("Kicauan ini telah digunakan utas lain!\n");
-            }
-            else
-            {
-                boolean isStop = false;
-                printf("Utas berhasil dibuat!\n");
-                printf("Masukkan kicauan: \n");
-                STARTSENTENCE();
-                kSambungAdd kSam = createKicauanSambung(currentWord, account);
-                kicau->utasKicau->content = kSam;
-                *jumlahUtas++;
-                kicau->utasKicau->IDUtas = *jumlahUtas;
-                printf("Apakah Anda ingin melanjutkan utas ini? (YA/TIDAK) ");
-                STARTWORD();
-                if (!lanjut)
-                {
-                    isStop = true;
-                }
-                else
-                {
-                    isStop = false;
-                }
-                while (!isStop)
-                {
-                    printf("Masukkan kicauan:\n");
-                    STARTSENTENCE();
-                    kSam->next = createKicauanSambung(currentWord, account);
-                    kSam = kSam->next;
-                    printf("Apakah Anda ingin melanjutkan utas ini? (YA/TIDAK) ");
-                    STARTWORD();
-                    if (!lanjut)
-                    {
-                        isStop = true;
-                    }
-                    else
-                    {
-                        isStop = false;
-                    }
-                }
-                printf("Utas selesai!\n");
-            }
-        }
-    }
-}
-
-void ReadKicau_FILE(char filename[], ListKicau * kList){
-    STARTWORD_FILE(filename);
-    int n = WordToInt(currentWord);
-    int i;
-    for(i = 0; i < n ; i++){
-        Kicau temp; 
-        ADVSENTENCE();
-        int id = WordToInt(currentWord);
-        temp.id = id;
-        ADVSENTENCE();
-        w2s(temp.text ,currentWord);
-        ADVSENTENCE();
-        temp.like = WordToInt(currentWord);
-        ADVSENTENCE();
-        temp.author = emptyWord;
-        CopyWordTo(&temp.author, currentWord);
-        if (i != n-1){
-            ADVSENTENCE();
-        }
-        else{
-            currentWord = emptyWord;
-            ADV();
-            int m;
-            for(m = 0; m < 19; m++){
-                currentWord.TabWord[m] = currentChar;
-                currentWord.Length++;
-                ADV();
-            }
-        }
-        DATETIME waktukicau;
-        int k;
-        Word dd;
-        for(k = 0; k < 2; k++){
-            dd.TabWord[k] = currentWord.TabWord[k];
-        }
-        dd.Length = 2;
-        int DD = WordToInt(dd);
-        Word mm;
-        for(k = 3; k < 5; k++){
-            mm.TabWord[k-3] = currentWord.TabWord[k];
-        }
-        mm.Length = 2;
-        int MM = WordToInt(mm);
-        Word yy;
-        for(k = 6; k < 10; k++){
-            yy.TabWord[k-6] = currentWord.TabWord[k];
-        }
-        yy.Length = 4;
-        int YY = WordToInt(yy);
-        Word hh;
-        for(k = 11; k < 13; k++){
-            hh.TabWord[k-11] = currentWord.TabWord[k];
-        }
-        hh.Length = 2;
-        int HH = WordToInt(hh);
-        Word m;
-        for(k = 14; k < 16; k++){
-            m.TabWord[k-14] = currentWord.TabWord[k];
-        }
-        m.Length = 2;
-        int M = WordToInt(m);
-        Word ss;
-        for(k = 17; k < 19; k++){
-            ss.TabWord[k-17] = currentWord.TabWord[k];
-        }
-        ss.Length = 2;
-        int SS = WordToInt(ss);
-        CreateDATETIME(&waktukicau, DD, MM, YY, HH, M, SS);
-        temp.datetime = waktukicau;
-        AddToKicauan(kList, temp);
-    }
-}
-
-void saveKicau_FILE(char filename[], ListKicau kList){
-    FILE *file = fopen(filename, "w");
-    if (file == NULL){
-        fprintf(stderr, "Error opening file.\n");
-    }
-    int N = kList.nEff;
-    fprintf(file, "%d\n", N);
-    int i;
-    for(i = 0; i < N; i++){
-        fprintf(file, "%d\n", kList.kicau[i].id);
-        fprintf(file, "%s\n", kList.kicau[i].text);
-        fprintf(file, "%d\n", kList.kicau[i].like);
-        int j;
-        for(j = 0; j < kList.kicau[i].author.Length; j++){
-            fprintf(file, "%c", kList.kicau[i].author.TabWord[j]);
-        }
-        fprintf(file, "\n");
-        if (i == N-1){
-            fprintf(file, "%02d/%02d/%d %02d:%02d:%02d", kList.kicau[i].datetime.DD, kList.kicau[i].datetime.MM, kList.kicau[i].datetime.YYYY, kList.kicau[i].datetime.T.HH, kList.kicau[i].datetime.T.MM, kList.kicau[i].datetime.T.SS);
-        }
-        else{
-            fprintf(file, "%02d/%02d/%d %02d:%02d:%02d\n", kList.kicau[i].datetime.DD, kList.kicau[i].datetime.MM, kList.kicau[i].datetime.YYYY, kList.kicau[i].datetime.T.HH, kList.kicau[i].datetime.T.MM, kList.kicau[i].datetime.T.SS);
-        }
-    }
-    fclose(file);
-}
-
-
 int main()
 {
 
@@ -620,7 +230,7 @@ int main()
                 i++;
             }
             i++;
-            while (command.TabWord[i] != MARKACC)
+            while (i<command.Length)
             {
                 index *= 10;
                 index += CharToInt(command.TabWord[i]);
@@ -640,7 +250,7 @@ int main()
                 i++;
             }
             i++;
-            while (command.TabWord[i] != MARKACC)
+            while (i<command.Length)
             {
                 index *= 10;
                 index += CharToInt(command.TabWord[i]);
@@ -652,7 +262,7 @@ int main()
         {
             int idUtas = 0;
             int i = 11;
-            while (command.TabWord[i] != MARKACC)
+            while (i<command.Length)
             {
                 idUtas *= 10;
                 idUtas += CharToInt(command.TabWord[i]);
@@ -676,7 +286,98 @@ int main()
             }
             if (isLogin)
             {
-                buatdraf(drafStack, idUser, &akun);
+                drafkicau DrafUser;
+                STARTSENTENCE();
+                printf("Masukkan draf:\n");
+
+                // Akuisisi dan simpan draf dalam stack
+                STARTSENTENCE();
+                CopyWordTo(&DrafUser.Draf, currentWord);
+                time_t rawtime;
+                struct tm *timeinfo;
+
+                time(&rawtime);                 // Get the current time
+                timeinfo = localtime(&rawtime); // Convert to local time
+
+                // Access individual components
+                int SS, M, HH, DD, MM, YY;
+                getlocaltime(&SS, &M, &HH, &DD, &MM, &YY);
+                DATETIME waktudraf;
+                CreateDATETIME(&waktudraf, DD, MM, YY, HH, M, SS);
+                DrafUser.waktu = waktudraf;
+                DrafUser.IDuser = idUser;
+                Push(&drafStack[idUser], DrafUser);
+
+                printf("Apakah anda ingin menghapus, menyimpan, atau menerbitkan draf ini?\n");
+                ADVSENTENCE();
+
+                while (1)
+                {
+                    STARTWORD();
+                    if (WordEqual(currentWord, stringToWord("HAPUS", 5)))
+                    {
+                    // Pengguna ingin menghapus draf
+                    if (!IsEmptyStack(drafStack[idUser]))
+                    {
+                        Pop(&drafStack[idUser], &DrafUser);
+                        printf("Draf telah berhasil dihapus!\n");
+                    }
+                    else
+                    {
+                        printf("Tidak ada draf yang bisa dihapus.\n");
+                    }
+                    break;
+                    }
+                    else if (WordEqual(currentWord, stringToWord("SIMPAN", 6)))
+                    {
+                    // Pengguna ingin menyimpan draf
+                    printf("Draf telah berhasil disimpan!\n");
+                    break;
+                    }
+                    else if (WordEqual(currentWord, stringToWord("TERBIT", 6)))
+                    {
+                    // Pengguna ingin menerbitkan draf
+                    Pop(&drafStack[idUser], &DrafUser);
+                    DATETIME waktuterbit;
+                    int SS, M, HH, DD, MM, YY;
+                    getlocaltime(&SS, &M, &HH, &DD, &MM, &YY);
+                    CreateDATETIME(&waktuterbit, DD, MM, YY, HH, M, SS);
+                    DrafUser.waktu = waktuterbit;
+
+                    ADVWORD();
+
+                    printf("Selamat! Draf kicauan telah diterbitkan!\n\n");
+                    Kicau temp;
+                    temp.id = kList.nEff + 1;
+                    temp.like = 0;
+                    wordToString(temp.text, DrafUser.Draf);
+                    temp.author = *akun.accounts[idUser].username;
+                    temp.datetime = waktuterbit;
+                    temp.utasKicau = NULL;
+
+                    // Tambahkan logikanya untuk menerbitkan draf
+                    AddToKicauan(&kList, temp);
+
+                    printf("Detil kicauan:\n");
+                    printf("| ID = %d\n", temp.id);
+                    printf("| ");
+                    printWord(*akun.accounts[idUser].username);
+                    printf("\n");
+                    printf("| ");
+                    TulisDATETIME(waktuterbit);
+                    printf("\n");
+                    printf("| ");
+                    printWord(DrafUser.Draf);
+                    printf("\n");
+                    printf("| ");
+                    printf("Disukai: 0\n");
+                    break;
+                    }
+                    else
+                    {
+                    printf("Perintah tidak valid. Silakan masukkan 'HAPUS', 'SIMPAN', 'TERBIT', atau 'KEMBALI'.\n");
+                    }
+                }
             }
             else
             {
@@ -699,7 +400,193 @@ int main()
             }
             if (isLogin)
             {
-                lihatdraf(drafStack, idUser, &akun);
+                drafkicau DrafUser;
+
+                // Check if the user has any drafts
+                if (!IsEmptyStack(drafStack[idUser]))
+                {
+                    printf("Ini draf terakhir anda:\n");
+                    printf("| ");
+                    TulisDATETIME(InfoTop(drafStack[idUser]).waktu);
+                    printf("\n");
+                    printf("| ");
+                    printWord(InfoTop(drafStack[idUser]).Draf);
+                    printf("\n");
+
+                    printf("\nApakah anda ingin mengubah, menghapus, atau menerbitkan draf ini? (KEMBALI jika ingin kembali)\n");
+
+                    while (1)
+                    {
+                    STARTWORD();
+                    if (WordEqual(currentWord, stringToWord("HAPUS", 5)))
+                    {
+                        // Pengguna ingin menghapus draf
+                        if (!IsEmptyStack(drafStack[idUser]))
+                        {
+                        Pop(&drafStack[idUser], &DrafUser);
+                        printf("Draf telah berhasil dihapus!\n");
+                        }
+                        else
+                        {
+                        printf("Tidak ada draf yang bisa dihapus.\n");
+                        }
+                        break;
+                    }
+                    else if (WordEqual(currentWord, stringToWord("UBAH", 4)))
+                    {
+                        // Akuisisi dan simpan draf baru dalam stack
+                        Pop(&drafStack[idUser], &DrafUser);
+                        STARTSENTENCE();
+                        printf("Masukkan draf yang baru:\n");
+
+                        // Akuisisi dan simpan draf dalam stack
+                        STARTSENTENCE();
+                        CopyWordTo(&DrafUser.Draf, currentWord);
+                        time_t rawtime;
+                        struct tm *timeinfo;
+                        time(&rawtime);                 // Get the current time
+                        timeinfo = localtime(&rawtime); // Convert to local time
+
+                        // Access individual components
+                        int SS, M, HH, DD, MM, YY;
+                        getlocaltime(&SS, &M, &HH, &DD, &MM, &YY);
+                        DATETIME waktudraf;
+                        CreateDATETIME(&waktudraf, DD, MM, YY, HH, M, SS);
+                        DrafUser.waktu = waktudraf;
+                        Push(&drafStack[idUser], DrafUser);
+
+                        printf("Apakah anda ingin menghapus, menyimpan, atau menerbitkan draf ini?\n");
+
+                        while (1)
+                        {
+                        STARTWORD();
+                        if (WordEqual(currentWord, stringToWord("HAPUS", 5)))
+                        {
+                            // Pengguna ingin menghapus draf
+                            if (!IsEmptyStack(drafStack[idUser]))
+                            {
+                            Pop(&drafStack[idUser], &DrafUser);
+                            printf("Draf telah berhasil dihapus!\n");
+                            }
+                            else
+                            {
+                            printf("Tidak ada draf yang bisa dihapus.\n");
+                            }
+                            break;
+                        }
+                        else if (WordEqual(currentWord, stringToWord("SIMPAN", 6)))
+                        {
+                            // Pengguna ingin menyimpan draf
+                            printf("Draf telah berhasil disimpan!\n");
+                            break;
+                        }
+                        else if (WordEqual(currentWord, stringToWord("TERBIT", 6)))
+                        {
+                            // Di-pop karena draf telah diterbitkan
+                            Pop(&drafStack[idUser], &DrafUser);
+                            DATETIME waktuterbit;
+                            int SS, M, HH, DD, MM, YY;
+                            getlocaltime(&SS, &M, &HH, &DD, &MM, &YY);
+                            CreateDATETIME(&waktuterbit, DD, MM, YY, HH, M, SS);
+                            DrafUser.waktu = waktuterbit;
+
+                            ADVWORD();
+
+                            printf("Selamat! Draf kicauan telah diterbitkan!\n\n");
+                            Kicau temp;
+                            temp.id = kList.nEff + 1;
+                            temp.like = 0;
+                            wordToString(temp.text, DrafUser.Draf);
+                            temp.author = *akun.accounts[idUser].username;
+                            temp.datetime = waktuterbit;
+                            temp.utasKicau = NULL;
+
+                            // Tambahkan logikanya untuk menerbitkan draf
+                            AddToKicauan(&kList, temp);
+
+                            printf("Detil kicauan:\n");
+                            printf("| ID = %d\n", temp.id);
+                            printf("| ");
+                            printWord(*akun.accounts[idUser].username);
+                            printf("\n");
+                            printf("| ");
+                            TulisDATETIME(waktuterbit);
+                            printf("\n");
+                            printf("| ");
+                            printWord(DrafUser.Draf);
+                            printf("\n");
+                            printf("| ");
+                            printf("Disukai: 0\n");
+                            break;
+                        }
+                        else if (WordEqual(currentWord, stringToWord("KEMBALI", 7)))
+                        {
+                            // Pengguna ingin kembali
+                            printf("Kembali ke draf sebelumnya.\n");
+                            break;
+                        }
+                        else
+                        {
+                            printf("Perintah tidak valid. Silakan masukkan 'HAPUS', 'SIMPAN', 'TERBIT', atau 'KEMBALI'.\n");
+                        }
+                        }
+                        break;
+                    }
+                    else if (WordEqual(currentWord, stringToWord("TERBIT", 6)))
+                    {
+                        // Di-pop karena draf telah diterbitkan
+                        Pop(&drafStack[idUser], &DrafUser);
+                        DATETIME waktuterbit;
+                        int SS, M, HH, DD, MM, YY;
+                        getlocaltime(&SS, &M, &HH, &DD, &MM, &YY);
+                        CreateDATETIME(&waktuterbit, DD, MM, YY, HH, M, SS);
+                        DrafUser.waktu = waktuterbit;
+
+                        ADVWORD();
+
+                        printf("Selamat! Draf kicauan telah diterbitkan!\n\n");
+                        Kicau temp;
+                        temp.id = kList.nEff + 1;
+                        temp.like = 0;
+                        wordToString(temp.text, DrafUser.Draf);
+                        temp.author = *akun.accounts[idUser].username;
+                        temp.datetime = waktuterbit;
+                        temp.utasKicau = NULL;
+
+                        // Tambahkan logikanya untuk menerbitkan draf
+                        AddToKicauan(&kList, temp);
+
+                        printf("Detil kicauan:\n");
+                        printf("| ID = %d\n", temp.id);
+                        printf("| ");
+                        printWord(*akun.accounts[idUser].username);
+                        printf("\n");
+                        printf("| ");
+                        TulisDATETIME(waktuterbit);
+                        printf("\n");
+                        printf("| ");
+                        printWord(DrafUser.Draf);
+                        printf("\n");
+                        printf("| ");
+                        printf("Disukai: 0\n");
+                        break;
+                    }
+                    else if (WordEqual(currentWord, stringToWord("KEMBALI", 7)))
+                    {
+                        // Pengguna ingin kembali
+                        printf("Kembali ke draf sebelumnya.\n");
+                        break;
+                    }
+                    else
+                    {
+                        printf("Perintah tidak valid. Silakan masukkan 'HAPUS', 'UBAH', 'TERBIT', atau 'KEMBALI'.\n");
+                    }
+                    }
+                }
+                else
+                {
+                    printf("Yah, anda belum memiliki draf apapun! Buat dulu ya :D\n");
+                }
             }
             else
             {

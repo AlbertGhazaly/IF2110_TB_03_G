@@ -1,6 +1,7 @@
 #include "SimpanMuat.h"
 #include <sys/stat.h>
 #include <time.h>
+
 void wordToString(char destination[MAXChar],Word input){
     int i;
     for (i=0;i<input.Length;i++){
@@ -8,6 +9,7 @@ void wordToString(char destination[MAXChar],Word input){
     }
     destination[i] = '\0';
 }
+
 // void muat(char folderName[],AccountList *list, Graf *Teman, prioqueuefren *Q){
 //     char path[] = "../cfg/";
 //     char *folder = concatStr(path,folderName);
@@ -209,48 +211,80 @@ void ReadUser_FILE(char filename[], AccountList *list, Graf *Teman, prioqueuefre
         Enqueueprio(Q, temp);
     }
 }
-// void loadTweetCnfg(char filename[],KicauList* kList){
-//     int n;
-//     STARTWORD_FILE(filename);
-//     n = WordToInt(currentWord);
-//     int j;
-//     for (int i=0;i<n;i++){
-//         Kicau k;
-//         int id,like;
-//         Word tex;
-//         Word author;
-//         time_t date;
-//         j = 0;
-//         while (j<5)
-//         {
-//             currentWord = emptyWord;
-//             ADVSENTENCE();
-//             if (j==0){
-//                 id = WordToInt(currentWord);
-//             }
-//             else if (j==1) {
-//                CopyWord(&tex,currentWord);
-//             } 
-//             else if (j==2){
-//                 like = WordToInt(currentWord);
-//             }
-//             else if (j==3){
-//                 CopyWord(&author,currentWord);
-//             }else{
-//                 struct tm tm = {0};
-//                 strptime(currentWord.TabWord,"%d/%m/%Y %H:%M:%S",&tm);
-//                 date = mktime(&tm);
-//             }
-//             j++;
-//         }
-//         CreateKicau(&k,author.TabWord);
-//         k.id = id;
-//         k.like = like;
-//         wordToString(k.text,tex);
-//         k.datetime = date;
-//         AddKicauToList(k,kList);
-//     }
-// }
+
+void ReadKicau_FILE(char filename[], ListKicau * kList){
+    STARTWORD_FILE(filename);
+    int n = WordToInt(currentWord);
+    int i;
+    for(i = 0; i < n ; i++){
+        Kicau temp; 
+        ADVSENTENCE();
+        int id = WordToInt(currentWord);
+        temp.id = id;
+        ADVSENTENCE();
+        w2s(temp.text ,currentWord);
+        ADVSENTENCE();
+        temp.like = WordToInt(currentWord);
+        ADVSENTENCE();
+        temp.author = emptyWord;
+        CopyWordTo(&temp.author, currentWord);
+        if (i != n-1){
+            ADVSENTENCE();
+        }
+        else{
+            currentWord = emptyWord;
+            ADV();
+            int m;
+            for(m = 0; m < 19; m++){
+                currentWord.TabWord[m] = currentChar;
+                currentWord.Length++;
+                ADV();
+            }
+        }
+        DATETIME waktukicau;
+        int k;
+        Word dd;
+        for(k = 0; k < 2; k++){
+            dd.TabWord[k] = currentWord.TabWord[k];
+        }
+        dd.Length = 2;
+        int DD = WordToInt(dd);
+        Word mm;
+        for(k = 3; k < 5; k++){
+            mm.TabWord[k-3] = currentWord.TabWord[k];
+        }
+        mm.Length = 2;
+        int MM = WordToInt(mm);
+        Word yy;
+        for(k = 6; k < 10; k++){
+            yy.TabWord[k-6] = currentWord.TabWord[k];
+        }
+        yy.Length = 4;
+        int YY = WordToInt(yy);
+        Word hh;
+        for(k = 11; k < 13; k++){
+            hh.TabWord[k-11] = currentWord.TabWord[k];
+        }
+        hh.Length = 2;
+        int HH = WordToInt(hh);
+        Word m;
+        for(k = 14; k < 16; k++){
+            m.TabWord[k-14] = currentWord.TabWord[k];
+        }
+        m.Length = 2;
+        int M = WordToInt(m);
+        Word ss;
+        for(k = 17; k < 19; k++){
+            ss.TabWord[k-17] = currentWord.TabWord[k];
+        }
+        ss.Length = 2;
+        int SS = WordToInt(ss);
+        CreateDATETIME(&waktukicau, DD, MM, YY, HH, M, SS);
+        temp.datetime = waktukicau;
+        temp.utasKicau = NULL;
+        AddToKicauan(kList, temp);
+    }
+}
 
 // void loadUtas(char filename[],KicauList* kList, int* jumlahUtas, AccountList akunList){
 //     STARTWORD_FILE(filename);
@@ -453,28 +487,32 @@ void ReadUser_FILE(char filename[], AccountList *list, Graf *Teman, prioqueuefre
 //     }   
 // }
 
-// void saveTweet(char filename[],KicauList kList){
-//     FILE *configFile = fopen(filename, "w");
-//     fprintf(configFile,"%d",kList.count);
-//     for (int i=0;i<kList.count;i++){
-//         fprintf(configFile,"\n%d\n",kList.kicauan[i].id);
-//         fprintf(configFile,"%s\n",kList.kicauan[i].text);
-//         fprintf(configFile,"%d\n",kList.kicauan[i].like);
-//         char * author;
-//         wordToString(author,kList.kicauan[i].author);
-//         fprintf(configFile,"%s\n",author);
-//         struct tm *tm_struct = localtime(kList.kicauan[i].datetime);
-//         DATETIME local;
-//         CreateDATETIME(&local, tm_struct->tm_mday, tm_struct->tm_mon + 1, tm_struct->tm_year + 1900, tm_struct->tm_hour, tm_struct->tm_min, tm_struct->tm_sec);
-//         int DD = Day(local);
-//         int MM = Month(local);
-//         int YY = Year(local);
-//         int hh = Hour(Time(local));
-//         int mm = Minute(Time(local));
-//         int ss = Second(Time(local));
-//         fprintf(configFile,"%02d/%02d/%d %02d:%02d:%02d", DD, MM, YY, hh, mm, ss);
-
-//     }
+void saveKicau_FILE(char filename[], ListKicau kList){
+    FILE *file = fopen(filename, "w");
+    if (file == NULL){
+        fprintf(stderr, "Error opening file.\n");
+    }
+    int N = kList.nEff;
+    fprintf(file, "%d\n", N);
+    int i;
+    for(i = 0; i < N; i++){
+        fprintf(file, "%d\n", kList.kicau[i].id);
+        fprintf(file, "%s\n", kList.kicau[i].text);
+        fprintf(file, "%d\n", kList.kicau[i].like);
+        int j;
+        for(j = 0; j < kList.kicau[i].author.Length; j++){
+            fprintf(file, "%c", kList.kicau[i].author.TabWord[j]);
+        }
+        fprintf(file, "\n");
+        if (i == N-1){
+            fprintf(file, "%02d/%02d/%d %02d:%02d:%02d", kList.kicau[i].datetime.DD, kList.kicau[i].datetime.MM, kList.kicau[i].datetime.YYYY, kList.kicau[i].datetime.T.HH, kList.kicau[i].datetime.T.MM, kList.kicau[i].datetime.T.SS);
+        }
+        else{
+            fprintf(file, "%02d/%02d/%d %02d:%02d:%02d\n", kList.kicau[i].datetime.DD, kList.kicau[i].datetime.MM, kList.kicau[i].datetime.YYYY, kList.kicau[i].datetime.T.HH, kList.kicau[i].datetime.T.MM, kList.kicau[i].datetime.T.SS);
+        }
+    }
+    fclose(file);
+}
 // }
 void SaveUser_FILE(char filename[], AccountList *list, Graf Teman, prioqueuefren Q)
 {
@@ -543,7 +581,45 @@ void SaveUser_FILE(char filename[], AccountList *list, Graf Teman, prioqueuefren
     }
     fclose(file);
 }
+void SaveDraf_FILE(char filename[], AccountList *list, Stack S[]){
+/*Menyimpan file Draf dari program kedalam Draf.config
+    I.S. Stack terdefinisi dan AccountList sudah diakuisisi dari user.config
+    F.S. Stack terisi dengan drafkicauan dari Draf.Config
+    */
+    FILE *file = fopen(filename, "w");
 
-// void saveDraf(char filename[], AccountList *list, Stack *S){
-    
-// }
+    if (file == NULL){
+        fprintf(stderr, "Error opening file.\n");
+    }
+    int i;
+    int countdraf = 0;
+    for(i = 0; i < 20; i++){
+        if(!IsEmptyStack(S[i])){
+            countdraf++;
+        }
+    }
+    fprintf(file, "%d\n", countdraf);
+    int count = 0;
+    for(i = 0; i < 20; i++){
+        if(!IsEmptyStack(S[i])){
+            count++;
+            fprintf(file, "%s %d\n", list->accounts[i].username->TabWord, NbElmtStack(S[i]));
+            int j;
+            int N = NbElmtStack(S[i]);
+            for(j = 0; j < N; j++){
+                drafkicau temp;
+                Pop(&S[i], &temp);
+                char str[281];
+                wordToString(str,temp.Draf);
+                fprintf(file, "%s\n", str);
+                if (count == countdraf && j == N-1){
+                    fprintf(file, "%02d/%02d/%d %02d:%02d:%02d", temp.waktu.DD, temp.waktu.MM, temp.waktu.YYYY, temp.waktu.T.HH, temp.waktu.T.MM, temp.waktu.T.SS);
+                }
+                else{
+                    fprintf(file, "%02d/%02d/%d %02d:%02d:%02d\n", temp.waktu.DD, temp.waktu.MM, temp.waktu.YYYY, temp.waktu.T.HH, temp.waktu.T.MM, temp.waktu.T.SS);
+                }
+            }
+        }
+    }
+    fclose(file);
+}
