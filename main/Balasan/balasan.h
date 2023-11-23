@@ -4,7 +4,7 @@
 #include "../../modules/adt.h"
 #include <time.h>
 
-#define MAXChar 280
+#define MAXChar 281
 typedef struct kicau {
     int id;
     char text[MAXChar];

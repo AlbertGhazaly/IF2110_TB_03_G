@@ -640,8 +640,8 @@ int main()
         {
             if (isLogin)
             {
-                Balasan b;
-                CreateBalasan(&b, akunLogin);
+                // Balasan b;
+                // CreateBalasan(&b, akunLogin);
                 
             }
             else
