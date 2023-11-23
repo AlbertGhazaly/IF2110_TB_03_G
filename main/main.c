@@ -499,6 +499,7 @@ int main()
             else
             {
                 signup(&akun);
+                teman.mem[akun.count-1][akun.count-1] = 1;
             }
         }
 
@@ -1031,8 +1032,8 @@ int main()
         {
             if (isLogin)
             {
-                Balasan b;
-                CreateBalasan(&b, akunLogin);
+                // Balasan b;
+                // CreateBalasan(&b, akunLogin);
                 
             }
             else
