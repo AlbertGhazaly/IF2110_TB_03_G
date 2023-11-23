@@ -52,3 +52,13 @@ void END()
 {
        fclose(pita);
 }
+
+boolean containsSpace(const char *str) {
+    while (*str) {
+       if (*str == ' ') {
+              return true;  // Mengandung spasi
+       }
+       str++;
+    }
+    return false;  // Tidak mengandung spasi
+}

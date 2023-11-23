@@ -102,7 +102,7 @@ void CopyWordSpace()
 /*Mengakuisisi kata, dengan enter atau NewLine sebagai MARK*/
 {
     int i = 0;
-    while (currentChar != MARKBaris && currentChar != MARK){
+    while (currentChar != MARKBaris && currentChar != MARK && currentChar!='\r' && i<NMax){
         currentWord.TabWord[i] = currentChar;
         ADV();
         i++;
@@ -301,3 +301,5 @@ void ADVCOMMAND(){
         CopyWordCommand();
     }
 }
+
+// Fungsi untuk membandingkan sebuah string dengan string lain mulai dari karakter kedua string
