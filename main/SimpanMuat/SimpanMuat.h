@@ -15,6 +15,7 @@ void ReadUser_FILE(char filename[], AccountList *list, Graf *Teman, prioqueuefre
 //     F.S. Stack terisi dengan drafkicauan dari Draf.Config
 //     */
 
+void wordToString(char destination[MAXChar],Word input);
 
 void SaveUser_FILE(char filename[], AccountList *list, Graf Teman, prioqueuefren Q);
 // void saveUtas(char filename[],KicauList* kList, int jumlahUtas, AccountList akunList);
