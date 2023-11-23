@@ -359,7 +359,6 @@ void ReadKicau_FILE(char filename[], ListKicau * kList){
         CreateDATETIME(&waktukicau, DD, MM, YY, HH, M, SS);
         temp.datetime = waktukicau;
         AddToKicauan(kList, temp);
-        BaseDisplay(temp);
     }
 }
 
