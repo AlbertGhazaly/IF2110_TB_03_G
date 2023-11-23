@@ -468,9 +468,10 @@ int main()
         Word setujui_pertemanan = {"SETUJUI_PERTEMANAN", 18};
         Word utas = {"UTAS", 4};
         Word kicau = {"KICAU", 5};
-        Word suka_kicau = {"SUKA_KICAU", 10};
+        Word suka_kicauan = {"SUKA_KICAUAN", 10};
         Word kicauan = {"KICAUAN", 7};
         Word ubah_kicauan = {"UBAH_KICAUAN", 12};
+        Word balas = {"BALAS", 5};
         Word sambung_utas = {"SAMBUNG_UTAS", 12};
         Word hapus_utas = {"HAPUS_UTAS", 10};
         Word cetak_utas = {"CETAK_UTAS", 10};
@@ -715,7 +716,7 @@ int main()
                 printf("Anda belum masuk! Masuk terlebih dahulu untuk menikmati layanan BurBir.\n");
             }
         }
-        else if (wordCheck(command, 0, 9, suka_kicau) && command.Length > 10)
+        else if (wordCheck(command, 0, 9, suka_kicauan) && command.Length > 10)
         {
             if (isLogin)
             {
@@ -742,6 +743,19 @@ int main()
             if (isLogin)
             {
                 UbahKicau(akunLogin, wordFromIndex(command, 13), &kList);
+            }
+            else
+            {
+                printf("Anda belum masuk! Masuk terlebih dahulu untuk menikmati layanan BurBir.\n");
+            }
+        }
+        else if (wordCheck(command, 0, 4, balas) && command.Length > 5)
+        {
+            if (isLogin)
+            {
+                Balasan b;
+                CreateBalasan(&b, akunLogin);
+                
             }
             else
             {
