@@ -109,6 +109,7 @@ int main()
             else
             {
                 signup(&akun);
+                teman.mem[akun.count-1][akun.count-1] = 1;
             }
         }
 

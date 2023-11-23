@@ -1,11 +1,9 @@
 #ifndef Disjointset_H
 #define Disjointset_H
 
-#define PARENT(s, i) (ELMTSTAT(s, i))
-
 #include "../../modules/adt.h"
 
-typedef ListStatik DisjointSet;
+typedef ListGraf DisjointSet;
 
 /**** Konstruktor ****/
 DisjointSet makeDisjointSet(int length);
@@ -14,16 +12,8 @@ DisjointSet makeDisjointSet(int length);
     F.S.: DisjointSet yang telah diinisialisasi.
 */
 
-/**** Finder ****/
-int findIndexRoot(DisjointSet s,  int i);
-/* Mencari indeks root dari suatu elemen.
-    I.S.: s - DisjointSet yang ingin dicari rootnya.
-          i - indeks elemen yang ingin dicari rootnya.
-    F.S.: Indeks root dari elemen yang dicari.
-*/
-
-/**** Setter ****/
-void UnionDisjointSet(DisjointSet *s, int i, int j);
+/**** Concatenation ****/
+void UnionDisjointSet(DisjointSet *s, Graf g, int i, int j);
 /* Menggabungkan dua himpunan disjoint.
     I.S.: s - DisjointSet yang ingin digabungkan.
           i - indeks elemen pertama yang ingin digabungkan.
@@ -31,7 +21,14 @@ void UnionDisjointSet(DisjointSet *s, int i, int j);
     F.S.: s - DisjointSet yang telah digabungkan.
 */
 
-DisjointSet findGroups(Graf m);
+boolean similar(DisjointSet s1, DisjointSet s2);
+/* Mengecek apakah dua himpunan disjoint memiliki elemen yang sama.
+    I.S.: s1 - DisjointSet pertama yang ingin dicek.
+          s2 - DisjointSet kedua yang ingin dicek.
+    F.S.: true jika kedua DisjointSet memiliki elemen yang sama, false jika tidak.
+*/
+
+DisjointSet findGroups(Graf m, int idUser);
 /* Mencari himpunan-himpunan disjoint dari suatu matriks graf.
     I.S.: m - matriks graf yang ingin dicari himpunan-himpunan disjointnya.
     F.S.: DisjointSet yang berisi himpunan-himpunan disjoint dari matriks graf.
