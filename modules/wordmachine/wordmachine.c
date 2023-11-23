@@ -301,3 +301,5 @@ void ADVCOMMAND(){
         CopyWordCommand();
     }
 }
+
+// Fungsi untuk membandingkan sebuah string dengan string lain mulai dari karakter kedua string

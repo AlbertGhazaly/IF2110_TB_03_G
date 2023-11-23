@@ -25,6 +25,7 @@ typedef struct {
     Word author;
     DATETIME datetime;
     Utas* utasKicau;
+    char tagar[MAXChar];
 } Kicau;
 
 typedef struct {

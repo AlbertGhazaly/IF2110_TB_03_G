@@ -68,13 +68,49 @@ void CreateKicau(Account akunLogin, ListKicau *list, Kicau *k) {
     }
     k->text[el] = '\0';
 
+    //baca tagar
+    boolean space = true;
+    while (space){
+        el = 1;
+        k->tagar[0] = '#';
+        printf("Masukkan tagar:\n");
+        START();
+        while (currentChar=='\n' || currentChar=='\r')
+        {
+            ADV();
+        }
+        
+        while (currentChar!=';')
+        {
+            if (el<MAXChar)
+            {
+                k->tagar[el] = currentChar;
+                el++;
+            }
+            
+            ADV();
+        }
+        k->tagar[el] = '\0';
+
+        if (containsSpace(k->tagar))
+        {
+            space = true;
+            printf("Tagar tidak boleh mengandung spasi!\n");
+        }
+        else
+        {
+            space = false;
+        }
+    }
+
+
 
     k->id = CreateIDKicau(list); 
     k->like = 0;
     CopyWordTo(&k->author,akunLogin.username[0]);
     k->datetime = local;
     k->utasKicau = NULL;
-    printf("Selamat! Kicauan telah diterbitkan!\n Detil kicauan:\n");
+    printf("\n\nSelamat! Kicauan telah diterbitkan!\n Detil kicauan:\n");
     BaseDisplay(*k);
     AddToKicauan(list, *k);
 }
@@ -105,6 +141,17 @@ void BaseDisplay (Kicau k)
         printf("%c", k.text[j]);
         j++;
     }
+    //jika tagar tidak kosong, tampilkan tagar
+    if (k.tagar[1] != '\0')
+    {
+        printf("\n| Tagar: ");
+        j = 0;
+        while (k.tagar[j] != '\0')
+        {
+            printf("%c", k.tagar[j]);
+            j++;
+        }
+    }
     //print likes
     printf("\n| Disukai: %d\n\n", k.like);
 }
@@ -113,6 +160,62 @@ void Kicauan(Account akunLogin, ListKicau list) {
     //Print Kicauan (list kicau)
     for (int i = list.nEff - 1; i >= 0; i--) {
         if (WordEqual(list.kicau[i].author, *akunLogin.username)) {
+            BaseDisplay(list.kicau[i]);
+        }
+    }
+}
+
+void wordToStr(char destination[MAXChar],Word input){
+    int i;
+    for (i=0;i<input.Length;i++){
+        (destination[i]) = input.TabWord[i];
+    }
+    destination[i] = '\0';
+}
+
+boolean compareWithoutHash(const char *str1, const char *str2) {
+    while (*str1 != '\0' && *str2 != '\0') {
+        if (*str1 == '#' && *str2 != '#' && *(str1 + 1) == *str2) {
+            str1++; // Lewati karakter '#'
+        } else if (*str2 == '#' && *str1 != '#' && *str1 == *(str2 + 1)) {
+            str2++; // Lewati karakter '#'
+        } else if (*str1 != *str2) {
+            return false;
+        }
+
+        str1++;
+        str2++;
+    }
+
+    return *str1 == *str2; // Pastikan keduanya berakhir pada saat yang sama
+}
+
+char toLowerz(char ch) {
+    if (ch >= 'A' && ch <= 'Z') {
+        return ch + ('a' - 'A');
+    }
+    return ch;
+}
+
+void toLowerCaze(const char *source, char *destination) {
+    while (*source) {
+        *destination = toLowerz(*source);
+        source++;
+        destination++;
+    }
+    *destination = '\0';  // Menambahkan null terminator pada akhir string
+}
+
+void KicauanTagar(ListKicau list, Word tags) {
+    //Print Kicauan (list kicau)
+    char tag[MAXChar];
+    wordToStr(tag, tags);
+    char dst1[MAXChar];
+    char dst2[MAXChar];
+    for (int i = list.nEff - 1; i >= 0; i--) {
+        toLowerCaze(tag, dst1);
+        toLowerCaze(list.kicau[i].tagar, dst2);
+        if (compareWithoutHash(dst1, dst2)) {
             BaseDisplay(list.kicau[i]);
         }
     }

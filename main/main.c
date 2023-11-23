@@ -470,6 +470,7 @@ int main()
         Word kicau = {"KICAU", 5};
         Word suka_kicauan = {"SUKA_KICAUAN", 10};
         Word kicauan = {"KICAUAN", 7};
+        Word cari_kicauan = {"CARI_KICAUAN", 12};
         Word ubah_kicauan = {"UBAH_KICAUAN", 12};
         Word balas = {"BALAS", 5};
         Word sambung_utas = {"SAMBUNG_UTAS", 12};
@@ -749,18 +750,21 @@ int main()
                 printf("Anda belum masuk! Masuk terlebih dahulu untuk menikmati layanan BurBir.\n");
             }
         }
-        else if (wordCheck(command, 0, 4, balas) && command.Length > 5)
+        else if (wordCheck(command, 0, 11, cari_kicauan) && command.Length > 12)
         {
+            printf("Masuk\n");
             if (isLogin)
             {
-                Balasan b;
-                CreateBalasan(&b, akunLogin);
-                
+                KicauanTagar(kList, wordFromIndex(command, 13));
             }
             else
             {
                 printf("Anda belum masuk! Masuk terlebih dahulu untuk menikmati layanan BurBir.\n");
             }
+        }
+        else
+        {
+            printf("Perintah tidak dikenali.\n");
         }
     }
     ADVCOMMAND();
