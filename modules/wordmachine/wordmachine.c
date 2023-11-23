@@ -131,7 +131,7 @@ void STARTSENTENCE()
    F.S. : Mengakuisisi kata dengan pembatas NEWLINE terhadap kata berikutnya*/
 {
    START();
-   if (currentChar == MARKBaris || currentChar == MARK || currentChar=='\r'){
+   if (currentChar == MARKBaris || currentChar == MARK){
       EndWord = true;
    }
    else{

@@ -18,8 +18,6 @@
         "includeadt.h": "c",
         "math.h": "c",
         "types.h": "c",
-        "balasan.h": "c",
-        "profil.h": "c",
-        "utas.h": "c"
+        "balasan.h": "c"
     }
 }
