@@ -1,6 +1,7 @@
 #include "SimpanMuat.h"
 #include <sys/stat.h>
 #include <time.h>
+
 void wordToString(char destination[MAXChar],Word input){
     int i;
     for (i=0;i<input.Length;i++){
@@ -8,6 +9,7 @@ void wordToString(char destination[MAXChar],Word input){
     }
     destination[i] = '\0';
 }
+
 // void muat(char folderName[],AccountList *list, Graf *Teman, prioqueuefren *Q){
 //     char path[] = "../cfg/";
 //     char *folder = concatStr(path,folderName);
