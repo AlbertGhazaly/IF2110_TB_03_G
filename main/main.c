@@ -1,4 +1,5 @@
 #include "./includeADT.h"
+
 void ReadDraf_FILE(char filename[], AccountList *list, Stack *S){
 /*Membaca file Draf dari Draf.config kedalam program
     I.S. Stack terdefinisi dan AccountList sudah diakuisisi dari user.config
@@ -115,24 +116,7 @@ int main()
     Stack drafStack[20]; // Buat 20 stack untuk 20 pengguna
     // int userID = 0;                  // ID pengguna saat ini
     // CreateEmpty(&drafStack[userID]); // Inisialisasi stack untuk pengguna saat ini
-    int i;
-    for (i = 0; i < 20; i++)
-    {
-        CreateEmptyStack(&drafStack[i]);
-    }
-
-    while (!IsEmptyStack(draf))
-    {
-        drafkicau temp;
-        Pop(&draf, &temp);
-        for (i = 0; i < 20; i++)
-        {
-            if (temp.IDuser == i)
-            {
-                Push(&drafStack[i], temp);
-            }
-        }
-    }
+    
     Account akunLogin;
     ListKicau kList;
     CreateListKicau(&kList);
@@ -140,6 +124,14 @@ int main()
     // ReadKicau_FILE("../cfg/kicauan.config", &kList);
     int idUtas = 0;
     // readUtas("../cfg/utas.config",&kList,&idUtas,akun);
+    boolean isLogin = false;
+    printf("           ____  __  __  ____  ____  ____  ____ /\\ \n");
+    printf("    __    (  _ \\(  )(  )(  _ \\(  _ \\(_  _)(  _ \\)(    __    \n");
+    printf("___( o)>   ) _ < )(__)(  )   / ) _ < _)(_  )   /\\/  <(o )___\n");
+    printf("\\ <_. )   (____/(______)(_)\\_)(____/(____)(_)\\_)()   ( ._> /\n");
+    printf(" `---'              Tempat Anda Mencibir              `---' \n\n");
+
+    printf("Selamat datang di Burbir. Selamat berkicau!\n");
     char path[MAXChar] = "../cfg/";
     printf("Masukkan config yang hendak dimuat:");
     STARTSENTENCE();
@@ -194,6 +186,24 @@ int main()
             strcpy(folder,path1);
             strcat(folder,file);
             ReadDraf_FILE("../cfg/draf.config", &akun, &draf);
+            int i;
+            for (i = 0; i < 20; i++)
+            {
+                CreateEmptyStack(&drafStack[i]);
+            }
+
+            while (!IsEmptyStack(draf))
+            {
+                drafkicau temp;
+                Pop(&draf, &temp);
+                for (i = 0; i < 20; i++)
+                {
+                    if (temp.IDuser == i)
+                    {
+                        Push(&drafStack[i], temp);
+                    }
+                }
+            }
             free(folder);
         }
         else if (i==3){ // Utas config
@@ -209,14 +219,7 @@ int main()
         }
         
     }
-    boolean isLogin = false;
-    printf("           ____  __  __  ____  ____  ____  ____ /\\ \n");
-    printf("    __    (  _ \\(  )(  )(  _ \\(  _ \\(_  _)(  _ \\)(    __    \n");
-    printf("___( o)>   ) _ < )(__)(  )   / ) _ < _)(_  )   /\\/  <(o )___\n");
-    printf("\\ <_. )   (____/(______)(_)\\_)(____/(____)(_)\\_)()   ( ._> /\n");
-    printf(" `---'              Tempat Anda Mencibir              `---' \n\n");
-
-    printf("Selamat datang di Burbir. Selamat berkicau!\n");
+    printf("File Config berhasil dimuat\n");
     while (runProgram)
     {
         printf(">> ");
@@ -465,7 +468,7 @@ int main()
         else if (WordEqual(command, buat_draf))
         {
             int idUser;
-            i = 0;
+            int i = 0;
             boolean found = false;
             while (i < akun.count && found == false)
             {
@@ -579,7 +582,7 @@ int main()
         else if (WordEqual(command, lihat_draf))
         {
             int idUser;
-            i = 0;
+            int i = 0;
             boolean found = false;
             while (i < akun.count && found == false)
             {
