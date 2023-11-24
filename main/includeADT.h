@@ -3,6 +3,8 @@
 
 // #include "Balasan/balasan.h"
 // #include "Balasan/balasan.c"
+#include "KelompokTeman/disjointset.h"
+#include "KelompokTeman/disjointset.c"
 #include "DrafKicauan/DrafKicauan.h"
 #include "DrafKicauan/DrafKicauan.c"
 #include "Kicauan/Kicauan.h"
