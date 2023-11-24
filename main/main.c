@@ -47,6 +47,7 @@ int main()
     Kicau k;
     ReadKicau_FILE("../cfg/kicauan.config", &kList);
     int idUtas = 0;
+    readUtas("../cfg/utas.config",&kList,&idUtas,akun);
 
     boolean isLogin = false;
     printf("           ____  __  __  ____  ____  ____  ____ /\\ \n");
@@ -94,6 +95,7 @@ int main()
             SaveUser_FILE("../cfg/pengguna.config", &akun, teman, Q);
             SaveDraf_FILE("../cfg/draf.config", &akun, drafStack);
             saveKicau_FILE("../cfg/kicauan.config", kList);
+            saveUtas("../cfg/utas.config",&kList,idUtas,akun);
             runProgram = false;
         }
         else if (WordEqual(command, daftar))
