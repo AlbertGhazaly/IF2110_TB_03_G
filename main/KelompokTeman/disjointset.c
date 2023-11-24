@@ -8,31 +8,12 @@ DisjointSet makeDisjointSet(int length)
 */
 {
     DisjointSet s;
-    CreateListStatik(&s);
-
-    for (int i = 0; i < length; i++) {
-        ELMTSTAT(s, i) = MARKLISTGRAF;
-    }
+    CreateListGraf(&s);
     return s;
 }
 
-/**** Finder ****/
-int findIndexRoot(DisjointSet s,  int i)
-/* Mencari indeks root dari suatu elemen.
-    I.S.: s - DisjointSet yang ingin dicari rootnya.
-          i - indeks elemen yang ingin dicari rootnya.
-    F.S.: Indeks root dari elemen yang dicari.
-*/
-{
-    while (ELMTSTAT(s, i) >= 0) {
-        i = PARENT(s, i);
-    }
-    return i;
-}
-
-
-/**** Setter ****/
-void UnionDisjointSet(DisjointSet *s, int i, int j)
+/**** Concatenation ****/
+void UnionDisjointSet(DisjointSet *s, Graf g, int i, int j)
 /* Menggabungkan dua himpunan disjoint.
     I.S.: s - DisjointSet yang ingin digabungkan.
           i - indeks elemen pertama yang ingin digabungkan.
@@ -40,36 +21,54 @@ void UnionDisjointSet(DisjointSet *s, int i, int j)
     F.S.: s - DisjointSet yang telah digabungkan.
 */
 {
-    int rootA = getIndexRoot(*s, i);
-    int rootB = getIndexRoot(*s, j);
-
-    boolean sameSet = (rootA == rootB);
-    if (!sameSet) {
-        if (ELMTSTAT(*s, rootA) <= ELMTSTAT(*s, rootB)) {
-            ELMTSTAT(*s, rootA) += -1;
-            ELMTSTAT(*s, rootB) = rootA;
-        } else {
-            ELMTSTAT(*s, rootA) = rootB;
-            ELMTSTAT(*s, rootB) += -1;
+    ListGraf l1, l2;
+    CreateListGraf(&l1);
+    CreateListGraf(&l2);
+    getOne(g, i, &l1);
+    getOne(g, j, &l2);
+    int i;
+    for(i = 0 ; i < CAPACITYGRAF; i++){
+        if(ELMTLISTGRAF(l2, i) == 1 && ELMTLISTGRAF(l2,i) == 1){
+            ELMTLISTGRAF(*s, i) = 1;
         }
     }
 }
 
-DisjointSet findGroups(Graf m)
+boolean similar(DisjointSet s1, DisjointSet s2){
+/* Mengecek apakah dua himpunan disjoint memiliki elemen yang sama.
+    I.S.: s1 - DisjointSet pertama yang ingin dicek.
+          s2 - DisjointSet kedua yang ingin dicek.
+    F.S.: true jika kedua DisjointSet memiliki elemen yang sama, false jika tidak.
+*/
+    boolean found = true;
+    int i;
+    for(i = 0 ; i < CAPACITYGRAF; i++){
+        if(ELMTLISTGRAF(s1, i) != ELMTLISTGRAF(s2,i)){
+            found = false;
+        }
+    }
+    return found;
+}
+
+DisjointSet findGroups(Graf m, int idUser)
 /* Mencari himpunan-himpunan disjoint dari suatu matriks graf.
     I.S.: m - matriks graf yang ingin dicari himpunan-himpunan disjointnya.
     F.S.: DisjointSet yang berisi himpunan-himpunan disjoint dari matriks graf.
 */
 {
-    int n = ROW_GRAF;
-
-    DisjointSet s = makeDisjointSet(n);
-    for (int i = 0; i < n; i++) {
-        for (int j = (i + 1); j < n; j++) {
-            if (ELMT_MATRIXCHAR(m, i, j) == 1) {
-                UnionDisjointSet(&s, i, j);
+    DisjointSet s;
+    CreateListGraf(&s);
+    getOne(m, idUser, &s);
+    boolean cek = false;
+    while(!cek){
+        DisjointSet tempinitial = s;
+        int i;
+        for (i = 0; i < CAPACITYGRAF; i++){
+            if (ELMTLISTGRAF(s, i) == 1){
+                UnionDisjointSet(&s, m, idUser, i);
             }
         }
+        DisjointSet tempfinal = s;
+        cek = similar(tempinitial, tempfinal);
     }
-    return s;
 }
