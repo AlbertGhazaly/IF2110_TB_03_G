@@ -262,3 +262,31 @@ void getlocaltime(int *SS, int *M, int *HH, int *DD, int *MM, int *YY){
     *MM = timeinfo->tm_mon + 1; // Month (0-11, add 1 for January-December)
     *YY = timeinfo->tm_year + 1900; // Year (since 1900)
 }
+
+int CompareDateTime(DATETIME dt1, DATETIME dt2){
+    // Compare years
+    if (Year(dt1) != Year(dt2)) {
+        return Year(dt1) - Year(dt2);
+    }
+
+    // Compare months
+    if (Month(dt1) != Month(dt2)) {
+        return Month(dt1) - Month(dt2);
+    }
+
+    // Compare days
+    if (Day(dt1) != Day(dt2)) {
+        return Day(dt1) - Day(dt2);
+    }
+
+    // Compare hours, minutes, and seconds
+    if (Time(dt1).HH != Time(dt2).HH) {
+        return Time(dt1).HH - Time(dt2).HH;
+    }
+
+    if (Time(dt1).MM != Time(dt2).MM) {
+        return Time(dt1).MM - Time(dt2).MM;
+    }
+
+    return Time(dt1).SS - Time(dt2).SS;
+}

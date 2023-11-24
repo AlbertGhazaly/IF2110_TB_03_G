@@ -79,7 +79,7 @@ int main()
         Word setujui_pertemanan = {"SETUJUI_PERTEMANAN", 18};
         Word utas = {"UTAS", 4};
         Word kicau = {"KICAU", 5};
-        Word suka_kicauan = {"SUKA_KICAUAN", 10};
+        Word suka_kicauan = {"SUKA_KICAUAN", 12};
         Word kicauan = {"KICAUAN", 7};
         Word cari_kicauan = {"CARI_KICAUAN", 12};
         Word ubah_kicauan = {"UBAH_KICAUAN", 12};
@@ -90,6 +90,7 @@ int main()
         Word buat_draf = {"BUAT_DRAF", 9};
         Word lihat_draf = {"LIHAT_DRAF", 10};
         Word kelompok_teman = {"KELOMPOK_TEMAN", 14};
+        Word fyb = {"FYB", 3};
 
         if (WordEqual(command, tutup_program))
         {
@@ -631,11 +632,11 @@ int main()
                 printf("Anda belum masuk! Masuk terlebih dahulu untuk menikmati layanan BurBir.\n");
             }
         }
-        else if (wordCheck(command, 0, 9, suka_kicauan) && command.Length > 10)
+        else if (wordCheck(command, 0, 11, suka_kicauan) && command.Length > 12)
         {
             if (isLogin)
             {
-                SukaKicau(akunLogin, wordFromIndex(command, 11), &kList, &k, &akun, teman);
+                SukaKicau(akunLogin, wordFromIndex(command, 13), &kList, &k, &akun, teman);
             }
             else
             {
@@ -718,6 +719,9 @@ int main()
             {
                 printf("Anda belum masuk! Masuk terlebih dahulu untuk menikmati layanan BurBir.\n");
             }
+        }
+        else if (WordEqual(command, fyb)){
+            DisplayFYB(kList);
         }
         else
         {
