@@ -131,49 +131,63 @@ void sambungUtas(int idUtas, int index, ListKicau *kList, Account account)
         {
             int i = 1;
             kSambungAdd kSam = kicauan->utasKicau->content;
-            while (kSam->next != NULL)
-            {
-                i++;
-                kSam = kSam->next;
-            }
-
-            if (index < 1)
-            {
-                printf("Index terlalu rendah!\n");
-            }
-            else if (index > i + 1)
-            {
-                printf("Index terlalu tinggi!\n");
-            }
-            else
-            {
-                STARTSENTENCE();
-                printf("Masukkan kicauan:\n");
-                STARTSENTENCE();
-                kSam = kicauan->utasKicau->content;
-                kSambungAdd newKSam = createKicauanSambung(currentWord, account);
-                if (index == 1)
+            if (kSam!=NULL){
+                while (kSam->next != NULL)
                 {
-                    newKSam->next = kSam;
-                    kicauan->utasKicau->content = newKSam;
+                    i++;
+                    kSam = kSam->next;
+                }
+
+                if (index < 1)
+                {
+                    printf("Index terlalu rendah!\n");
+                }
+                else if (index > i + 1)
+                {
+                    printf("Index terlalu tinggi!\n");
                 }
                 else
                 {
-                    for (int j = 2; j < index; j++)
+                    STARTSENTENCE();
+                    printf("Masukkan kicauan:\n");
+                    STARTSENTENCE();
+                    kSam = kicauan->utasKicau->content;
+                    kSambungAdd newKSam = createKicauanSambung(currentWord, account);
+                    if (index == 1)
                     {
-                        kSam = kSam->next;
-                    }
-                    if ((kSam->next) == NULL)
-                    {
-                        kSam->next = newKSam;
+                        newKSam->next = kSam;
+                        kicauan->utasKicau->content = newKSam;
                     }
                     else
                     {
-                        newKSam->next = kSam->next;
-                        kSam->next = newKSam;
+                        for (int j = 2; j < index; j++)
+                        {
+                            kSam = kSam->next;
+                        }
+                        if ((kSam->next) == NULL)
+                        {
+                            kSam->next = newKSam;
+                        }
+                        else
+                        {
+                            newKSam->next = kSam->next;
+                            kSam->next = newKSam;
+                        }
                     }
+                    printf("Utas berhasil disambung !\n");
                 }
-                printf("Utas berhasil disambung !\n");
+            }else{
+                if (index>1){
+                    printf("Index terlalu tinggi!\n");
+                }else{
+                    STARTSENTENCE();
+                    printf("Masukkan kicauan:\n");
+                    STARTSENTENCE();
+                    kSam = kicauan->utasKicau->content;
+                    kSambungAdd newKSam = createKicauanSambung(currentWord, account);
+                    kicauan->utasKicau->content = newKSam;
+                    printf("Utas berhasil disambung !\n");
+                }
             }
         }
     }

@@ -16,8 +16,8 @@ int main()
     MakeEmptyprio(&Q, 100);
     Stack draf;
     CreateEmptyStack(&draf);
-    // ReadUser_FILE("../cfg/pengguna.config", &akun, &teman, &Q);
-    // ReadDraf_FILE("../cfg/draf.config", &akun, &draf);
+    ReadUser_FILE("../cfg/pengguna.config", &akun, &teman, &Q);
+    ReadDraf_FILE("../cfg/draf.config", &akun, &draf);
 
     Stack drafStack[20]; // Buat 20 stack untuk 20 pengguna
     // int userID = 0;                  // ID pengguna saat ini
@@ -45,9 +45,9 @@ int main()
     ListKicau kList;
     CreateListKicau(&kList);
     Kicau k;
-    // ReadKicau_FILE("../cfg/kicauan.config", &kList);
+    ReadKicau_FILE("../cfg/kicauan.config", &kList);
     int idUtas = 0;
-    // readUtas("../cfg/utas.config",&kList,&idUtas,akun);
+    readUtas("../cfg/utas.config",&kList,&idUtas,akun);
     char path[] = "../cfg/";
     // printf("Masukkan config yang hendak dimuat:");
     // STARTSENTENCE();
