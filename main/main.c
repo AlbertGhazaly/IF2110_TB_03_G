@@ -62,7 +62,72 @@ int main()
     ReadKicau_FILE("../cfg/kicauan.config", &kList);
     int idUtas = 0;
     readUtas("../cfg/utas.config",&kList,&idUtas,akun);
+    char path[] = "../cfg/";
+    // printf("Masukkan config yang hendak dimuat:");
+    // STARTSENTENCE();
+    // char fold[MAXChar];
+    // w2s(fold,currentWord);
+    // char *folder1;
+    // folder1 = copyString(path);
+    // concatStrings(path,fold,folder1);
+    // concatStrings(folder1,"/",folder1);
+    // // char folderName[] = "contoh";
+    // // char *folder= (char *)malloc(strlen(path) + strlen(folderName) + 1);
+    // // strcpy(folder,path);
+    // // strcat(folder,folderName);
+    // while (!isDirExist(folder1)){
+    //     printf("Tidak ada folder yang dimaksud!\n");
+    //     free(folder1);
+    //     char path[] = "../cfg/";
+    //     printf("Masukkan config yang hendak dimuat:");
+    //     STARTSENTENCE();
+    //     char fold[MAXChar];
+    //     w2s(fold,currentWord);
+    //     char *folder1;
+    //     folder1 = copyString(path);
+    //     concatStrings(path,fold,folder1);
+    //     concatStrings(folder1,"/",folder1);
+    // }
 
+    // printf("%s\n",folder1);
+    // for (int i=0;i<5;i++){
+    //     if (i==0){ 
+    //         char file[] = "pengguna.config";
+    //         char *folder;
+    //         folder = copyString(folder1);
+    //         concatStrings(folder1,file,folder);
+    //         ReadUser_FILE(folder,&akun,&teman,&Q);
+    //         free(folder);
+    //     }
+    //     else if (i==1){ 
+    //         char file[] = "kicauan.config";
+    //         char *folder;
+    //         folder = copyString(folder1);
+    //         concatStrings(folder1,file,folder);
+    //         ReadKicau_FILE(folder,&kList);
+    //         free(folder);
+    //     } 
+    //     else if (i==2){ // Draft config
+    //         char file[] = "draf.config";
+    //         char *folder;
+    //         folder = copyString(folder1);
+    //         concatStrings(folder1,file,folder);
+    //         ReadDraf_FILE(folder,&akun,&draf);
+    //         free(folder);
+    //     }
+    //     else if (i==3){ // Utas config
+    //         char file[] = "utas.config";
+    //         char *folder;
+    //         folder = copyString(folder1);
+    //         concatStrings(folder1,file,folder);
+    //         readUtas(folder,&kList,&idUtas,akun);
+    //         free(folder);
+    //     }
+    //     else if (i==4){ //Reply config
+
+    //     }
+        
+    // }
     boolean isLogin = false;
     
     while (runProgram)
@@ -91,7 +156,6 @@ int main()
         Word kicauan = {"KICAUAN", 7};
         Word cari_kicauan = {"CARI_KICAUAN", 12};
         Word ubah_kicauan = {"UBAH_KICAUAN", 12};
-        Word balas = {"BALAS", 5};
         Word sambung_utas = {"SAMBUNG_UTAS", 12};
         Word hapus_utas = {"HAPUS_UTAS", 10};
         Word cetak_utas = {"CETAK_UTAS", 10};
@@ -100,6 +164,11 @@ int main()
         Word kelompok_teman = {"KELOMPOK_TEMAN", 14};
         Word simpan = {"SIMPAN", 6};
         Word fyb = {"FYB", 3};
+        Word balas = {"BALAS",5};
+        Word balasan = {"BALASAN",7};
+        Word hapus_balasan = {"HAPUS_BALASAN",13};
+        Word muat = {"MUAT",4};
+        Word simpan = {"SIMPAN",6};
 
         if (WordEqual(command, tutup_program))
         {
@@ -283,7 +352,7 @@ int main()
                 index += CharToInt(command.TabWord[i]);
                 i++;
             }
-            if (!isLogin){
+            if (isLogin){
                 hapusUtas(idUtas, index, &kList, akunLogin);
             }else{
                 printf("Anda belum masuk! Masuk terlebih dahulu untuk menikmati layanan BurBir.\n");
@@ -731,6 +800,24 @@ int main()
         }
         else if (WordEqual(command, fyb)){
             DisplayFYB(kList);
+        }else if(wordCheck(command,0,4,balas)){
+            
+        }else if(WordEqual(command,muat)){
+            char path[] = "../cfg/";
+            printf("Masukkan config yang hendak dimuat:");
+            STARTSENTENCE();
+            char fold[MAXChar];
+            w2s(fold,currentWord);
+            char *folder1= (char *)malloc(strlen(path) + strlen(fold) + 2);
+            strcpy(folder1,path);
+            strcat(folder1,fold);
+            strcat(folder1,"/");
+            // char folderName[] = "contoh";
+            // char *folder= (char *)malloc(strlen(path) + strlen(folderName) + 1);
+            // strcpy(folder,path);
+            // strcat(folder,folderName);
+        }else if(WordEqual(command,simpan)){
+
         }
         else
         {
