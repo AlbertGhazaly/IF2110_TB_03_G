@@ -3,6 +3,7 @@
 
 #include "../../modules/adt.h"
 #include "../Pengguna/Pengguna.h"
+#include "../includeADT.h"
 
 #define MAXChar 281
 
@@ -19,7 +20,6 @@ typedef struct {
     int IDUtas;
     kSambungAdd content;
 } Utas;
-
 typedef struct {
     int id;
     int like;

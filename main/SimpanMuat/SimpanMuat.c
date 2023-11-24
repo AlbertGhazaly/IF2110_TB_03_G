@@ -286,90 +286,87 @@ void ReadKicau_FILE(char filename[], ListKicau * kList){
     }
 }
 
-// void loadUtas(char filename[],KicauList* kList, int* jumlahUtas, AccountList akunList){
-//     STARTWORD_FILE(filename);
-//     int n = WordToInt(currentWord);
-//     for (int i=0;i<n;i++){
-//         ADVSENTENCE();
-//         int id = WordToInt(currentWord);
-//         int l;
-//         Word user;
-//         for (l = 0;l<kList->count && id!=kList->kicauan[l].id;l++){
-            
-//         }
+void readUtas(char filename[], ListKicau* kList, int* jumlahUtas, AccountList akunList){
+    STARTWORD_FILE(filename);
+    int n = WordToInt(currentWord);
+    for (int i=0;i<n;i++){
+        ADVSENTENCE();
+        int id = WordToInt(currentWord);
+        int l;
+        Word user;
+        for (l = 0;l<kList->nEff && id!=kList->kicau[l].id;l++);
        
-//         CopyWordTo(&user,kList->kicauan[l].author);
-//         int k;
-//         for (k=0;k<akunList.count && !WordEqual(user,akunList.accounts[k].username[0]);k++){
+        CopyWordTo(&user,kList->kicau[l].author);
+        int k;
+        for (k=0;k<akunList.count && !WordEqual(user,akunList.accounts[k].username[0]);k++);
+        Account akun = akunList.accounts[k];
+        currentWord = emptyWord;
+        ADVSENTENCE();
+        int jumlah = WordToInt(currentWord);
+        for (int j=0;j<jumlah;j++){
+            ADVSENTENCE();
+            kSambungAdd ksam = createKicauanSambung(currentWord,akun);
+            ADVSENTENCE();
+            ADVSENTENCE();
+            int k;
+            Word dd;
+            for(k = 0; k < 2; k++){
+                dd.TabWord[k] = currentWord.TabWord[k];
+            }
+            dd.Length = 2;
+            int DD = WordToInt(dd);
+            Word mm;
+            for(k = 3; k < 5; k++){
+                mm.TabWord[k-3] = currentWord.TabWord[k];
+            }
+            mm.Length = 2;
+            int MM = WordToInt(mm);
+            Word yy;
+            for(k = 6; k < 10; k++){
+                yy.TabWord[k-6] = currentWord.TabWord[k];
+            }
+            yy.Length = 4;
+            int YY = WordToInt(yy);
+            Word hh;
+            for(k = 11; k < 13; k++){
+                hh.TabWord[k-11] = currentWord.TabWord[k];
+            }
+            hh.Length = 2;
+            int HH = WordToInt(hh);
+            Word m;
+            for(k = 14; k < 16; k++){
+                m.TabWord[k-14] = currentWord.TabWord[k];
+            }
+            m.Length = 2;
+            int M = WordToInt(m);
+            Word ss;
+            for(k = 17; k < 19; k++){
+                ss.TabWord[k-17] = currentWord.TabWord[k];
+            }
+            ss.Length = 2;
+            int SS = WordToInt(ss);
+            DATETIME date;
+            CreateDATETIME(&date, DD, MM, YY, HH, M, SS);
+            ksam->datetime = date;
 
-//         }
-//         Account akun = akunList.accounts[k];
-//         ADVSENTENCE();
-//         int jumlah = WordToInt(currentWord);
-//         for (int j=0;j<jumlah;j++){
-//             ADVSENTENCE();
-//             kSambungAdd ksam = createKicauanSambung(currentWord,akun);
-//             ADVSENTENCE();
-//             ADVSENTENCE();
-//             int k;
-//             Word dd;
-//             for(k = 0; k < 2; k++){
-//                 dd.TabWord[k] = currentWord.TabWord[k];
-//             }
-//             dd.Length = 2;
-//             int DD = WordToInt(dd);
-//             Word mm;
-//             for(k = 3; k < 5; k++){
-//                 mm.TabWord[k-3] = currentWord.TabWord[k];
-//             }
-//             mm.Length = 2;
-//             int MM = WordToInt(mm);
-//             Word yy;
-//             for(k = 6; k < 10; k++){
-//                 yy.TabWord[k-6] = currentWord.TabWord[k];
-//             }
-//             yy.Length = 4;
-//             int YY = WordToInt(yy);
-//             Word hh;
-//             for(k = 11; k < 13; k++){
-//                 hh.TabWord[k-11] = currentWord.TabWord[k];
-//             }
-//             hh.Length = 2;
-//             int HH = WordToInt(hh);
-//             Word m;
-//             for(k = 14; k < 16; k++){
-//                 m.TabWord[k-14] = currentWord.TabWord[k];
-//             }
-//             m.Length = 2;
-//             int M = WordToInt(m);
-//             Word ss;
-//             for(k = 17; k < 19; k++){
-//                 ss.TabWord[k-17] = currentWord.TabWord[k];
-//             }
-//             ss.Length = 2;
-//             int SS = WordToInt(ss);
-//             DATETIME date;
-//             CreateDATETIME(&date, DD, MM, YY, HH, M, SS);
-//             ksam->datetime = date;
-
-//             kSambungAdd kPrev;
-//             if (kList->kicauan[l].utasKicau==NULL){
-//                 Utas u;
-//                 u.IDUtas = *jumlahUtas+1;
-//                 *jumlahUtas += 1;
-//                 kList->kicauan[l].utasKicau = &u;
-//                 kList->kicauan[l].utasKicau->content = ksam;
-//             }else{
-//                 kPrev = kList->kicauan[l].utasKicau->content;
-//                 while (kPrev->next!=NULL)
-//                 {
-//                     kPrev = kPrev->next;
-//                 }
-//                 kPrev->next = ksam;
-//             }
-//         }
-//     }
-// }
+            kSambungAdd kPrev;
+            if (kList->kicau[l].utasKicau==NULL){
+                Utas* u = (Utas*)malloc(sizeof(Utas));
+                *jumlahUtas += 1;
+                u->IDUtas = *jumlahUtas;
+                kList->kicau[l].utasKicau = u;
+                kList->kicau[l].utasKicau->content = ksam;
+            }else{
+                kPrev = kList->kicau[l].utasKicau->content;
+                while (kPrev->next!=NULL)
+                {
+                    kPrev = kPrev->next;
+                }
+                kPrev->next = ksam;
+            }
+        }
+    }
+}
 // void ReadDraf_FILE(char filename[], AccountList *list, Stack *S){
 // /*Membaca file Draf dari Draf.config kedalam program
 //     I.S. Stack terdefinisi dan AccountList sudah diakuisisi dari user.config
@@ -453,39 +450,31 @@ void ReadKicau_FILE(char filename[], ListKicau * kList){
 //     }
 // }
 // ///////////////////////////////////////////////////////////////////////////////////////////
-// void saveUtas(char filename[],KicauList* kList, int jumlahUtas, AccountList akunList){
-//     FILE *configFile = fopen(filename, "w");
-//     fprintf(configFile,"%d\n",jumlahUtas);
-//     for (int i=0;i<kList->count;i++){
-//         if (kList->kicauan[i].utasKicau!=NULL){
-//             fprintf(configFile,"%d\n",kList->kicauan[i].utasKicau->IDUtas);
-//             kSambungAdd k = kList->kicauan[i].utasKicau->content;
-//             int j = 1;
-//             while (k->next!=NULL)
-//             {
-//                 j++;
-//                 k = k->next;
-//             }
-//             fprintf(configFile,"%d",j);
-//             k = kList->kicauan[i].utasKicau->content;
-//             for (int n=0;n<j;n++){
-//                 fprintf(configFile,"\ns\n",k->text);
-//                 fprintf(configFile,"%s\n",k->author.TabWord);
-//                 struct tm *tm_struct = localtime(&k->datetime);
-//                 DATETIME local;
-//                 CreateDATETIME(&local, tm_struct->tm_mday, tm_struct->tm_mon + 1, tm_struct->tm_year + 1900, tm_struct->tm_hour, tm_struct->tm_min, tm_struct->tm_sec);
-//                 int DD = Day(local);
-//                 int MM = Month(local);
-//                 int YY = Year(local);
-//                 int hh = Hour(Time(local));
-//                 int mm = Minute(Time(local));
-//                 int ss = Second(Time(local));
-//                 fprintf(configFile,"%02d/%02d/%d %02d:%02d:%02d", DD, MM, YY, hh, mm, ss);
-//             }
+void saveUtas(char filename[], ListKicau* kList, int jumlahUtas, AccountList akunList){
+    FILE *configFile = fopen(filename, "w");
+    fprintf(configFile,"%d",jumlahUtas);
+    for (int i=0;i<kList->nEff;i++){
+        if (kList->kicau[i].utasKicau!=NULL){
+            fprintf(configFile,"\n%d\n",kList->kicau[i].id);
+            kSambungAdd k = kList->kicau[i].utasKicau->content;
+            int j = 1;
+            while (k->next!=NULL)
+            {
+                j++;
+                k = k->next;
+            }
+            fprintf(configFile,"%d",j);
+            k = kList->kicau[i].utasKicau->content;
+            for (int n=0;n<j;n++){
+                fprintf(configFile,"\n%s\n",k->text);
+                fprintf(configFile,"%s\n",k->author.TabWord);
+                fprintf(configFile, "%02d/%02d/%d %02d:%02d:%02d", k->datetime.DD, k->datetime.MM, k->datetime.YYYY, k->datetime.T.HH, k->datetime.T.MM, k->datetime.T.SS);
+                k = k->next;
+            }
             
-//         }
-//     }   
-// }
+        }
+    }   
+}
 
 void saveKicau_FILE(char filename[], ListKicau kList){
     FILE *file = fopen(filename, "w");

@@ -50,14 +50,14 @@ void cetakUtas(int idUtas, ListKicau kList, Account account, AccountList *listAc
         int i;
         for (i = 0; !WordEqual(account.username[0], listAccount->accounts[i].username[0]); i++)
             ;
-        int idUser = i-1;
+        int idUser = i;
         for (i = 0; !WordEqual(kicauan.author, listAccount->accounts[i].username[0]); i++)
             ;
-        int idTeman = i-1;
+        int idTeman = i;
 
         if (WordEqual(listAccount->accounts[idTeman].jenisAkun[0], privat) && ELMTGRAF(teman, idUser, idTeman) == 0)
         {
-            printf("Akun yang membuat utas ini adalah akun privat!\n Ikuti dahulu akun ini untuk melihat utasnya!\n");
+            printf("Akun yang membuat utas ini adalah akun privat!\nIkuti dahulu akun ini untuk melihat utasnya!\n");
         }
         else
         {

@@ -47,6 +47,7 @@ int main()
     Kicau k;
     ReadKicau_FILE("../cfg/kicauan.config", &kList);
     int idUtas = 0;
+    readUtas("../cfg/utas.config",&kList,&idUtas,akun);
 
     boolean isLogin = false;
     printf("           ____  __  __  ____  ____  ____  ____ /\\ \n");
@@ -95,6 +96,7 @@ int main()
             SaveUser_FILE("../cfg/pengguna.config", &akun, teman, Q);
             SaveDraf_FILE("../cfg/draf.config", &akun, drafStack);
             saveKicau_FILE("../cfg/kicauan.config", kList);
+            saveUtas("../cfg/utas.config",&kList,idUtas,akun);
             runProgram = false;
         }
         else if (WordEqual(command, daftar))
@@ -222,7 +224,11 @@ int main()
                 id += CharToInt(command.TabWord[i]);
                 i++;
             }
-            createUtas(id, &kList, akunLogin, &idUtas);
+            if (isLogin){
+                createUtas(id, &kList, akunLogin, &idUtas);
+            }else{
+                printf("Anda belum masuk! Masuk terlebih dahulu untuk menikmati layanan BurBir.\n");
+            }
         }
         else if (wordCheck(command, 0, 11, sambung_utas)) // sambung utas
         {
@@ -242,7 +248,12 @@ int main()
                 index += CharToInt(command.TabWord[i]);
                 i++;
             }
-            sambungUtas(idUtas, index, &kList, akunLogin);
+            if (isLogin){
+                sambungUtas(idUtas, index, &kList, akunLogin);
+            }else{
+                printf("Anda belum masuk! Masuk terlebih dahulu untuk menikmati layanan BurBir.\n");
+
+            }
         }
         else if (wordCheck(command, 0, 9, hapus_utas)) // hapus utas
         {
@@ -262,7 +273,12 @@ int main()
                 index += CharToInt(command.TabWord[i]);
                 i++;
             }
-            hapusUtas(idUtas, index, &kList, akunLogin);
+            if (!isLogin){
+                hapusUtas(idUtas, index, &kList, akunLogin);
+            }else{
+                printf("Anda belum masuk! Masuk terlebih dahulu untuk menikmati layanan BurBir.\n");
+            }
+            
         }
         else if (wordCheck(command, 0, 9, cetak_utas)) // cetak utas
         {
@@ -274,8 +290,13 @@ int main()
                 idUtas += CharToInt(command.TabWord[i]);
                 i++;
             }
-            cetakUtas(idUtas, kList, akunLogin, &akun, teman);
+            if (isLogin){
+                cetakUtas(idUtas, kList, akunLogin, &akun, teman);
+            }else{
+                printf("Anda belum masuk! Masuk terlebih dahulu untuk menikmati layanan BurBir.\n");
+            }
         }
+            
         else if (WordEqual(command, buat_draf))
         {
             int idUser;
