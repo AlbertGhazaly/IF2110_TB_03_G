@@ -89,6 +89,7 @@ int main()
         Word cetak_utas = {"CETAK_UTAS", 10};
         Word buat_draf = {"BUAT_DRAF", 9};
         Word lihat_draf = {"LIHAT_DRAF", 10};
+        Word kelompok_teman = {"KELOMPOK_TEMAN", 14};
 
         if (WordEqual(command, tutup_program))
         {
@@ -189,6 +190,10 @@ int main()
         else if (WordEqual(command, tambah_teman))
         {
             tambahteman(isLogin, akunLogin, &akun, teman, &Q);
+        }
+        else if (WordEqual(command, daftar_teman))
+        {
+            daftarteman(isLogin, akunLogin, &akun, teman);
         }
         else if (WordEqual(command, daftar_permintaan_teman))
         {
@@ -665,6 +670,49 @@ int main()
             if (isLogin)
             {
                 KicauanTagar(kList, wordFromIndex(command, 13));
+            }
+            else
+            {
+                printf("Anda belum masuk! Masuk terlebih dahulu untuk menikmati layanan BurBir.\n");
+            }
+        }
+        else if (WordEqual(command, kelompok_teman)){
+            if (isLogin)
+            {
+                int idAkun;
+                int i = 0;
+                boolean found = false;
+                while(i < akun.count && found == false)
+                {
+                    if(WordEqual(*akun.accounts[i].username, *akunLogin.username))
+                    {
+                        idAkun = i;
+                        found = true;
+                    }
+                    i++; 
+                }
+                DisjointSet Group;
+                findGroups(teman, idAkun, &Group);
+                if (listEffGraf(Group) == 0){
+                    printf("Terdapat 1 orang dalam Kelompok Teman ");
+                    printWord(*akun.accounts[idAkun].username);
+                    printf(" :\n");
+                    printWord(*akun.accounts[idAkun].username);
+                    printf("\n");
+                }
+                else{
+                    printf("Terdapat %d orang dalam Kelompok Teman ", listEffGraf(Group));
+                    printWord(*akun.accounts[idAkun].username);
+                    printf(" :\n");
+                    int j;
+                    for (j = 0; j < CAPACITYGRAF-1; j++){
+                        if (ELMTLISTGRAF(Group,j) == 1)
+                        {
+                            printWord(*akun.accounts[j].username);
+                            printf("\n");
+                        }
+                    }
+                }
             }
             else
             {

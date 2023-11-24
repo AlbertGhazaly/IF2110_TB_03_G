@@ -11,6 +11,8 @@
 #include "Profil/Profil.c"
 #include "PermintaanPertemanan/PermintaanPertemanan.h"
 #include "PermintaanPertemanan/PermintaanPertemanan.c"
+#include "KelompokTeman/disjointset.h"
+#include "KelompokTeman/disjointset.c"
 #include "Kicauan/Kicauan.h"
 #include "Kicauan/Kicauan.c"
 #include "DrafKicauan/DrafKicauan.h"

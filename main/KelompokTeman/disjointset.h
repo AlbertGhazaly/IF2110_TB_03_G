@@ -28,7 +28,7 @@ boolean similar(DisjointSet s1, DisjointSet s2);
     F.S.: true jika kedua DisjointSet memiliki elemen yang sama, false jika tidak.
 */
 
-DisjointSet findGroups(Graf m, int idUser);
+void findGroups(Graf m, int idUser, DisjointSet *s);
 /* Mencari himpunan-himpunan disjoint dari suatu matriks graf.
     I.S.: m - matriks graf yang ingin dicari himpunan-himpunan disjointnya.
     F.S.: DisjointSet yang berisi himpunan-himpunan disjoint dari matriks graf.

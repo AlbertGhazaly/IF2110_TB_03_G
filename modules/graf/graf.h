@@ -49,4 +49,7 @@ void getOne(Graf g, IdxGraf rowID, ListGraf *l);
 void displayGraf(Graf g, int count);
 /*Menampilkan graf*/
 
+void printListGraf(ListGraf l);
+/*Menampilkan list*/
+
 #endif
