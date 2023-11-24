@@ -22,7 +22,7 @@ int listEffGraf(ListGraf l)
 {
     int sum = 0;
     for (int i = 0; i <= CAPACITYGRAF-1; i++) {
-        if(ELMTLISTGRAF(l, i) != MARKLISTGRAF)
+        if(ELMTLISTGRAF(l, i) == 1)
         {
             sum++;
         }
@@ -62,4 +62,17 @@ void displayGraf(Graf g, int count)
         }
     }
     printf("\n");
+}
+
+void printListGraf(ListGraf l)
+{
+    printf("[");
+    for (int i = 0; i <=CAPACITYGRAF-1; i++) {
+        if (i==CAPACITYGRAF-1) {
+            printf("%d", ELMTLISTGRAF(l,i));
+        } else {
+            printf("%d,", ELMTLISTGRAF(l,i));
+        }
+    } 
+    printf("]");
 }
