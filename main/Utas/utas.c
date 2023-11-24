@@ -220,6 +220,7 @@ void hapusUtas(int idUtas, int index, ListKicau *kList, Account account)
                     kSam = kSam->next;
                     kicauan->utasKicau->content = kSam;
                     free(delKSam);
+                    printf("Kicauan sambungan berhasil dihapus!\n");
                 }
                 else
                 {
