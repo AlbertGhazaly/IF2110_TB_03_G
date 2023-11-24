@@ -1,5 +1,99 @@
 #include "./includeADT.h"
 
+void ReadDraf_FILE(char filename[], AccountList *list, Stack *S){
+/*Membaca file Draf dari Draf.config kedalam program
+    I.S. Stack terdefinisi dan AccountList sudah diakuisisi dari user.config
+    F.S. Stack terisi dengan drafkicauan dari Draf.Config
+    */
+    int N;
+    STARTWORD_FILE(filename);
+    N = WordToInt(currentWord);
+    int i;
+    for(i = 0; i < N; i++)
+    {
+        ADVSENTENCE();
+        Word user;
+        int jumlah;
+        int j;
+        CopyWordTo(&user, currentWord);
+        user.Length = user.Length - 2;
+        int idAkun;
+        int cok = 0;
+        boolean found = false;
+        while(cok < list->count && found == false)
+        {
+            if(WordEqual(*list->accounts[cok].username, user))
+            {
+                idAkun = cok;
+                found = true;
+            }
+            cok++; 
+        }
+        jumlah = CharToInt(currentWord.TabWord[currentWord.Length-1]);
+        for(j = 0; j < jumlah; j++)
+        {
+            drafkicau DrafKicau;
+            DATETIME waktudraf;
+            ADVSENTENCE();
+            Word draf = currentWord;
+            if (j == jumlah-1 && i == N-1){
+                currentWord = emptyWord;
+                ADV();
+                int m;
+                for(m = 0; m < 19; m++){
+                    currentWord.TabWord[m] = currentChar;
+                    currentWord.Length++;
+                    ADV();
+                }
+            }
+            else{
+                ADVSENTENCE();
+            }
+            int k;
+            Word dd;
+            for(k = 0; k < 2; k++){
+                dd.TabWord[k] = currentWord.TabWord[k];
+            }
+            dd.Length = 2;
+            int DD = WordToInt(dd);
+            Word mm;
+            for(k = 3; k < 5; k++){
+                mm.TabWord[k-3] = currentWord.TabWord[k];
+            }
+            mm.Length = 2;
+            int MM = WordToInt(mm);
+            Word yy;
+            for(k = 6; k < 10; k++){
+                yy.TabWord[k-6] = currentWord.TabWord[k];
+            }
+            yy.Length = 4;
+            int YY = WordToInt(yy);
+            Word hh;
+            for(k = 11; k < 13; k++){
+                hh.TabWord[k-11] = currentWord.TabWord[k];
+            }
+            hh.Length = 2;
+            int HH = WordToInt(hh);
+            Word m;
+            for(k = 14; k < 16; k++){
+                m.TabWord[k-14] = currentWord.TabWord[k];
+            }
+            m.Length = 2;
+            int M = WordToInt(m);
+            Word ss;
+            for(k = 17; k < 19; k++){
+                ss.TabWord[k-17] = currentWord.TabWord[k];
+            }
+            ss.Length = 2;
+            int SS = WordToInt(ss);
+            CreateDATETIME(&waktudraf, DD, MM, YY, HH, M, SS);
+            DrafKicau.Draf = draf;
+            DrafKicau.IDuser = idAkun;
+            DrafKicau.waktu = waktudraf;
+            Push(S, DrafKicau);
+        }
+    }
+}
 int main()
 {
 
@@ -16,39 +110,20 @@ int main()
     MakeEmptyprio(&Q, 100);
     Stack draf;
     CreateEmptyStack(&draf);
-    ReadUser_FILE("../cfg/pengguna.config", &akun, &teman, &Q);
-    ReadDraf_FILE("../cfg/draf.config", &akun, &draf);
+    // ReadUser_FILE("../cfg/pengguna.config", &akun, &teman, &Q);
+    // ReadDraf_FILE("../cfg/draf.config", &akun, &draf);
 
     Stack drafStack[20]; // Buat 20 stack untuk 20 pengguna
     // int userID = 0;                  // ID pengguna saat ini
     // CreateEmpty(&drafStack[userID]); // Inisialisasi stack untuk pengguna saat ini
-    int i;
-    for (i = 0; i < 20; i++)
-    {
-        CreateEmptyStack(&drafStack[i]);
-    }
-
-    while (!IsEmptyStack(draf))
-    {
-        drafkicau temp;
-        Pop(&draf, &temp);
-        for (i = 0; i < 20; i++)
-        {
-            if (temp.IDuser == i)
-            {
-                Push(&drafStack[i], temp);
-            }
-        }
-    }
-
+    
     Account akunLogin;
     ListKicau kList;
     CreateListKicau(&kList);
     Kicau k;
-    ReadKicau_FILE("../cfg/kicauan.config", &kList);
+    // ReadKicau_FILE("../cfg/kicauan.config", &kList);
     int idUtas = 0;
-    readUtas("../cfg/utas.config",&kList,&idUtas,akun);
-
+    // readUtas("../cfg/utas.config",&kList,&idUtas,akun);
     boolean isLogin = false;
     printf("           ____  __  __  ____  ____  ____  ____ /\\ \n");
     printf("    __    (  _ \\(  )(  )(  _ \\(  _ \\(_  _)(  _ \\)(    __    \n");
@@ -57,6 +132,94 @@ int main()
     printf(" `---'              Tempat Anda Mencibir              `---' \n\n");
 
     printf("Selamat datang di Burbir. Selamat berkicau!\n");
+    char path[MAXChar] = "../cfg/";
+    printf("Masukkan config yang hendak dimuat:");
+    STARTSENTENCE();
+    char *fold = (char*)malloc(MAXChar*sizeof(char));
+    char *path1 = (char*)malloc(MAXChar*sizeof(char));
+    w2s(fold,currentWord);
+    path1 = strcopy(path1,path);
+    strconcat(path1,fold);
+    strconcat(path1,"/");
+    // char fold1[100];
+    // strcopy(fold1,path);
+    // printf("%s\n",fold1);
+    // char folderName[] = "contoh";
+    // char *folder= (char *)malloc(strlen(path) + strlen(folderName) + 1);
+    // strcpy(folder,path);
+    // strcat(folder,folderName);
+    printf("%s\n",path1);
+    while (!isDirExist(path1)){
+        printf("Tidak ada folder yang dimaksud!\n");
+        free(path1);
+        free(fold);
+        printf("Masukkan config yang hendak dimuat:");
+        STARTSENTENCE();
+        char *fold = (char*)malloc(MAXChar*sizeof(char));
+        char *path1 = (char*)malloc(MAXChar*sizeof(char));
+        w2s(fold,currentWord);
+        strcopy(path1,path);
+        strconcat(path1,fold);
+        strconcat(path1,"/");
+    }
+
+    for (int i=0;i<5;i++){
+        if (i==0){ 
+            char file[20] = "pengguna.config";
+            char *folder = (char*)malloc(MAXChar*sizeof(char));
+            strcpy(folder,path1);
+            strcat(folder,file);
+            ReadUser_FILE(folder,&akun,&teman,&Q);
+            free(folder);
+        }
+        else if (i==1){ 
+            char file[20] = "kicauan.config";
+            char *folder = (char*)malloc(MAXChar*sizeof(char));
+            strcpy(folder,path1);
+            strcat(folder,file);
+            ReadKicau_FILE(folder,&kList);
+            free(folder);
+        } 
+        else if (i==2){ // Draft config
+            char file[20] = "draf.config";
+            char *folder = (char*)malloc(MAXChar*sizeof(char));
+            strcpy(folder,path1);
+            strcat(folder,file);
+            ReadDraf_FILE("../cfg/draf.config", &akun, &draf);
+            int i;
+            for (i = 0; i < 20; i++)
+            {
+                CreateEmptyStack(&drafStack[i]);
+            }
+
+            while (!IsEmptyStack(draf))
+            {
+                drafkicau temp;
+                Pop(&draf, &temp);
+                for (i = 0; i < 20; i++)
+                {
+                    if (temp.IDuser == i)
+                    {
+                        Push(&drafStack[i], temp);
+                    }
+                }
+            }
+            free(folder);
+        }
+        else if (i==3){ // Utas config
+            char file[20] = "utas.config";
+            char *folder = (char*)malloc(MAXChar*sizeof(char));
+            strcpy(folder,path1);
+            strcat(folder,file);
+            readUtas(folder,&kList,&idUtas,akun);
+            free(folder);
+        }
+        else if (i==4){ //Reply config
+
+        }
+        
+    }
+    printf("File Config berhasil dimuat\n");
     while (runProgram)
     {
         printf(">> ");
@@ -93,6 +256,11 @@ int main()
         Word lihat_draf = {"LIHAT_DRAF", 10};
         Word kelompok_teman = {"KELOMPOK_TEMAN", 14};
         Word fyb = {"FYB", 3};
+        Word balas = {"BALAS",5};
+        Word balasan = {"BALASAN",7};
+        Word hapus_balasan = {"HAPUS_BALASAN",13};
+        Word muat = {"MUAT",4};
+        Word simpan = {"SIMPAN",6};
 
         if (WordEqual(command, tutup_program))
         {
@@ -276,7 +444,7 @@ int main()
                 index += CharToInt(command.TabWord[i]);
                 i++;
             }
-            if (!isLogin){
+            if (isLogin){
                 hapusUtas(idUtas, index, &kList, akunLogin);
             }else{
                 printf("Anda belum masuk! Masuk terlebih dahulu untuk menikmati layanan BurBir.\n");
@@ -303,7 +471,7 @@ int main()
         else if (WordEqual(command, buat_draf))
         {
             int idUser;
-            i = 0;
+            int i = 0;
             boolean found = false;
             while (i < akun.count && found == false)
             {
@@ -417,7 +585,7 @@ int main()
         else if (WordEqual(command, lihat_draf))
         {
             int idUser;
-            i = 0;
+            int i = 0;
             boolean found = false;
             while (i < akun.count && found == false)
             {
@@ -773,6 +941,24 @@ int main()
         }
         else if (WordEqual(command, fyb)){
             DisplayFYB(kList);
+        }else if(wordCheck(command,0,4,balas)){
+            
+        }else if(WordEqual(command,muat)){
+            char path[] = "../cfg/";
+            printf("Masukkan config yang hendak dimuat:");
+            STARTSENTENCE();
+            char fold[MAXChar];
+            w2s(fold,currentWord);
+            char *folder1= (char *)malloc(strlen(path) + strlen(fold) + 2);
+            strcpy(folder1,path);
+            strcat(folder1,fold);
+            strcat(folder1,"/");
+            // char folderName[] = "contoh";
+            // char *folder= (char *)malloc(strlen(path) + strlen(folderName) + 1);
+            // strcpy(folder,path);
+            // strcat(folder,folderName);
+        }else if(WordEqual(command,simpan)){
+
         }
         else if(wordCheck(command, 0, 2, tes)){
             Word angka = {"BALAS 45 36", 11};

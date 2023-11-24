@@ -4,6 +4,7 @@
 #include "../../modules/adt.h"
 #include "../Pengguna/Pengguna.h"
 #include "../includeADT.h"
+#include "../Balasan/balasan.h"
 
 #define MAXChar 281
 
@@ -27,6 +28,7 @@ typedef struct {
     Word author;
     DATETIME datetime;
     Utas* utasKicau;
+    addressTree balas;
     char tagar[MAXChar];
     int jumlahBalasan;
     TreeBalasan balasan;

@@ -9,33 +9,80 @@ void wordToString(char destination[MAXChar],Word input){
     }
     destination[i] = '\0';
 }
+void concatStrings(const char *str1, const char *str2, char *result) {
+    int i = 0;
+    while (str1[i] != '\0') {
+        result[i] = str1[i];
+        i++;
+    }
+    
+    int j = 0;
+    while (str2[j] != '\0') {
+        result[i] = str2[j];
+        i++;
+        j++;
+    }
+    
+    result[i] = '\0';
+}
+char* strcopy(char* destination, const char* source) {
+    char* start = destination;
 
-// void muat(char folderName[],AccountList *list, Graf *Teman, prioqueuefren *Q){
-//     char path[] = "../cfg/";
-//     char *folder = concatStr(path,folderName);
+    while (*source != '\0') {
+        *destination = *source;
+        destination++;
+        source++;
+    }
 
-//     if (!isDirExist(folder)){
-//         printf("Tidak ada folder yang dimaksud!\n");
-//     }else{
-//         for (int i=0;i<5;i++){
-//             if (i==0){ // User config
-//                 ReadUser_FILE(concatStr(folder,"pengguna.config"),list,Teman, Q);
-//             }
-//             else if (i==1){ // Tweet config
+    *destination = '\0'; // Null-terminate the destination string
+    return start;
+}
 
-//             } 
-//             else if (i==2){ // Reply config
+// Function to concatenate two strings using strcat
+char* strconcat(char* destination, const char* source) {
+    char* start = destination;
 
-//             }
-//             else if (i==3){ // Draft config
+    while (*destination != '\0') {
+        destination++;
+    }
 
-//             }
-//             else if (i==4){ //Utas config
+    while (*source != '\0') {
+        *destination = *source;
+        destination++;
+        source++;
+    }
 
-//             }
-//         }
-//     }
-// }
+    *destination = '\0'; // Null-terminate the concatenated string
+    return start;
+}
+void muat(char folderName[],AccountList *listakun, Graf *Teman, prioqueuefren *Q,ListKicau * kList, Stack* draf, int* jumlahUtas){
+    char path[] = "../cfg/";
+    char *folder= (char *)malloc(strlen(path) + strlen(folderName) + 1);
+    strcpy(folder,path);
+    strcat(folder,folderName);
+    if (!isDirExist(folder)){
+        printf("Tidak ada folder yang dimaksud!\n");
+    }else{
+        printf("%s\n",folder);
+        for (int i=0;i<5;i++){
+            if (i==0){ 
+                ReadUser_FILE(path,listakun,Teman,Q);
+            }
+            else if (i==1){ 
+                ReadKicau_FILE(path,kList);
+            } 
+            else if (i==2){ // Draft config
+                ReadDraf_FILE(path,listakun,draf);
+            }
+            else if (i==3){ // Utas config
+                readUtas(path,kList,jumlahUtas,*listakun);
+            }
+            else if (i==4){ //Reply config
+
+            }
+        }
+    }
+}
 
 // void simpan(char folderName[]){
 //     // concat path to cfg folder
@@ -64,16 +111,16 @@ void wordToString(char destination[MAXChar],Word input){
 //     }
 // }
 
-// boolean isDirExist(char path[]){
-//     struct stat stats;
-//     stat(path, &stats);
+boolean isDirExist(char path[]){
+    struct stat stats;
+    stat(path, &stats);
 
-//     if (S_ISDIR(stats.st_mode)){
-//         return true;
-//     }
-//     return false;
-// }
-// char* concatStr(char path[],char folder[]){
+    if (S_ISDIR(stats.st_mode)){
+        return true;
+    }
+    return false;
+}
+// void concatStr(char* path,char folder[]){
 //     int i;
 //     for (i=0;path[i]!='\0';i++);
 //     for (int j=0;folder[j]!='\0';j++){
@@ -81,7 +128,7 @@ void wordToString(char destination[MAXChar],Word input){
 //         i++;
 //     }
 //     path[i] = '\0';
-//     return path;
+//     strcat
 // }
 // // Load
 void ReadUser_FILE(char filename[], AccountList *list, Graf *Teman, prioqueuefren *Q){

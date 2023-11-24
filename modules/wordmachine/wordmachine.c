@@ -102,7 +102,7 @@ void CopyWordSpace()
 /*Mengakuisisi kata, dengan enter atau NewLine sebagai MARK*/
 {
     int i = 0;
-    while (currentChar != MARKBaris && currentChar != MARK && currentChar!='\r' && i<NMax){
+    while (currentChar != MARKBaris && currentChar != MARK && currentChar!='\r' && i<NMax-1){
         currentWord.TabWord[i] = currentChar;
         ADV();
         i++;

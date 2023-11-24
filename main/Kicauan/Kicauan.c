@@ -110,6 +110,7 @@ void CreateKicau(Account akunLogin, ListKicau *list, Kicau *k) {
     CopyWordTo(&k->author,akunLogin.username[0]);
     k->datetime = local;
     k->utasKicau = NULL;
+    k->balas = NULL;
     printf("\n\nSelamat! Kicauan telah diterbitkan!\n Detil kicauan:\n");
     BaseDisplay(*k);
     AddToKicauan(list, *k);
@@ -165,7 +166,7 @@ void Kicauan(Account akunLogin, ListKicau list) {
         }
     }
     if (!found) {
-        printf("Tidak ada kicauan oleh pengguna %s.\n", akunLogin.username);
+        printf("Tidak ada kicauan oleh pengguna %s.\n", akunLogin.username[0].TabWord);
     }
 }
 
