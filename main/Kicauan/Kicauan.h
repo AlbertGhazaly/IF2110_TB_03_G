@@ -28,6 +28,8 @@ typedef struct {
     DATETIME datetime;
     Utas* utasKicau;
     char tagar[MAXChar];
+    int jumlahBalasan;
+    TreeBalasan balasan;
 } Kicau;
 
 typedef struct {
@@ -47,6 +49,7 @@ void SukaKicau (Account akunLogin, Word id, ListKicau *listkicau, Kicau *k, Acco
 boolean isIdInKicauan (int id, ListKicau *list);
 void UbahKicau (Account akunLogin, Word id, ListKicau *list);
 void ReadKicau_FILE(char filename[], ListKicau *kList);
-
+int idxOfKicauan(int id, ListKicau listKicau);
+int listLengthKicauan(ListKicau list);
 
 #endif

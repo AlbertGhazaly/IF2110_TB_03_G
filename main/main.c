@@ -61,7 +61,7 @@ int main()
     {
         printf(">> ");
         STARTCOMMAND();
-
+        Word tes = {"tes", 3};
         Word command = currentWord;
         Word tutup_program = {"TUTUP_PROGRAM", 13};
         Word daftar = {"DAFTAR", 6};
@@ -84,6 +84,8 @@ int main()
         Word cari_kicauan = {"CARI_KICAUAN", 12};
         Word ubah_kicauan = {"UBAH_KICAUAN", 12};
         Word balas = {"BALAS", 5};
+        Word balasan = {"BALASAN", 7};
+        Word hapus_balasan = {"HAPUS_BALASAN", 13};
         Word sambung_utas = {"SAMBUNG_UTAS", 12};
         Word hapus_utas = {"HAPUS_UTAS", 10};
         Word cetak_utas = {"CETAK_UTAS", 10};
@@ -676,6 +678,56 @@ int main()
                 printf("Anda belum masuk! Masuk terlebih dahulu untuk menikmati layanan BurBir.\n");
             }
         }
+        // else if (wordCheck(command, 0, 6, balasan) && command.Length > 7){
+        //     if(isIdInKicauan(WordToInt(wordFromIndex(command, 8)), &kList)){
+        //         if (isLogin){
+        //             int idKicau = WordToInt(wordFromIndex(command, 8));
+        //             DisplayBalasan(kList, 3);
+        //         }
+        //         else{
+        //             printf("Anda belum masuk! Masuk terlebih dahulu untuk menikmati layanan BurBir.\n");
+        //         }
+        //     }
+        //     else{
+        //         printf("Perintah tidak dikenali.\n");
+        //     }
+        // }
+        else if (wordCheck(command, 0, 4, balas) && command.Length > 5){
+            if(isIdInKicauan(WordToInt(wordFromIndexToSpace(command, 6)), &kList)){
+                if(isWordInteger(wordFromIndex(command, balas.Length + wordFromIndexToSpace(command, 6).Length + 1))){
+                    if (isLogin){
+                        int idKicau = WordToInt(wordFromIndexToSpace(command, 6));
+                        int idBalasan = WordToInt(wordFromIndex(command, balas.Length + wordFromIndexToSpace(command, 6).Length + 2));
+                        Balas(&kList, akunLogin, idKicau, idBalasan);
+                    }
+                }
+                else{
+                    printf(".\n");
+                }
+            }
+            else{
+                printf("Perintah tidak dikenali.\n");
+            }
+        }
+        
+        // else if (wordCheck(command, 0, 13, hapus_balasan) && command.Length > 14){
+        //     if(isIdInKicauan(WordToInt(wordFromIndexToSpace(command, 14)), &kList)){
+        //         if(isWordInteger(wordFromIndex(command, hapus_balasan.Length + wordFromIndexToSpace(command, 14).Length + 1))){
+        //             if (isLogin){
+        //                 int idKicau = WordToInt(wordFromIndexToSpace(command, 14));
+        //                 int idBalasan = WordToInt(wordFromIndex(command, hapus_balasan.Length + wordFromIndexToSpace(command, 14).Length + 2));
+        //                 HapusBalasan(&kList, akunLogin, idKicau, idBalasan);
+        //             }
+        //         }
+        //         else{
+        //             printf(".\n");
+        //         }
+        //     }
+        //     else{
+        //         printf("Perintah tidak dikenali.\n");
+        //     }
+
+        // }
         else if (WordEqual(command, kelompok_teman)){
             if (isLogin)
             {
@@ -721,6 +773,11 @@ int main()
         }
         else if (WordEqual(command, fyb)){
             DisplayFYB(kList);
+        }
+        else if(wordCheck(command, 0, 2, tes)){
+            Word angka = {"BALAS 45 36", 11};
+            printf("Masuk\n");
+            printf("%d\n", WordToInt(wordFromIndexToSpace(angka, 6)));
         }
         else
         {

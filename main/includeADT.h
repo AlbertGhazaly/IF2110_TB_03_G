@@ -1,8 +1,8 @@
 #ifndef INCLUDEADT_H
 #define INCLUDEADT_H
 
-// #include "Balasan/balasan.h"
-// #include "Balasan/balasan.c"
+#include "Balasan/balasan.h"
+#include "Balasan/balasan.c"
 #include "Pengguna/Pengguna.h"
 #include "Pengguna/Pengguna.c"
 #include "Teman/Teman.h"

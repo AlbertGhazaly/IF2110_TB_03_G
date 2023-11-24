@@ -169,6 +169,29 @@ void Kicauan(Account akunLogin, ListKicau list) {
     }
 }
 
+int listLengthKicauan(ListKicau list)
+{
+    return list.nEff;
+}
+
+int idxOfKicauan(int id, ListKicau listKicau) {
+    int i = 0;
+    boolean found = false;
+    while (!found && i < listLengthKicauan(listKicau)) {
+        if (listKicau.kicau[i].id == id) {
+            found = true;
+        } else {
+            i++;
+        }
+    }
+
+    if (found) {
+        return i;
+    } else {
+        return IDX_UNDEF_KICAUAN;
+    }
+}
+
 void SukaKicau (Account akunLogin, Word id, ListKicau *listkicau, Kicau *k, AccountList* listakun, Graf teman)
 {
     //Account ID user saat ini
