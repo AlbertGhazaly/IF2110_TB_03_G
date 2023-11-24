@@ -3,14 +3,13 @@
 
 #include "../../modules/adt.h"
 #include <time.h>
-
+#define ELMTGRAF(G, i, j) (G).mem[(i)][(j)]
 #define MAXChar 281
 typedef struct kicau {
     int id;
     char text[MAXChar];
     Word author;
-    DATETIME datetime;
-    Tree kumpulanBalasan;  
+    DATETIME datetime; 
  } Balasan;
 
 #define ROOT(t) (t)->T
@@ -24,7 +23,7 @@ typedef struct kicau {
 
 typedef struct tNode *addressTree;
 typedef struct tNode {
-    int data;
+    Balasan data;
     addressTree firstChild;
     addressTree nextSibling;
 } NodeTree;
@@ -47,32 +46,34 @@ typedef struct {
 #define LISTELMT(l, i) (l).contents[(i)]
 
 
-void CreateTree(Tree *T);
+// void CreateTree(Tree *T);
 
-addressTree Alokasi(int X);
+// addressTree Alokasi(int X);
 
-void Dealokasi(addressTree P);
+// void Dealokasi(addressTree P);
 
-void AddChild(addressTree *P, addressTree C);
+// void AddChild(addressTree *P, addressTree C);
 
-void AddSibling(addressTree *P, addressTree S);
+// void AddSibling(addressTree *P, addressTree S);
 
-void printSiblings(addressTree P);
+// void printSiblings(addressTree P);
 
-void printChild(addressTree P);
+// void printChild(addressTree P);
 
-void printTree (addressTree P, int h);
+// void printTree (addressTree P, int h);
 
-addressTree getAddress (addressTree P, int X);
+// addressTree getAddress (addressTree P, int X);
 
-addressTree getParent(addressTree root,addressTree C);
+// addressTree getParent(addressTree root,addressTree C);
 
-void CreateBalasan(Balasan *balasan, Account author);
-void BaseDisplayTree (Balasan b);
-void MembalasKicauan(Tree *balasanKicauan, Balasan *balasan, int balasanId);
-void MembalasBalasan(Tree *balasanKicauan, Balasan *balasan, int parentId);
-void DisplayBalasan(Tree balasanKicauan, int balasanId);
-void DeleteBalasan(Tree *balasanKicauan, int balasanId);
-void CascadeDelete(Tree *balasanKicauan, int parentId);
+// void CreateBalasan(Balasan *balasan, Account author);
+// void BaseDisplayTree (Balasan b);
+// void MembalasKicauan(Tree *balasanKicauan, Balasan *balasan, int balasanId);
+// void MembalasBalasan(Tree *balasanKicauan, Balasan *balasan, int parentId);
+// void DisplayBalasan(Tree balasanKicauan, int balasanId);
+// void DeleteBalasan(Tree *balasanKicauan, int balasanId);
+// void CascadeDelete(Tree *balasanKicauan, int parentId);
+/* File : tree.h */
+/* Definisi N-Ary Tree */
 
 #endif

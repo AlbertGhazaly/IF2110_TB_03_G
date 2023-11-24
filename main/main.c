@@ -83,7 +83,6 @@ int main()
         Word kicauan = {"KICAUAN", 7};
         Word cari_kicauan = {"CARI_KICAUAN", 12};
         Word ubah_kicauan = {"UBAH_KICAUAN", 12};
-        Word balas = {"BALAS", 5};
         Word sambung_utas = {"SAMBUNG_UTAS", 12};
         Word hapus_utas = {"HAPUS_UTAS", 10};
         Word cetak_utas = {"CETAK_UTAS", 10};
@@ -91,6 +90,9 @@ int main()
         Word lihat_draf = {"LIHAT_DRAF", 10};
         Word kelompok_teman = {"KELOMPOK_TEMAN", 14};
         Word fyb = {"FYB", 3};
+        Word balas = {"BALAS",5};
+        Word balasan = {"BALASAN",7};
+        Word hapus_balasan = {"HAPUS_BALASAN",13};
 
         if (WordEqual(command, tutup_program))
         {
@@ -722,6 +724,8 @@ int main()
         }
         else if (WordEqual(command, fyb)){
             DisplayFYB(kList);
+        }else if(wordCheck(command,0,4,balas)){
+            
         }
         else
         {
