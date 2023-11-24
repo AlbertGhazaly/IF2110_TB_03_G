@@ -104,13 +104,7 @@ int main()
     printf(" `---'              Tempat Anda Mencibir              `---' \n\n");
     printf("Selamat datang di Burbir. Selamat berkicau!\n\n");
     printf("Aplikasi untuk studi kualitatif mengenai perilaku manusia dengan menggunakan metode (pengambilan data berupa) Focused Group Discussion kedua di zamannya.\n\n");
-    STARTSENTENCE();
-    printf("Silahkan masukan folder konfigurasi untuk dimuat:");
     printf("\n\n");
-    STARTSENTENCE();
-
-
-    printf("File konfigurasi berhasil dimuat! Selamat berkicau!\n\n");
 
     // Utilities
     boolean login = false;
@@ -226,7 +220,7 @@ int main()
         
     }
     boolean isLogin = false;
-    
+    printf("File konfigurasi berhasil dimuat! Selamat berkicau!\n\n");
     while (runProgram)
     {
         printf(">> ");
