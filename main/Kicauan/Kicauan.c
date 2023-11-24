@@ -110,7 +110,7 @@ void CreateKicau(Account akunLogin, ListKicau *list, Kicau *k) {
     CopyWordTo(&k->author,akunLogin.username[0]);
     k->datetime = local;
     k->utasKicau = NULL;
-    k->balas = NULL;
+    k->balasan = NULL;
     printf("\n\nSelamat! Kicauan telah diterbitkan!\n Detil kicauan:\n");
     BaseDisplay(*k);
     AddToKicauan(list, *k);

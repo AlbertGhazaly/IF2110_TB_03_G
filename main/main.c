@@ -1,4 +1,5 @@
 #include "./includeADT.h"
+#include "../modules/adt.h"
 
 void ReadDraf_FILE(char filename[], AccountList *list, Stack *S){
 /*Membaca file Draf dari Draf.config kedalam program
@@ -246,8 +247,6 @@ int main()
         Word kicauan = {"KICAUAN", 7};
         Word cari_kicauan = {"CARI_KICAUAN", 12};
         Word ubah_kicauan = {"UBAH_KICAUAN", 12};
-        Word balas = {"BALAS", 5};
-        Word balasan = {"BALASAN", 7};
         Word hapus_balasan = {"HAPUS_BALASAN", 13};
         Word sambung_utas = {"SAMBUNG_UTAS", 12};
         Word hapus_utas = {"HAPUS_UTAS", 10};
@@ -258,7 +257,6 @@ int main()
         Word fyb = {"FYB", 3};
         Word balas = {"BALAS",5};
         Word balasan = {"BALASAN",7};
-        Word hapus_balasan = {"HAPUS_BALASAN",13};
         Word muat = {"MUAT",4};
         Word simpan = {"SIMPAN",6};
 

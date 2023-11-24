@@ -4,7 +4,6 @@
 #include "../includeADT.h"
 #include "../../modules/adt.h"
 #include "../Kicauan/Kicauan.h"
-
 int hitungKicauanDenganBalasan(ListKicau listKicauan);
 void PrintBalasan(Balasan kontol, int indent);
 void PrintTreeBalasan(TreeBalasan t, int indent);

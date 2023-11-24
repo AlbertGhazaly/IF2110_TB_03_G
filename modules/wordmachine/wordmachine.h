@@ -11,6 +11,7 @@
 #define BLANK ' '
 #define MARKBaris '\n'
 #define MARKFile '\0'
+#define MAXWord 281
 
 typedef struct
 {

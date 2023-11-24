@@ -2,6 +2,7 @@
 #define KICAUAN_H
 
 #include "../../modules/adt.h"
+#include "../../modules/tree/tree.h"
 #include "../Pengguna/Pengguna.h"
 #include "../includeADT.h"
 #include "../Balasan/balasan.h"
@@ -28,7 +29,6 @@ typedef struct {
     Word author;
     DATETIME datetime;
     Utas* utasKicau;
-    addressTree balas;
     char tagar[MAXChar];
     int jumlahBalasan;
     TreeBalasan balasan;
