@@ -667,7 +667,6 @@ int main()
         }
         else if (wordCheck(command, 0, 11, cari_kicauan) && command.Length > 12)
         {
-            printf("Masuk\n");
             if (isLogin)
             {
                 KicauanTagar(kList, wordFromIndex(command, 13));

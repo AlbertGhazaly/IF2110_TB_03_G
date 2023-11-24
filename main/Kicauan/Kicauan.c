@@ -144,7 +144,7 @@ void BaseDisplay (Kicau k)
     //jika tagar tidak kosong, tampilkan tagar
     if (k.tagar[1] != '\0')
     {
-        printf("\n| Tagar: ");
+        printf("\n| ");
         j = 0;
         while (k.tagar[j] != '\0')
         {
@@ -166,92 +166,6 @@ void Kicauan(Account akunLogin, ListKicau list) {
     }
     if (!found) {
         printf("Tidak ada kicauan oleh pengguna %s.\n", akunLogin.username);
-    }
-}
-
-void DisplayFYB(ListKicau list) {
-    SortByLikes(&list);
-    int displayCount = list.nEff < 8 ? list.nEff : 8;
-    printf("Berikut %d kicauan dengan like tertinggi di FYB\n", displayCount);
-
-    for (int i = 0; i < displayCount; i++) {
-        printf("\nKicauan %d:\n", i + 1);
-        BaseDisplay(list.kicau[i]);
-    }
-}
-
-void SortByLikes(ListKicau *list) {
-    if (list->nEff == 0) {
-        printf("Tidak ada kicauan nih, yuk mulai berkicau!\n");
-    }
-    else{
-        for (int i = 0; i < list->nEff - 1; i++) {
-            for (int j = 0; j < list->nEff - i - 1; j++) {
-                if (list->kicau[j].like < list->kicau[j + 1].like ||
-                    (list->kicau[j].like == list->kicau[j + 1].like &&
-                    CompareDateTime(list->kicau[j].datetime, list->kicau[j + 1].datetime) < 0)) {
-                    Kicau temp = list->kicau[j];
-                    list->kicau[j] = list->kicau[j + 1];
-                    list->kicau[j + 1] = temp;
-                }
-            }
-        }
-    }
-}
-
-void wordToStr(char destination[MAXChar],Word input){
-    int i;
-    for (i=0;i<input.Length;i++){
-        (destination[i]) = input.TabWord[i];
-    }
-    destination[i] = '\0';
-}
-
-boolean compareWithoutHash(const char *str1, const char *str2) {
-    while (*str1 != '\0' && *str2 != '\0') {
-        if (*str1 == '#' && *str2 != '#' && *(str1 + 1) == *str2) {
-            str1++; // Lewati karakter '#'
-        } else if (*str2 == '#' && *str1 != '#' && *str1 == *(str2 + 1)) {
-            str2++; // Lewati karakter '#'
-        } else if (*str1 != *str2) {
-            return false;
-        }
-
-        str1++;
-        str2++;
-    }
-
-    return *str1 == *str2; // Pastikan keduanya berakhir pada saat yang sama
-}
-
-char toLowerz(char ch) {
-    if (ch >= 'A' && ch <= 'Z') {
-        return ch + ('a' - 'A');
-    }
-    return ch;
-}
-
-void toLowerCaze(const char *source, char *destination) {
-    while (*source) {
-        *destination = toLowerz(*source);
-        source++;
-        destination++;
-    }
-    *destination = '\0';  // Menambahkan null terminator pada akhir string
-}
-
-void KicauanTagar(ListKicau list, Word tags) {
-    //Print Kicauan (list kicau)
-    char tag[MAXChar];
-    wordToStr(tag, tags);
-    char dst1[MAXChar];
-    char dst2[MAXChar];
-    for (int i = list.nEff - 1; i >= 0; i--) {
-        toLowerCaze(tag, dst1);
-        toLowerCaze(list.kicau[i].tagar, dst2);
-        if (compareWithoutHash(dst1, dst2)) {
-            BaseDisplay(list.kicau[i]);
-        }
     }
 }
 

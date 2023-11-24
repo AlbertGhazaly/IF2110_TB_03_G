@@ -21,6 +21,10 @@
 #include "Utas/utas.c"
 #include "SimpanMuat/SimpanMuat.h"
 #include "SimpanMuat/SimpanMuat.c"
+#include "FYB/fyb.h"
+#include "FYB/fyb.c"
+#include "Tagar/Tagar.h"
+#include "Tagar/Tagar.c"
 
 
 #endif
