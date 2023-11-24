@@ -178,14 +178,16 @@ boolean WordEqual(Word a, Word b)
     }
 }
 
-boolean isWordInteger(Word angka)
-/*Mengirimkan true apabila Word merupakan bilangan atau integer.*/
-{
-    int i;
+boolean isWordIntegerFromIndex(Word word, unsigned int index){
     boolean cek = true;
-    for (i=0; i < angka.Length; i++){
-        if (angka.TabWord[i] < 48 && angka.TabWord[i] > 57){
+    if (index >= word.Length) {
+        return false;
+    }
+
+    for (unsigned int i = index; i < word.Length; i++){
+        if (word.TabWord[i] < '0' || word.TabWord[i] > '9'){
             cek = false;
+            break;
         }
     }
     return cek;
@@ -265,6 +267,7 @@ Word wordFromIndex(Word word, int index){
     return newWord;
 }
 
+
 void CopyWordCommand(){
     int i = 0;
     while (currentChar != MARK){
@@ -279,6 +282,15 @@ void CopyWordCommand(){
         currentWord.Length = i;
     }
     EndWord = true;
+}
+
+void CopyString(char destination[MAXWord], char source[MAXWord]){
+    int i = 0;
+    while (source[i] != '\0'){
+        destination[i] = source[i];
+        i++;
+    }
+    destination[i] = '\0';
 }
 
 void STARTCOMMAND(){
@@ -302,4 +314,29 @@ void ADVCOMMAND(){
     }
 }
 
-// Fungsi untuk membandingkan sebuah string dengan string lain mulai dari karakter kedua string
+// Fungsi untuk mengambil word dari index tertentu sampai sebelum spasi, misal word = "BALAS 50 49" atau "BALAS 5 49 " maka yang diambil adalah "50" atau "5"
+Word wordFromIndexToSpace(Word word, int index){
+    Word newWord;
+    int i;
+    for (i = index; i < word.Length; i++) {
+        if (word.TabWord[i] == ' '){
+            break;
+        }
+        newWord.TabWord[i - index] = word.TabWord[i];
+    }
+    newWord.Length = i - index;
+    return newWord;
+}
+
+boolean isWordInteger(Word angka){
+    int i;
+    boolean cek = true;
+    for (i=0; i < angka.Length; i++){
+        if (angka.TabWord[i] < 48 && angka.TabWord[i] > 57){
+            cek = false;
+        }
+    }
+    return cek;
+}
+
+// Fungsi untuk mengambil index terakhir dari 

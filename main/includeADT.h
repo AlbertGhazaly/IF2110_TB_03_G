@@ -1,8 +1,8 @@
 #ifndef INCLUDEADT_H
 #define INCLUDEADT_H
 
-// #include "Balasan/balasan.h"
-// #include "Balasan/balasan.c"
+#include "Balasan/balasan.h"
+#include "Balasan/balasan.c"
 #include "Pengguna/Pengguna.h"
 #include "Pengguna/Pengguna.c"
 #include "Teman/Teman.h"
@@ -21,6 +21,10 @@
 #include "Utas/utas.c"
 #include "SimpanMuat/SimpanMuat.h"
 #include "SimpanMuat/SimpanMuat.c"
+#include "FYB/fyb.h"
+#include "FYB/fyb.c"
+#include "Tagar/Tagar.h"
+#include "Tagar/Tagar.c"
 
 
 #endif
