@@ -224,6 +224,8 @@ void ReadKicau_FILE(char filename[], ListKicau * kList){
         ADVSENTENCE();
         w2s(temp.text ,currentWord);
         ADVSENTENCE();
+        w2s(temp.tagar,currentWord);
+        ADVSENTENCE();
         temp.like = WordToInt(currentWord);
         ADVSENTENCE();
         temp.author = emptyWord;
@@ -467,7 +469,9 @@ void saveUtas(char filename[], ListKicau* kList, int jumlahUtas, AccountList aku
             k = kList->kicau[i].utasKicau->content;
             for (int n=0;n<j;n++){
                 fprintf(configFile,"\n%s\n",k->text);
-                fprintf(configFile,"%s\n",k->author.TabWord);
+                char str[MAXChar];
+                wordToString(str,k->author);
+                fprintf(configFile,"%s\n",str);
                 fprintf(configFile, "%02d/%02d/%d %02d:%02d:%02d", k->datetime.DD, k->datetime.MM, k->datetime.YYYY, k->datetime.T.HH, k->datetime.T.MM, k->datetime.T.SS);
                 k = k->next;
             }
@@ -487,6 +491,7 @@ void saveKicau_FILE(char filename[], ListKicau kList){
     for(i = 0; i < N; i++){
         fprintf(file, "%d\n", kList.kicau[i].id);
         fprintf(file, "%s\n", kList.kicau[i].text);
+        fprintf(file, "%s\n", kList.kicau[i].tagar);
         fprintf(file, "%d\n", kList.kicau[i].like);
         int j;
         for(j = 0; j < kList.kicau[i].author.Length; j++){
