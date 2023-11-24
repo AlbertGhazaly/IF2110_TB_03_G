@@ -1,5 +1,7 @@
 #include "./includeADT.h"
+
 void ReadDraf_FILE(char filename[], AccountList *list, Stack *S){
+    Word emptyWord = {'\0',0};
 /*Membaca file Draf dari Draf.config kedalam program
     I.S. Stack terdefinisi dan AccountList sudah diakuisisi dari user.config
     F.S. Stack terisi dengan drafkicauan dari Draf.Config
@@ -257,7 +259,6 @@ int main()
         Word buat_draf = {"BUAT_DRAF", 9};
         Word lihat_draf = {"LIHAT_DRAF", 10};
         Word kelompok_teman = {"KELOMPOK_TEMAN", 14};
-        Word simpan = {"SIMPAN", 6};
         Word fyb = {"FYB", 3};
         Word balas = {"BALAS",5};
         Word balasan = {"BALASAN",7};
