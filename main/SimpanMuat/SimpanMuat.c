@@ -25,28 +25,36 @@ void concatStrings(const char *str1, const char *str2, char *result) {
     
     result[i] = '\0';
 }
-char* copyString(const char* str) {
-    // Get the length of the input string
-    size_t length = 0;
-    while (str[length] != '\0') {
-        length++;
+char* strcopy(char* destination, const char* source) {
+    char* start = destination;
+
+    while (*source != '\0') {
+        *destination = *source;
+        destination++;
+        source++;
     }
 
-    // Allocate memory for the copied string (+1 for the null terminator)
-    char* copy = (char*)malloc((length + 1) * sizeof(char));
+    *destination = '\0'; // Null-terminate the destination string
+    return start;
+}
 
-    // Check if memory allocation succeeded
-    if (copy == NULL) {
-        perror("Memory allocation failed");
-        exit(EXIT_FAILURE);
+// Function to concatenate two strings using strcat
+char* strconcat(char* destination, const char* source) {
+    char* start = destination;
+
+    while (*destination != '\0') {
+        destination++;
     }
 
-    // Copy the characters one by one
-    for (size_t i = 0; i <= length; i++) {
-        copy[i] = str[i];
+    while (*source != '\0') {
+        *destination = *source;
+        destination++;
+        source++;
     }
-    return copy;
-} 
+
+    *destination = '\0'; // Null-terminate the concatenated string
+    return start;
+}
 void muat(char folderName[],AccountList *listakun, Graf *Teman, prioqueuefren *Q,ListKicau * kList, Stack* draf, int* jumlahUtas){
     char path[] = "../cfg/";
     char *folder= (char *)malloc(strlen(path) + strlen(folderName) + 1);
@@ -326,100 +334,7 @@ void ReadKicau_FILE(char filename[], ListKicau * kList){
         AddToKicauan(kList, temp);
     }
 }
-void ReadDraf_FILE(char filename[], AccountList *list, Stack *S){
-/*Membaca file Draf dari Draf.config kedalam program
-    I.S. Stack terdefinisi dan AccountList sudah diakuisisi dari user.config
-    F.S. Stack terisi dengan drafkicauan dari Draf.Config
-    */
-    int N;
-    STARTWORD_FILE(filename);
-    N = WordToInt(currentWord);
-    int i;
-    for(i = 0; i < N; i++)
-    {
-        ADVSENTENCE();
-        Word user;
-        int jumlah;
-        int j;
-        CopyWordTo(&user, currentWord);
-        user.Length = user.Length - 2;
-        int idAkun;
-        int cok = 0;
-        boolean found = false;
-        while(cok < list->count && found == false)
-        {
-            if(WordEqual(*list->accounts[cok].username, user))
-            {
-                idAkun = cok;
-                found = true;
-            }
-            cok++; 
-        }
-        jumlah = CharToInt(currentWord.TabWord[currentWord.Length-1]);
-        for(j = 0; j < jumlah; j++)
-        {
-            drafkicau DrafKicau;
-            DATETIME waktudraf;
-            ADVSENTENCE();
-            Word draf = currentWord;
-            if (j == jumlah-1 && i == N-1){
-                currentWord = emptyWord;
-                ADV();
-                int m;
-                for(m = 0; m < 19; m++){
-                    currentWord.TabWord[m] = currentChar;
-                    currentWord.Length++;
-                    ADV();
-                }
-            }
-            else{
-                ADVSENTENCE();
-            }
-            int k;
-            Word dd;
-            for(k = 0; k < 2; k++){
-                dd.TabWord[k] = currentWord.TabWord[k];
-            }
-            dd.Length = 2;
-            int DD = WordToInt(dd);
-            Word mm;
-            for(k = 3; k < 5; k++){
-                mm.TabWord[k-3] = currentWord.TabWord[k];
-            }
-            mm.Length = 2;
-            int MM = WordToInt(mm);
-            Word yy;
-            for(k = 6; k < 10; k++){
-                yy.TabWord[k-6] = currentWord.TabWord[k];
-            }
-            yy.Length = 4;
-            int YY = WordToInt(yy);
-            Word hh;
-            for(k = 11; k < 13; k++){
-                hh.TabWord[k-11] = currentWord.TabWord[k];
-            }
-            hh.Length = 2;
-            int HH = WordToInt(hh);
-            Word m;
-            for(k = 14; k < 16; k++){
-                m.TabWord[k-14] = currentWord.TabWord[k];
-            }
-            m.Length = 2;
-            int M = WordToInt(m);
-            Word ss;
-            for(k = 17; k < 19; k++){
-                ss.TabWord[k-17] = currentWord.TabWord[k];
-            }
-            ss.Length = 2;
-            int SS = WordToInt(ss);
-            CreateDATETIME(&waktudraf, DD, MM, YY, HH, M, SS);
-            DrafKicau.Draf = draf;
-            DrafKicau.IDuser = idAkun;
-            DrafKicau.waktu = waktudraf;
-            Push(S, DrafKicau);
-        }
-    }
-}
+
 void readUtas(char filename[], ListKicau* kList, int* jumlahUtas, AccountList akunList){
     STARTWORD_FILE(filename);
     int n = WordToInt(currentWord);
