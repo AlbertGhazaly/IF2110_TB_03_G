@@ -131,9 +131,10 @@ int main()
     printf("\\ <_. )   (____/(______)(_)\\_)(____/(____)(_)\\_)()   ( ._> /\n");
     printf(" `---'              Tempat Anda Mencibir              `---' \n\n");
 
-    printf("Selamat datang di Burbir. Selamat berkicau!\n");
+    printf("Selamat datang di Burbir. Selamat berkicau!\n\n");
+    printf("Aplikasi untuk studi kualitatif mengenai perilaku manusia dengan menggunakan metode (pengambilan data berupa) Focused Group Discussion kedua di zamannya.\n\n");
     char path[MAXChar] = "../cfg/";
-    printf("Masukkan config yang hendak dimuat:");
+    printf("Silahkan masukan folder konfigurasi untuk dimuat:");
     STARTSENTENCE();
     char *fold = (char*)malloc(MAXChar*sizeof(char));
     char *path1 = (char*)malloc(MAXChar*sizeof(char));
@@ -148,11 +149,12 @@ int main()
     // char *folder= (char *)malloc(strlen(path) + strlen(folderName) + 1);
     // strcpy(folder,path);
     // strcat(folder,folderName);
-    printf("%s\n",path1);
+
     while (!isDirExist(path1)){
         printf("Tidak ada folder yang dimaksud!\n");
         free(path1);
         free(fold);
+        STARTSENTENCE();
         printf("Masukkan config yang hendak dimuat:");
         STARTSENTENCE();
         char *fold = (char*)malloc(MAXChar*sizeof(char));
@@ -219,7 +221,7 @@ int main()
         }
         
     }
-    printf("File Config berhasil dimuat\n");
+    printf("File konfigurasi berhasil dimuat! Selamat berkicau!\n");
     while (runProgram)
     {
         printf(">> ");
@@ -891,22 +893,99 @@ int main()
             DisplayFYB(kList);
         }else if(wordCheck(command,0,4,balas)){
             
-        }else if(WordEqual(command,muat)){
-            char path[] = "../cfg/";
-            printf("Masukkan config yang hendak dimuat:");
-            STARTSENTENCE();
-            char fold[MAXChar];
-            w2s(fold,currentWord);
-            char *folder1= (char *)malloc(strlen(path) + strlen(fold) + 2);
-            strcpy(folder1,path);
-            strcat(folder1,fold);
-            strcat(folder1,"/");
-            // char folderName[] = "contoh";
-            // char *folder= (char *)malloc(strlen(path) + strlen(folderName) + 1);
-            // strcpy(folder,path);
-            // strcat(folder,folderName);
         }else if(WordEqual(command,simpan)){
 
+        }
+        else if (WordEqual(command, muat)){
+            if (isLogin){
+                printf("Anda harus keluar terlebih dahulu untuk melakukan pemuatan.\n\n");
+            }
+            else{
+
+                STARTSENTENCE();
+                printf("Masukkan nama folder yang hendak dimuat:");
+                STARTSENTENCE();
+                Word fileee = currentWord;
+
+                printWord(currentWord);
+                printf("\n\n");
+                char path[MAXChar] = "../cfg/";
+                char *fold = (char*)malloc(MAXChar*sizeof(char));
+                char *path1 = (char*)malloc(MAXChar*sizeof(char));
+                w2s(fold,currentWord);
+                path1 = strcopy(path1,path);
+                strconcat(path1,fold);
+                strconcat(path1,"/");
+                if (isDirExist(path1)){
+                    CreateAccountList(&akun);
+                    createEmptyGraf(&teman);
+                    MakeEmptyprio(&Q, 100);
+                    CreateEmptyStack(&draf);
+                    CreateListKicau(&kList);
+                    for (int i=0;i<5;i++){
+                        if (i==0){ 
+                            char file[20] = "pengguna.config";
+                            char *folder = (char*)malloc(MAXChar*sizeof(char));
+                            strcpy(folder,path1);
+                            strcat(folder,file);
+                            ReadUser_FILE(folder,&akun,&teman,&Q);
+                            free(folder);
+                        }
+                        else if (i==1){ 
+                            char file[20] = "kicauan.config";
+                            char *folder = (char*)malloc(MAXChar*sizeof(char));
+                            strcpy(folder,path1);
+                            strcat(folder,file);
+                            ReadKicau_FILE(folder,&kList);
+                            free(folder);
+                        } 
+                        else if (i==2){ // Draft config
+                            char file[20] = "draf.config";
+                            char *folder = (char*)malloc(MAXChar*sizeof(char));
+                            strcpy(folder,path1);
+                            strcat(folder,file);
+                            ReadDraf_FILE(folder, &akun, &draf);
+                            int i;
+                            for (i = 0; i < 20; i++)
+                            {
+                                CreateEmptyStack(&drafStack[i]);
+                            }
+
+                            while (!IsEmptyStack(draf))
+                            {
+                                drafkicau temp;
+                                Pop(&draf, &temp);
+                                for (i = 0; i < 20; i++)
+                                {
+                                    if (temp.IDuser == i)
+                                    {
+                                        Push(&drafStack[i], temp);
+                                    }
+                                }
+                            }
+                            free(folder);
+                        }
+                        else if (i==3){ // Utas config
+                            char file[20] = "utas.config";
+                            char *folder = (char*)malloc(MAXChar*sizeof(char));
+                            strcpy(folder,path1);
+                            strcat(folder,file);
+                            readUtas(folder,&kList,&idUtas,akun);
+                            free(folder);
+                        }
+                        else if (i==4){ //Reply config
+
+                        }
+                        
+                    }
+                printf("Anda akan melakukan pemuatan dari ");
+                printWord(fileee);
+                printf("\n\n");
+            }
+            else{
+                printf("Tidak ada folder yang dimaksud!\n\n");
+            }
+            }
         }
         else
         {
