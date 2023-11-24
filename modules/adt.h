@@ -33,5 +33,7 @@
 #include "./pcolor/pcolor.c"
 #include "./prioqueuefren/prioqueuefren.h"
 #include "./prioqueuefren/prioqueuefren.c"
+#include "./tree/tree.h"
+#include "./tree/tree.c"
 
 #endif

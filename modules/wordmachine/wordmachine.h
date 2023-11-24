@@ -6,7 +6,7 @@
 
 #include "../boolean.h"
 #include "charmachine.h"
-
+#define MAXWord 281
 #define NMax 50
 #define BLANK ' '
 #define MARKBaris '\n'
@@ -89,6 +89,8 @@ Word stringToWord(char character[], int length);
 void CopyWordTo(Word *destination, Word source);
 
 void CopyWordCommand();
+
+void CopyString(char destination[MAXWord], char source[MAXWord]);
 
 boolean wordCheck(Word perintah, int idxawal, int idxakhir, Word katauji);
 
