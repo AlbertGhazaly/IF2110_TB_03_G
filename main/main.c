@@ -2,6 +2,20 @@
 
 int main()
 {
+    printf("           ____  __  __  ____  ____  ____  ____ /\\ \n");
+    printf("    __    (  _ \\(  )(  )(  _ \\(  _ \\(_  _)(  _ \\)(    __    \n");
+    printf("___( o)>   ) _ < )(__)(  )   / ) _ < _)(_  )   /\\/  <(o )___\n");
+    printf("\\ <_. )   (____/(______)(_)\\_)(____/(____)(_)\\_)()   ( ._> /\n");
+    printf(" `---'              Tempat Anda Mencibir              `---' \n\n");
+    printf("Selamat datang di Burbir. Selamat berkicau!\n\n");
+    printf("Aplikasi untuk studi kualitatif mengenai perilaku manusia dengan menggunakan metode (pengambilan data berupa) Focused Group Discussion kedua di zamannya.\n\n");
+    STARTSENTENCE();
+    printf("Silahkan masukan folder konfigurasi untuk dimuat:");
+    printf("\n\n");
+    STARTSENTENCE();
+
+
+    printf("File konfigurasi berhasil dimuat! Selamat berkicau!\n\n");
 
     // Utilities
     boolean login = false;
@@ -50,13 +64,7 @@ int main()
     readUtas("../cfg/utas.config",&kList,&idUtas,akun);
 
     boolean isLogin = false;
-    printf("           ____  __  __  ____  ____  ____  ____ /\\ \n");
-    printf("    __    (  _ \\(  )(  )(  _ \\(  _ \\(_  _)(  _ \\)(    __    \n");
-    printf("___( o)>   ) _ < )(__)(  )   / ) _ < _)(_  )   /\\/  <(o )___\n");
-    printf("\\ <_. )   (____/(______)(_)\\_)(____/(____)(_)\\_)()   ( ._> /\n");
-    printf(" `---'              Tempat Anda Mencibir              `---' \n\n");
-
-    printf("Selamat datang di Burbir. Selamat berkicau!\n");
+    
     while (runProgram)
     {
         printf(">> ");
@@ -90,6 +98,7 @@ int main()
         Word buat_draf = {"BUAT_DRAF", 9};
         Word lihat_draf = {"LIHAT_DRAF", 10};
         Word kelompok_teman = {"KELOMPOK_TEMAN", 14};
+        Word simpan = {"SIMPAN", 6};
         Word fyb = {"FYB", 3};
 
         if (WordEqual(command, tutup_program))
